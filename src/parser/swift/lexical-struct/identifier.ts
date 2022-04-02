@@ -2,7 +2,7 @@ import {Parser} from "../../../types";
 import {map} from "../../../util";
 import {cat, or, rep} from "../../../combinators";
 import {alpha, Alphabet, char, Digit, digit, is, upperAlpha, UpperAlphabet} from "../../../char";
-import {decimalDigits} from "../integer-literal";
+import {decimalDigits} from "./integer-literal";
 
 // <identifier> ::= <identifier-head> <identifier-characters>?
 //   | '`' <identifier-head> <identifier-characters>? '`'

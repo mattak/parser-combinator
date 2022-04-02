@@ -1,4 +1,4 @@
-import {ParserOutput} from "../../types";
+import {ParserOutput} from "../../../types";
 import {binaryLiteral, decimalLiteral, hexadecimalLiteral, integerLiteral, octalLiteral} from "./integer-literal";
 
 describe('binaryLiteral', () => {
