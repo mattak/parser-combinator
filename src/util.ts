@@ -1,4 +1,4 @@
-import type {Parser} from './types';
+import type {Parser, ParserInput} from './types';
 import {char} from "./char";
 import {cat, not, rep} from "./combinators";
 
@@ -63,3 +63,21 @@ export const list: ListFunc = (p, delimiter) => map(
   ]),
   ([first, rest]) => [first, ...rest.map(([, r]) => r)]
 );
+
+type NextMatchFunc = <T>(p: Parser<T>) => Parser<[ParserInput, T]>
+export const nextMatch: NextMatchFunc = (p) => input => {
+  for (let i = 0; i < input.length; i++) {
+    const result = p(input.slice(i));
+    if (result.result === 'success') {
+      return {
+        result: 'success',
+        data: [input.slice(0, i), result.data],
+        rest: result.rest,
+      }
+    }
+  }
+
+  return {
+    result: 'fail'
+  }
+};

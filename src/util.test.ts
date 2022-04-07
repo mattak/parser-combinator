@@ -1,7 +1,7 @@
-import {map, str, opt, diff, list} from './util';
+import {map, str, opt, diff, list, nextMatch} from './util';
 import type {Option} from './util';
 import {char, digit, Digit} from './char';
-import type {ParserOutput} from "./types";
+import type {ParserInput, ParserOutput} from "./types";
 
 describe('map(digit, s => Number.parseInt(s,10))', () => {
   const parser = map(digit, s => Number.parseInt(s, 10));
@@ -167,6 +167,46 @@ describe('list(digit, char(","))', () => {
       result: 'success',
       data: ['1', '2', '3', '4', '5'],
       rest: [],
+    });
+  });
+});
+
+describe('nextMatch(digit)', () => {
+  const parser = nextMatch(digit);
+
+  test('Empty input', () => {
+    const input = [] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<[ParserInput, Digit]>>({
+      result: 'fail',
+    });
+  });
+
+  test('Input a', () => {
+    const input = [...'a'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<[ParserInput, Digit]>>({
+      result: 'fail',
+    });
+  });
+
+  test('Input 1', () => {
+    const input = [...'1'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<[ParserInput, Digit]>>({
+      result: 'success',
+      data: [[], '1'],
+      rest: [],
+    });
+  });
+
+  test('Input a1b2', () => {
+    const input = [...'a1b2'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<[ParserInput, Digit]>>({
+      result: 'success',
+      data: [['a'], '1'],
+      rest: ['b', '2'],
     });
   });
 });
