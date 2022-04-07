@@ -5,12 +5,12 @@ import {diff, map, str} from "../../../util";
 import {anyChar} from "../../../primitives";
 import * as fs from "fs";
 
-const lineBreak: Parser<string> = or([
+export const lineBreak: Parser<string> = or([
   str('\r\n'),
   char('\r'),
   char('\n'),
 ]);
-const inlineSpace: Parser<string> = or([
+export const inlineSpace: Parser<string> = or([
   char('\t'),
   char(' ')
 ]);
