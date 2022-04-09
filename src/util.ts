@@ -64,6 +64,15 @@ export const list: ListFunc = (p, delimiter) => map(
   ([first, rest]) => [first, ...rest.map(([, r]) => r)]
 );
 
+type ListWithTailDelimiter = <T, U>(p: Parser<T>, delimiter: Parser<unknown>) => Parser<T[]>;
+export const listWithTailDelimiter: ListWithTailDelimiter = (p, delimiter) => map(
+  cat([
+    list(p, delimiter),
+    opt(delimiter),
+  ]),
+  ([lst, _]) => lst
+);
+
 type NextMatchFunc = <T>(p: Parser<T>) => Parser<[ParserInput, T]>
 export const nextMatch: NextMatchFunc = (p) => input => {
   for (let i = 0; i < input.length; i++) {
