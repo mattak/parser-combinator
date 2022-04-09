@@ -7,9 +7,9 @@ import {Parser} from "../../../types";
 import {cat} from "../../../combinators";
 import {list, map, opt, str} from "../../../util";
 import {char} from "../../../char";
-import {whitespace} from "../../json/whitespace";
 import {pattern, SwiftPattern} from "../pattern/pattern";
 import {SwiftDeclaration} from "./declaration";
+import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 
 export interface SwiftConstantDeclaration extends SwiftDeclaration {
   type: 'constant',
@@ -28,9 +28,9 @@ export interface SwiftInitializer {
 
 const initializer: Parser<SwiftInitializer> = map(
   cat([
-    whitespace,
+    whitespace0,
     char('='),
-    whitespace,
+    whitespace0,
     // <expression>
   ]),
   ([, ,]) => {
@@ -58,7 +58,7 @@ export const constantDeclaration: Parser<SwiftConstantDeclaration> = map(
     // declaration-modifiers?
     str('let'),
     whitespace,
-    list(patternInitializer, cat([whitespace, char(','), whitespace]))
+    list(patternInitializer, cat([whitespace0, char(','), whitespace0]))
   ]),
   ([, , initializers]) => {
     return {
