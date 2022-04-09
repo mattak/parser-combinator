@@ -3,13 +3,14 @@
 // <pattern-initializer> ::= <pattern> <initializer>?
 // <initializer> ::= <expression>
 
-import {Parser} from "../../../types";
+import {Parser, ParserInput, ParserOutput} from "../../../types";
 import {cat} from "../../../combinators";
 import {list, map, opt, str} from "../../../util";
 import {char} from "../../../char";
 import {pattern, SwiftPattern} from "../pattern/pattern";
 import {SwiftDeclaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
+import {expression, SwiftExpression} from "../expression/expression";
 
 export interface SwiftConstantDeclaration extends SwiftDeclaration {
   type: 'constant',
@@ -21,9 +22,7 @@ export interface SwiftPatternInitializer {
   initializer: SwiftInitializer | null,
 }
 
-export interface SwiftInitializer {
-  // <expression>
-  expression: null,
+export interface SwiftInitializer extends SwiftExpression {
 }
 
 const initializer: Parser<SwiftInitializer> = map(
@@ -31,12 +30,10 @@ const initializer: Parser<SwiftInitializer> = map(
     whitespace0,
     char('='),
     whitespace0,
-    // <expression>
+    expression
   ]),
-  ([, ,]) => {
-    return {
-      expression: null, // FIXME
-    }
+  ([, , , ex]) => {
+    return ex
   }
 );
 
@@ -52,17 +49,20 @@ const patternInitializer: Parser<SwiftPatternInitializer> = map(
     }
   });
 
-export const constantDeclaration: Parser<SwiftConstantDeclaration> = map(
-  cat([
-    // attributes?
-    // declaration-modifiers?
-    str('let'),
-    whitespace,
-    list(patternInitializer, cat([whitespace0, char(','), whitespace0]))
-  ]),
-  ([, , initializers]) => {
-    return {
-      type: 'constant',
-      patternInitializers: initializers,
+export function constantDeclaration(input: ParserInput): ParserOutput<SwiftConstantDeclaration> {
+  return map(
+    cat([
+      // attributes?
+      // declaration-modifiers?
+      str('let'),
+      whitespace,
+      list(patternInitializer, cat([whitespace0, char(','), whitespace0]))
+    ]),
+    ([_let, _space, initializers]) => {
+      return <SwiftConstantDeclaration>{
+        type: 'constant',
+        patternInitializers: initializers,
+      }
     }
-  });
+  )(input);
+}

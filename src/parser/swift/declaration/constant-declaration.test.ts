@@ -1,5 +1,8 @@
 import {constantDeclaration, SwiftConstantDeclaration} from "./constant-declaration";
 import {ParserOutput} from "../../../types";
+import {SwiftExpression} from "../expression/expression";
+import {SwiftPostfixExpressionPrimary} from "../expression/postfix-expression";
+import {SwiftLiteralExpression} from "../expression/literal-expression";
 
 describe('constant-declaration', () => {
   const parser = constantDeclaration;
@@ -41,8 +44,46 @@ describe('constant-declaration', () => {
     });
   });
 
-  test('Input "let _ = , a = , b="', () => {
-    const input = [...'let _ = , a = , b='] as const;
+
+  test('Input: "let a = 1"', () => {
+    const input = [...'let a = 1'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftConstantDeclaration>>({
+      result: 'success',
+      data: {
+        type: 'constant',
+        patternInitializers: [
+          {
+            pattern: {
+              type: 'identifier',
+              value: 'a',
+            },
+            initializer: {
+              prefix: {
+                prefixOperator: null,
+                postfixExpression: <SwiftPostfixExpressionPrimary>{
+                  postfixType: 'primary',
+                  primaryType: 'literal',
+                  value: <SwiftLiteralExpression>{
+                    type: 'literal',
+                    value: {
+                      type: 'numeric',
+                      numericType: 'integer',
+                      value: '1',
+                    }
+                  },
+                },
+              }
+            },
+          },
+        ],
+      },
+      rest: []
+    });
+  });
+
+  test('Input "let _, a, b"', () => {
+    const input = [...'let _, a, b'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftConstantDeclaration>>({
       result: 'success',
@@ -54,32 +95,25 @@ describe('constant-declaration', () => {
               type: 'wildcard',
               value: '_',
             },
-            initializer: {
-              expression: null,
-            },
+            initializer: null,
           },
           {
             pattern: {
               type: 'identifier',
               value: 'a',
             },
-            initializer: {
-              expression: null,
-            },
+            initializer: null,
           },
           {
             pattern: {
               type: 'identifier',
               value: 'b',
             },
-            initializer: {
-              expression: null,
-            },
+            initializer: null,
           },
         ],
       },
       rest: []
     });
   });
-
 });
