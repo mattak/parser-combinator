@@ -47,7 +47,7 @@ export const declarationModifierPrimitive: Parser<SwiftDeclarationModifierPrimit
   str('weak'),
 ]);
 
-type SwiftAccessLevelModifier =
+export type SwiftAccessLevelModifier =
   'private' | 'private(set)'
   | 'fileprivate' | 'fileprivate(set)'
   | 'internal' | 'internal(set)'
