@@ -1,5 +1,5 @@
 import {expr} from './expression';
-import type {ParserOutput} from "../types";
+import type {ParserOutput} from "../../types";
 
 describe('init', () => {
   const parser = expr;

@@ -1,7 +1,7 @@
-import {Parser} from "../types";
-import {diff, map, opt} from "../util";
-import {char, Digit, digit, is} from "../char";
-import {cat, or, rep} from "../combinators";
+import {Parser} from "../../types";
+import {diff, map, opt} from "../../util";
+import {char, Digit, digit, is} from "../../char";
+import {cat, or, rep} from "../../combinators";
 
 export type NonZeroDigit = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 const nonZeroDigit: Parser<Digit> = diff(digit, char('0'));

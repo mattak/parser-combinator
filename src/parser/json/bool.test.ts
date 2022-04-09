@@ -1,5 +1,5 @@
 import {bool} from './bool';
-import type {ParserOutput} from "../types";
+import type {ParserOutput} from "../../types";
 
 describe('bool', () => {
   const parser = bool;

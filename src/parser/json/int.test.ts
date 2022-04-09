@@ -1,5 +1,5 @@
 import { int } from './int';
-import {ParserOutput} from "../types";
+import {ParserOutput} from "../../types";
 
 describe('int', () => {
   const parser = int;

@@ -1,7 +1,7 @@
 import {list, map, opt, str} from "../../util";
 import {Parser, ParserInput, ParserOutput} from "../../types";
 import {cat, or} from "../../combinators";
-import {bool} from "../bool";
+import {bool} from "./bool";
 import {number} from "./number";
 import {string} from "./string";
 import {whitespace} from "./whitespace";

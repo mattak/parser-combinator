@@ -1,7 +1,7 @@
-import {ParserInput, ParserOutput} from "../types";
-import {cat, or, rep} from "../combinators";
-import {map} from "../util";
-import {char} from "../char";
+import {ParserInput, ParserOutput} from "../../types";
+import {cat, or, rep} from "../../combinators";
+import {map} from "../../util";
+import {char} from "../../char";
 import {numbers} from "./int";
 
 // <expr> ::= <term> [("+"|"-") <term>]*
