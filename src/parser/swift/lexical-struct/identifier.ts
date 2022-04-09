@@ -1,4 +1,4 @@
-import {Parser} from "../../../types";
+import {Parser, ParserInput, ParserOutput} from "../../../types";
 import {map} from "../../../util";
 import {cat, or, rep} from "../../../combinators";
 import {alpha, Alphabet, char, Digit, digit, is, upperAlpha, UpperAlphabet} from "../../../char";
@@ -56,9 +56,11 @@ const identifierQuart: Parser<string> = map(
     return content;
   }
 );
-export const identifier: Parser<string> = or([
-  identifierQuart,
-  implicitParameterName,
-  propertyWrapperProjection,
-  identifierUnQuart,
-]);
+export function identifier(input: ParserInput): ParserOutput<string> {
+  return or([
+    identifierQuart,
+    implicitParameterName,
+    propertyWrapperProjection,
+    identifierUnQuart,
+  ])(input);
+}
