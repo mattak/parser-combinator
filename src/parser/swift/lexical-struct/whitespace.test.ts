@@ -1,4 +1,4 @@
-import {comment, multilineComment, whitespace} from "../lexical-struct/whitespace";
+import {comment, multilineComment, whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {ParserOutput} from "../../../types";
 
 describe('comment', () => {
@@ -188,6 +188,29 @@ describe('whitespace', () => {
     expect(output).toEqual<ParserOutput<string>>({
       result: 'success',
       data: '  secret comment ',
+      rest: []
+    });
+  });
+});
+
+describe('whitespace0', () => {
+  const parser = whitespace0;
+  test('Input Empty', () => {
+    const input = [...''] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<string>>({
+      result: 'success',
+      data: '',
+      rest: []
+    });
+  });
+
+  test('Input spaces', () => {
+    const input = [...' \n\r\t'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<string>>({
+      result: 'success',
+      data: ' \n\r\t',
       rest: []
     });
   });

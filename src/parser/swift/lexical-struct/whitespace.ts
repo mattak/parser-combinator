@@ -97,3 +97,7 @@ export const whitespace: Parser<string> = map(
   rep(whiteSpaceItem, 1),
   (s) => s.join(''),
 );
+export const whitespace0: Parser<string> = map(
+  rep(whiteSpaceItem),
+  (s) => s.join(''),
+);
