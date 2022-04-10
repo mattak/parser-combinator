@@ -1,6 +1,6 @@
 import {Parser} from "../../../types";
 import {cat, or, rep} from "../../../combinators";
-import {map, opt, str} from "../../../util";
+import {map, str} from "../../../util";
 import {char, Digit, digit, is} from "../../../char";
 
 type BinaryDigit = '0' | '1';

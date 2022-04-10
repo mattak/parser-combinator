@@ -11,14 +11,7 @@ import {integerLiteral} from "./integer-literal";
 import {floatingPointLiteral} from "./floating-point-literal";
 import {booleanLiteral} from "./boolean-literal";
 import {nilLiteral} from "./nil-literal";
-
-export type SwiftLiteralType = 'numeric' | 'string' | 'boolean' | 'nil';
-type SwiftLiteralNumericType = 'integer' | 'float';
-
-export interface SwiftLiteral {
-  type: SwiftLiteralType,
-  value: string,
-}
+import {SwiftLiteral} from "../../../syntax/swift";
 
 export const literal: Parser<SwiftLiteral> = or([
   map(

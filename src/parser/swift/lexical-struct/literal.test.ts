@@ -1,5 +1,6 @@
 import {ParserOutput} from "../../../types";
-import {literal, SwiftLiteral, SwiftLiteralType} from "./literal";
+import {literal} from "./literal";
+import {SwiftLiteral, SwiftLiteralType} from "../../../syntax/swift";
 
 describe('literal', () => {
   const parser = literal;

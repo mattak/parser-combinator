@@ -1,8 +1,9 @@
 import {ParserInput, ParserOutput} from "../../../types";
-import {literal, SwiftLiteral} from "../lexical-struct/literal";
+import {literal} from "../lexical-struct/literal";
 import {or} from "../../../combinators";
 import {map} from "../../../util";
 import {SwiftExpression} from "./expression";
+import {SwiftLiteral} from "../../../syntax/swift";
 
 type SwiftLiteralExpressionType = 'literal' | 'array' | 'dictionary' | 'playground';
 

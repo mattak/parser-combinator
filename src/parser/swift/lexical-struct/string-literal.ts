@@ -1,6 +1,6 @@
 import {Parser} from "../../../types";
 import {cat, or, rep} from "../../../combinators";
-import {diff, map, nextMatch, opt, str} from "../../../util";
+import {diff, map, str} from "../../../util";
 import {char, is} from "../../../char";
 import {anyChar} from "../../../primitives";
 import {inlineSpace, lineBreak} from "./whitespace";

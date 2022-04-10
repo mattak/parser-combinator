@@ -3,11 +3,8 @@ import {cat} from "../../../combinators";
 import {whitespace0} from "./whitespace";
 import {char} from "../../../char";
 import {listWithTailDelimiter, map, opt} from "../../../util";
-import {expression, SwiftExpression} from "../expression/expression";
-
-export interface SwiftArrayLiteral {
-  expressions: SwiftExpression[],
-}
+import {expression} from "../expression/expression";
+import {SwiftArrayLiteral} from "../../../syntax/swift";
 
 export function arrayLiteral(input: ParserInput): ParserOutput<SwiftArrayLiteral> {
   return map(

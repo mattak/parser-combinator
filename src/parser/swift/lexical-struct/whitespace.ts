@@ -1,9 +1,8 @@
 import {Parser, ParserInput, ParserOutput} from "../../../types";
-import {cat, not, or, rep} from "../../../combinators";
+import {cat, or, rep} from "../../../combinators";
 import {char} from "../../../char";
 import {diff, map, str} from "../../../util";
 import {anyChar} from "../../../primitives";
-import * as fs from "fs";
 
 export const lineBreak: Parser<string> = or([
   str('\r\n'),

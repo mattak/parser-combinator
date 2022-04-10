@@ -1,7 +1,7 @@
 import {ParserOutput} from "../../../types";
 import {primaryExpression, SwiftPrimaryExpression, SwiftPrimaryExpressionLiteral} from "./primary-expression";
 import {SwiftLiteralExpression} from "./literal-expression";
-import {SwiftLiteral} from "../lexical-struct/literal";
+import {SwiftLiteral} from "../../../syntax/swift";
 
 describe('primary-expression', () => {
   const parser = primaryExpression;

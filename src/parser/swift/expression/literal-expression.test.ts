@@ -1,6 +1,7 @@
-import {literal, SwiftLiteral} from "../lexical-struct/literal";
+import {literal} from "../lexical-struct/literal";
 import {ParserOutput} from "../../../types";
 import {literalExpression, SwiftLiteralExpression, SwiftLiteralExpressionLiteral} from "./literal-expression";
+import {SwiftLiteral} from "../../../syntax/swift";
 
 describe('literal', () => {
   const parser = literalExpression;

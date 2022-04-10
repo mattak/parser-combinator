@@ -1,8 +1,7 @@
 import {postfixExpression, SwiftPostfixExpression, SwiftPostfixExpressionPrimary} from "./postfix-expression";
 import {ParserOutput} from "../../../types";
-import {SwiftPrimaryExpressionLiteral} from "./primary-expression";
-import {SwiftLiteral} from "../lexical-struct/literal";
 import {SwiftLiteralExpression} from "./literal-expression";
+import {SwiftLiteral} from "../../../syntax/swift";
 
 describe('postfix-expression', () => {
   const parser = postfixExpression;

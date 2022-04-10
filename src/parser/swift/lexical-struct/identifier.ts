@@ -1,9 +1,3 @@
-import {Parser, ParserInput, ParserOutput} from "../../../types";
-import {map} from "../../../util";
-import {cat, or, rep} from "../../../combinators";
-import {alpha, Alphabet, char, Digit, digit, is, upperAlpha, UpperAlphabet} from "../../../char";
-import {decimalDigits} from "./integer-literal";
-
 // <identifier> ::= <identifier-head> <identifier-characters>?
 //   | '`' <identifier-head> <identifier-characters>? '`'
 //   | <implicit-parameter-name>
@@ -13,8 +7,16 @@ import {decimalDigits} from "./integer-literal";
 // <identifier-character> ::= <digit> | <identifier-head> | ...
 // <implicit-parameter-name> ::= '$' <decimal-digit>+
 // <property-wrapper-projection> ::= '$' <identifier-character>+
+
+import {Parser, ParserInput, ParserOutput} from "../../../types";
+import {map} from "../../../util";
+import {cat, or, rep} from "../../../combinators";
+import {Alphabet, char, Digit, digit, is} from "../../../char";
+import {decimalDigits} from "./integer-literal";
+
 type IdentifierHead = Alphabet | '_';
 type IdentifierCharacter = Digit | IdentifierHead;
+
 // TODO: add additional unicode endpoints
 // https://docs.swift.org/swift-book/ReferenceManual/LexicalStructure.html#grammar_identifier
 const identifierHead: Parser<IdentifierHead> = is((c): c is IdentifierHead => /[a-zA-Z_]/.test(c));
@@ -56,6 +58,7 @@ const identifierQuart: Parser<string> = map(
     return content;
   }
 );
+
 export function identifier(input: ParserInput): ParserOutput<string> {
   return or([
     identifierQuart,

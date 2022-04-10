@@ -1,10 +1,10 @@
-import {arrayLiteral, SwiftArrayLiteral} from "./array-literal";
+import {arrayLiteral} from "./array-literal";
 import {ParserOutput} from "../../../types";
 import {SwiftLiteralExpression} from "../expression/literal-expression";
 import {SwiftExpression} from "../expression/expression";
 import {SwiftPrefixExpression} from "../expression/prefix-expression";
 import {SwiftPostfixExpressionPrimary} from "../expression/postfix-expression";
-import {SwiftLiteral} from "./literal";
+import {SwiftArrayLiteral, SwiftLiteral} from "../../../syntax/swift";
 
 describe('arrayLiteral', () => {
   const parser = arrayLiteral;
