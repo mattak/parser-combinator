@@ -38,18 +38,18 @@ export interface SwiftImportDeclaration extends SwiftDeclaration {
 
 // struct
 export interface SwiftStructMember {
-  structMemberType: 'declaration' | 'compiler-control-statement';
+  structMemberType: 'declaration' | 'compiler-control-statement',
 }
 
 export interface SwiftStructMemberDeclaration extends SwiftStructMember, SwiftDeclaration {
-  structMemberType: 'declaration';
+  structMemberType: 'declaration',
 }
 
 export interface SwiftStructDeclaration extends SwiftDeclaration {
   type: 'struct',
-  name: string;
+  name: string,
   accessLevelModifier: SwiftAccessLevelModifier | null,
-  body: SwiftStructMember[];
+  body: SwiftStructMember[],
 }
 
 // constant
