@@ -7,10 +7,11 @@ import {Parser, ParserInput, ParserOutput} from "../../../types";
 import {cat} from "../../../combinators";
 import {list, map, opt, str} from "../../../util";
 import {char} from "../../../char";
-import {pattern, SwiftPattern} from "../pattern/pattern";
+import {pattern} from "../pattern/pattern";
 import {SwiftDeclaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {expression, SwiftExpression} from "../expression/expression";
+import {SwiftPattern} from "../../../syntax/swift";
 
 export interface SwiftConstantDeclaration extends SwiftDeclaration {
   type: 'constant',
