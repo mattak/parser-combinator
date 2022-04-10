@@ -1,6 +1,7 @@
 import {ParserOutput} from "../../../types";
-import {declaration} from "./declaration";
+import {declaration, SwiftDeclaration} from "./declaration";
 import {SwiftConstantDeclaration} from "./constant-declaration";
+import {SwiftImportDeclaration} from "../../../syntax/swift/declaration/import-declaration";
 
 describe('declaration', () => {
   const parser = declaration;
@@ -29,6 +30,21 @@ describe('declaration', () => {
             initializer: null,
           }
         ]
+      },
+      rest: [],
+    });
+  });
+
+  test('import Foundation', () => {
+    const input = [...'import Foundation'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftDeclaration>>({
+      result: 'success',
+      data: <SwiftImportDeclaration>{
+        type: 'import',
+        attributes: null,
+        kind: null,
+        path: 'Foundation',
       },
       rest: [],
     });
