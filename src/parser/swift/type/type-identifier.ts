@@ -6,14 +6,7 @@ import {cat, or} from "../../../combinators";
 import {identifier} from "../lexical-struct/identifier";
 import {genericArgumentClause} from "../generic-parameters/generic-argument";
 import {char} from "../../../char";
-import {SwiftType} from "./type";
-
-export interface SwiftTypeIdentifierType extends SwiftType {
-  type: 'type-identifier';
-  name: string;
-  genericArguments: SwiftType[];
-  innerType: SwiftTypeIdentifierType | null;
-}
+import {SwiftTypeIdentifierType} from "../../../syntax/swift";
 
 function typeIdentifier1(input: ParserInput): ParserOutput<SwiftTypeIdentifierType> {
   return map(

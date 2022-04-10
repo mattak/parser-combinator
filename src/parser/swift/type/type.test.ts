@@ -1,5 +1,5 @@
-import {SwiftType, type} from "./type";
-import {SwiftTypeIdentifierType} from "./type-identifier";
+import {type} from "./type";
+import {SwiftType, SwiftTypeIdentifierType} from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
 
 describe('type', ()=> {

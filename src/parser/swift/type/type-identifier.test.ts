@@ -1,5 +1,6 @@
 import {ParserOutput} from "../../../types";
-import {SwiftTypeIdentifierType, typeIdentifier} from "./type-identifier";
+import {typeIdentifier} from "./type-identifier";
+import {SwiftTypeIdentifierType} from "../../../syntax/swift/type/type-identifier";
 
 describe('typeIdentifier', () => {
   const parser = typeIdentifier;

@@ -3,7 +3,8 @@ import {cat} from "../../../combinators";
 import {char} from "../../../char";
 import {list, map} from "../../../util";
 import {whitespace0} from "../lexical-struct/whitespace";
-import {SwiftType, type} from "../type/type";
+import {type} from "../type/type";
+import {SwiftType} from "../../../syntax/swift/type/type";
 
 export function genericArgumentClause(input: ParserInput): ParserOutput<SwiftType[]> {
   return map(

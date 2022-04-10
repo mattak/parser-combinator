@@ -1,7 +1,7 @@
 import {genericArgumentClause} from "./generic-argument";
 import {ParserOutput} from "../../../types";
-import {SwiftType} from "../type/type";
-import {SwiftTypeIdentifierType} from "../type/type-identifier";
+import {SwiftType} from "../../../syntax/swift/type/type";
+import {SwiftTypeIdentifierType} from "../../../syntax/swift/type/type-identifier";
 
 describe('genericArgumentClause', () => {
   const parser = genericArgumentClause;
