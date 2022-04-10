@@ -1,5 +1,6 @@
 import {ParserOutput} from "../../../types";
-import {struct, structBody, SwiftStruct, SwiftStructMember} from "./struct";
+import {structDeclaration, structBody} from "./struct-declaration";
+import {SwiftStructDeclaration, SwiftStructMember} from "../../../syntax/swift";
 
 describe('structBody', () => {
   const parser = structBody;
@@ -47,22 +48,23 @@ describe('structBody', () => {
 });
 
 describe('struct', () => {
-  const parser = struct;
+  const parser = structDeclaration;
 
   test('Empty input', () => {
     const input = [] as const;
     const output = parser(input);
-    expect(output).toEqual<ParserOutput<SwiftStruct>>({
+    expect(output).toEqual<ParserOutput<SwiftStructDeclaration>>({
       result: 'fail'
     });
   });
 
-  test('Input: struct MyStruct {}', () => {
-    const input = [...'struct MyStruct {}'] as const;
+  test('Input: structDeclaration MyStruct {}', () => {
+    const input = [...'structDeclaration MyStruct {}'] as const;
     const output = parser(input);
-    expect(output).toEqual<ParserOutput<SwiftStruct>>({
+    expect(output).toEqual<ParserOutput<SwiftStructDeclaration>>({
       result: 'success',
-      data: <SwiftStruct>{
+      data: <SwiftStructDeclaration>{
+        type: 'struct',
         name: 'MyStruct',
         accessLevelModifier: null,
         body: [],

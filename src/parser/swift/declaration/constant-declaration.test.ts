@@ -1,6 +1,6 @@
-import {constantDeclaration, SwiftConstantDeclaration} from "./constant-declaration";
+import {constantDeclaration} from "./constant-declaration";
 import {ParserOutput} from "../../../types";
-import {SwiftLiteralExpression, SwiftPostfixExpressionPrimary} from "../../../syntax/swift";
+import {SwiftConstantDeclaration, SwiftLiteralExpression, SwiftPostfixExpressionPrimary} from "../../../syntax/swift";
 
 describe('constant-declaration', () => {
   const parser = constantDeclaration;

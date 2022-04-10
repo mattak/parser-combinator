@@ -3,26 +3,13 @@ import {cat, or, rep} from "../../../combinators";
 import {map, opt, str} from "../../../util";
 import {identifier} from "../lexical-struct/identifier";
 import {char} from "../../../char";
-import {accessLevelModifier, SwiftAccessLevelModifier} from "./declaration-modifier";
-import {declaration, SwiftDeclaration} from "./declaration";
+import {accessLevelModifier} from "./declaration-modifier";
+import {declaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
+import {SwiftStructDeclaration, SwiftStructMember, SwiftStructMemberDeclaration} from "../../../syntax/swift";
 
-export interface SwiftStructMember {
-  structMemberType: 'declaration' | 'compiler-control-statement';
-}
-
-export interface SwiftStructMemberDeclaration extends SwiftStructMember, SwiftDeclaration {
-  structMemberType: 'declaration';
-}
-
-export interface SwiftStruct {
-  name: string;
-  accessLevelModifier: SwiftAccessLevelModifier | null,
-  body: SwiftStructMember[];
-}
-
-// <struct-member> ::= <declaration> | <compiler-control-statement>
-// <struct-body> ::= '{' <struct-member>* '}'
+// <structDeclaration-member> ::= <declaration> | <compiler-control-statement>
+// <structDeclaration-body> ::= '{' <structDeclaration-member>* '}'
 const structName: Parser<string> = identifier;
 const structMember: Parser<SwiftStructMember> = or([
   map(
@@ -43,11 +30,11 @@ export const structBody: Parser<SwiftStructMember[]> = map(
     return members;
   }
 );
-export const struct: Parser<SwiftStruct> = map(
+export const structDeclaration: Parser<SwiftStructDeclaration> = map(
   cat([
     // opt(attributes),
     opt(accessLevelModifier),
-    str('struct'),
+    str('structDeclaration'),
     whitespace,
     structName,
     whitespace0,
@@ -57,7 +44,8 @@ export const struct: Parser<SwiftStruct> = map(
     structBody,
   ]),
   ([modifier, _struct, _space1, name, _space2, body]) => {
-    return <SwiftStruct>{
+    return <SwiftStructDeclaration>{
+      type: 'struct',
       name: name,
       accessLevelModifier: modifier.status == 'some' ? modifier.value : null,
       body: body,

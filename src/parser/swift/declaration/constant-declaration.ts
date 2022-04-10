@@ -8,24 +8,9 @@ import {cat} from "../../../combinators";
 import {list, map, opt, str} from "../../../util";
 import {char} from "../../../char";
 import {pattern} from "../pattern/pattern";
-import {SwiftDeclaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {expression} from "../expression/expression";
-import {SwiftPattern} from "../../../syntax/swift";
-import {SwiftExpression} from "../../../syntax/swift/expression/expression";
-
-export interface SwiftConstantDeclaration extends SwiftDeclaration {
-  type: 'constant',
-  patternInitializers: SwiftPatternInitializer[],
-}
-
-export interface SwiftPatternInitializer {
-  pattern: SwiftPattern,
-  initializer: SwiftInitializer | null,
-}
-
-export interface SwiftInitializer extends SwiftExpression {
-}
+import {SwiftConstantDeclaration, SwiftInitializer, SwiftPatternInitializer} from "../../../syntax/swift";
 
 const initializer: Parser<SwiftInitializer> = map(
   cat([

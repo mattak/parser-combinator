@@ -1,8 +1,6 @@
 import {topLevelDeclaration} from "./top-level-declaration";
 import {ParserOutput} from "../../../types";
-import {SwiftTopLevelDeclaration} from "../../../syntax/swift/declaration/top-level-declaration";
-import {SwiftStatementDeclaration} from "../../../syntax/swift/statement/statement";
-import {SwiftImportDeclaration} from "../../../syntax/swift/declaration/import-declaration";
+import {SwiftImportDeclaration, SwiftStatementDeclaration, SwiftTopLevelDeclaration} from "../../../syntax/swift";
 
 describe('top-level-declaration', () => {
   const parser = topLevelDeclaration;

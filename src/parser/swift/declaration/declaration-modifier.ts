@@ -3,24 +3,11 @@ import {cat, or} from "../../../combinators";
 import {map, str} from "../../../util";
 import {char} from "../../../char";
 import {whitespace0} from "../lexical-struct/whitespace";
-
-type SwiftDeclarationModifierPrimitive =
-  'class'
-  | 'convenience'
-  | 'dynamic'
-  | 'final'
-  | 'infix'
-  | 'lazy'
-  | 'optional'
-  | 'override'
-  | 'postfix'
-  | 'prefix'
-  | 'required'
-  | 'static'
-  | 'unowned'
-  | 'unowned(safe)'
-  | 'unowned(unsafe)'
-  | 'weak';
+import {
+  SwiftAccessLevelModifier, SwiftActorIsolationModifier, SwiftDeclarationModifier,
+  SwiftDeclarationModifierPrimitive,
+  SwiftMutationModifier
+} from "../../../syntax/swift";
 
 export const declarationModifierPrimitive: Parser<SwiftDeclarationModifierPrimitive> = or([
   str('class'),
@@ -46,14 +33,6 @@ export const declarationModifierPrimitive: Parser<SwiftDeclarationModifierPrimit
   str('unowned'),
   str('weak'),
 ]);
-
-export type SwiftAccessLevelModifier =
-  'private' | 'private(set)'
-  | 'fileprivate' | 'fileprivate(set)'
-  | 'internal' | 'internal(set)'
-  | 'public' | 'public(set)'
-  | 'open' | 'open(set)'
-  ;
 
 export const accessLevelModifier: Parser<SwiftAccessLevelModifier> = or([
   map(
@@ -84,22 +63,13 @@ export const accessLevelModifier: Parser<SwiftAccessLevelModifier> = or([
   str('open'),
 ]);
 
-type SwiftMutationModifier = 'mutating' | 'nonmutating';
-
 export const mutatingModifier: Parser<SwiftMutationModifier> = or([
   str('mutating'),
   str('nonmutating')
 ]);
 
-type SwiftActorIsolationModifier = 'nonisolated';
-
 export const actorIsolationModifier: Parser<SwiftActorIsolationModifier> = str('nonisolated');
 
-export type SwiftDeclarationModifier =
-  SwiftDeclarationModifierPrimitive
-  | SwiftAccessLevelModifier
-  | SwiftMutationModifier
-  | SwiftActorIsolationModifier;
 export const declarationModifier: Parser<SwiftDeclarationModifier> = or([
   declarationModifierPrimitive,
   accessLevelModifier,

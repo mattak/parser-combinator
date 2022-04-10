@@ -1,5 +1,6 @@
-import {declarationModifier, SwiftDeclarationModifier} from "./declaration-modifier";
+import {declarationModifier} from "./declaration-modifier";
 import {ParserOutput} from "../../../types";
+import {SwiftDeclarationModifier} from "../../../syntax/swift";
 
 describe('declaration-modifier', () => {
   const parser = declarationModifier;

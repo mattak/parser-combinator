@@ -1,7 +1,6 @@
 import {ParserOutput} from "../../../types";
 import {statement} from "./statement";
-import {SwiftStatementDeclaration} from "../../../syntax/swift/statement/statement";
-import {SwiftImportDeclaration} from "../../../syntax/swift/declaration/import-declaration";
+import {SwiftImportDeclaration, SwiftStatementDeclaration} from "../../../syntax/swift";
 
 describe('statement', () => {
   const parser = statement;

@@ -1,14 +1,14 @@
 // <import-declaration> ::= <attributes> ? 'import' <import-kind> ? <import-path>
-// <import-kind> ::= typealias | struct | class | enum | protocol | let | var | func
+// <import-kind> ::= typealias | structDeclaration | class | enum | protocol | let | var | func
 // <import-path> ::= <import-path-identifier> | <import-path-identifier> . <import-path>
 // <import-path-identifier> ::= <identifier> | <operator>
 import {ParserInput, ParserOutput} from "../../../types";
-import {SwiftImportDeclaration} from "../../../syntax/swift/declaration/import-declaration";
 import {cat} from "../../../combinators";
 import {list, map, str} from "../../../util";
 import {whitespace} from "../lexical-struct/whitespace";
 import {identifier} from "../lexical-struct/identifier";
 import {char} from "../../../char";
+import {SwiftImportDeclaration} from "../../../syntax/swift";
 
 function importPath(input: ParserInput): ParserOutput<string> {
   return map(
