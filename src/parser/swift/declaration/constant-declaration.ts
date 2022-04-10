@@ -10,8 +10,9 @@ import {char} from "../../../char";
 import {pattern} from "../pattern/pattern";
 import {SwiftDeclaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
-import {expression, SwiftExpression} from "../expression/expression";
+import {expression} from "../expression/expression";
 import {SwiftPattern} from "../../../syntax/swift";
+import {SwiftExpression} from "../../../syntax/swift/expression/expression";
 
 export interface SwiftConstantDeclaration extends SwiftDeclaration {
   type: 'constant',

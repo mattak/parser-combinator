@@ -2,22 +2,7 @@ import {ParserInput, ParserOutput} from "../../../types";
 import {literal} from "../lexical-struct/literal";
 import {or} from "../../../combinators";
 import {map} from "../../../util";
-import {SwiftExpression} from "./expression";
-import {SwiftLiteral} from "../../../syntax/swift";
-
-type SwiftLiteralExpressionType = 'literal' | 'array' | 'dictionary' | 'playground';
-
-export interface SwiftLiteralExpression {
-  type: SwiftLiteralExpressionType,
-}
-
-export interface SwiftLiteralExpressionLiteral extends SwiftLiteralExpression {
-  value: SwiftLiteral,
-}
-
-export interface SwiftLiteralExpressionArray extends SwiftLiteralExpression {
-  expressions: SwiftExpression,
-}
+import {SwiftLiteralExpression} from "../../../syntax/swift";
 
 export function literalExpression(input: ParserInput): ParserOutput<SwiftLiteralExpression> {
   return or([

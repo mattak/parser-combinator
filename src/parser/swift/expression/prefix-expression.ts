@@ -4,12 +4,8 @@
 import {ParserInput, ParserOutput} from "../../../types";
 import {cat, or} from "../../../combinators";
 import {map} from "../../../util";
-import {postfixExpression, SwiftPostfixExpression} from "./postfix-expression";
-
-export interface SwiftPrefixExpression {
-  prefixOperator: null,
-  postfixExpression: SwiftPostfixExpression,
-}
+import {postfixExpression} from "./postfix-expression";
+import {SwiftPrefixExpression} from "../../../syntax/swift";
 
 export function prefixExpression(input: ParserInput): ParserOutput<SwiftPrefixExpression> {
   return or([

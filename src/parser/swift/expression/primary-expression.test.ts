@@ -1,7 +1,11 @@
 import {ParserOutput} from "../../../types";
-import {primaryExpression, SwiftPrimaryExpression, SwiftPrimaryExpressionLiteral} from "./primary-expression";
-import {SwiftLiteralExpression} from "./literal-expression";
-import {SwiftLiteral} from "../../../syntax/swift";
+import {primaryExpression} from "./primary-expression";
+import {
+  SwiftLiteral,
+  SwiftLiteralExpression,
+  SwiftPrimaryExpression,
+  SwiftPrimaryExpressionLiteral
+} from "../../../syntax/swift";
 
 describe('primary-expression', () => {
   const parser = primaryExpression;

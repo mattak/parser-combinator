@@ -1,7 +1,6 @@
 import {ParserOutput} from "../../../types";
-import {SwiftLiteralExpression} from "./literal-expression";
-import {prefixExpression, SwiftPrefixExpression} from "./prefix-expression";
-import {SwiftLiteral} from "../../../syntax/swift";
+import {prefixExpression} from "./prefix-expression";
+import {SwiftLiteral, SwiftLiteralExpression, SwiftPrefixExpression} from "../../../syntax/swift";
 
 describe('prefix-expression', () => {
   const parser = prefixExpression;

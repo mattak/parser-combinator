@@ -5,12 +5,9 @@
 
 import {ParserInput, ParserOutput} from "../../../types";
 import {cat} from "../../../combinators";
-import {prefixExpression, SwiftPrefixExpression} from "./prefix-expression";
+import {prefixExpression} from "./prefix-expression";
 import {map} from "../../../util";
-
-export interface SwiftExpression {
-  prefix: SwiftPrefixExpression,
-}
+import {SwiftExpression} from "../../../syntax/swift/expression/expression";
 
 export function expression(input: ParserInput): ParserOutput<SwiftExpression> {
   return map(

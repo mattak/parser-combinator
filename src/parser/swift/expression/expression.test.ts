@@ -1,7 +1,10 @@
 import {ParserOutput} from "../../../types";
-import {expression, SwiftExpression} from "./expression";
-import {SwiftPostfixExpressionPrimary} from "./postfix-expression";
-import {SwiftLiteralExpression} from "./literal-expression";
+import {expression} from "./expression";
+import {
+  SwiftExpression,
+  SwiftLiteralExpression,
+  SwiftPostfixExpressionPrimary
+} from "../../../syntax/swift/expression/expression";
 
 describe('expression', () => {
   const parser = expression;

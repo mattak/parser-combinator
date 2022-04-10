@@ -1,4 +1,4 @@
-import {SwiftExpression} from "../../../parser/swift/expression/expression";
+import {SwiftExpression} from "../expression/expression";
 
 export interface SwiftArrayLiteral {
   expressions: SwiftExpression[],

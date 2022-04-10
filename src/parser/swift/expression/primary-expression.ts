@@ -3,35 +3,8 @@ import {identifier} from "../lexical-struct/identifier";
 import {cat, or} from "../../../combinators";
 import {map, opt} from "../../../util";
 import {genericArgumentClause} from "../generic-parameters/generic-argument";
-import {literalExpression, SwiftLiteralExpression} from "./literal-expression";
-
-type SwiftPrimaryExpressionType =
-  'identifier'
-  | 'literal'
-  | 'self'
-  | 'superclass'
-  | 'closure'
-  | 'parenthesized'
-  | 'tuple'
-  | 'implicit-member'
-  | 'wildcard'
-  | 'key-path'
-  | 'selector'
-  | 'key-path-string';
-
-export interface SwiftPrimaryExpression {
-  primaryType: SwiftPrimaryExpressionType;
-}
-
-export interface SwiftPrimaryExpressionIdentifier extends SwiftPrimaryExpression {
-  primaryType: 'identifier';
-  value: string;
-}
-
-export interface SwiftPrimaryExpressionLiteral extends SwiftPrimaryExpression {
-  primaryType: 'literal';
-  value: SwiftLiteralExpression;
-}
+import {literalExpression} from "./literal-expression";
+import {SwiftPrimaryExpression} from "../../../syntax/swift";
 
 export function primaryExpression(input: ParserInput): ParserOutput<SwiftPrimaryExpression> {
   return or([
