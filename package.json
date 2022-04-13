@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "swift2kotlin": "ts-node src/command/swift2kotlin.ts",
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [],
@@ -13,10 +15,13 @@
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
   "jest": {
     "preset": "ts-jest",
-    "testPathIgnorePatterns": ["<rootDir>/dist/"]
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ]
   }
 }
