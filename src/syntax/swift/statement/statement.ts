@@ -1,12 +1,12 @@
-import {SwiftDeclaration} from "../../../parser/swift/declaration/declaration";
+import {SwiftDeclaration} from "../declaration/declaration";
 
 export type SwiftStatementType = 'declaration'
-  | 'loop-statement '
-  | 'branch-statement '
-  | 'labeled-statement '
-  | 'control-transfer-statement '
-  | 'defer-statement '
-  | 'do-statement '
+  | 'loop-statement'
+  | 'branch-statement'
+  | 'labeled-statement'
+  | 'control-transfer-statement'
+  | 'defer-statement'
+  | 'do-statement'
   | 'compiler-control-statement'
   ;
 

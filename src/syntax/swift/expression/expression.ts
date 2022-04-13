@@ -20,7 +20,7 @@ export type SwiftPostfixExpressionType = 'primary'
   | 'optional-chain';
 
 export interface SwiftPostfixExpression {
-  postfixType: SwiftPostfixExpressionType;
+  postfixType: SwiftPostfixExpressionType,
 }
 
 export interface SwiftPostfixExpressionPrimary extends SwiftPostfixExpression, SwiftPrimaryExpression {
@@ -55,15 +55,15 @@ export type SwiftPrimaryExpressionType =
   | 'key-path-string';
 
 export interface SwiftPrimaryExpression {
-  primaryType: SwiftPrimaryExpressionType;
+  primaryType: SwiftPrimaryExpressionType,
 }
 
 export interface SwiftPrimaryExpressionIdentifier extends SwiftPrimaryExpression {
-  primaryType: 'identifier';
-  value: string;
+  primaryType: 'identifier',
+  value: string,
 }
 
 export interface SwiftPrimaryExpressionLiteral extends SwiftPrimaryExpression {
-  primaryType: 'literal';
-  value: SwiftLiteralExpression;
+  primaryType: 'literal',
+  value: SwiftLiteralExpression,
 }

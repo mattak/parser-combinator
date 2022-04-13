@@ -1,4 +1,4 @@
-import {Parser} from "../../../types";
+import {Parser, ParserInput, ParserOutput} from "../../../types";
 import {cat, or, rep} from "../../../combinators";
 import {map, opt, str} from "../../../util";
 import {identifier} from "../lexical-struct/identifier";
@@ -11,44 +11,55 @@ import {SwiftStructDeclaration, SwiftStructMember, SwiftStructMemberDeclaration}
 // <structDeclaration-member> ::= <declaration> | <compiler-control-statement>
 // <structDeclaration-body> ::= '{' <structDeclaration-member>* '}'
 const structName: Parser<string> = identifier;
-const structMember: Parser<SwiftStructMember> = or([
-  map(
-    declaration,
-    (s) => <SwiftStructMemberDeclaration>{
-      structMemberType: 'declaration',
-      ...s
-    }),
-  // compilerControlStatement,
-]);
-export const structBody: Parser<SwiftStructMember[]> = map(
-  cat([
-    char('{'),
-    rep(structMember),
-    char('}'),
-  ]),
-  ([, members,]) => {
-    return members;
-  }
-);
-export const structDeclaration: Parser<SwiftStructDeclaration> = map(
-  cat([
-    // opt(attributes),
-    opt(accessLevelModifier),
-    str('structDeclaration'),
-    whitespace,
-    structName,
-    whitespace0,
-    // opt(genericParameterClause),
-    // opt(typeInheritanceClause),
-    // opt(genericWhereClause),
-    structBody,
-  ]),
-  ([modifier, _struct, _space1, name, _space2, body]) => {
-    return <SwiftStructDeclaration>{
-      type: 'struct',
-      name: name,
-      accessLevelModifier: modifier.status == 'some' ? modifier.value : null,
-      body: body,
+
+function structMember(input: ParserInput): ParserOutput<SwiftStructMember> {
+  return or([
+    map(
+      declaration,
+      (s) => <SwiftStructMemberDeclaration>{
+        structMemberType: 'declaration',
+        ...s
+      }),
+    // compilerControlStatement,
+  ])(input);
+}
+
+export function structBody(input: ParserInput): ParserOutput<SwiftStructMember[]> {
+  return map(
+    cat([
+      char('{'),
+      whitespace0,
+      rep(structMember),
+      whitespace0,
+      char('}'),
+    ]),
+    ([, , members, ,]) => {
+      return members;
     }
-  }
-);
+  )(input);
+}
+
+export function structDeclaration(input: ParserInput): ParserOutput<SwiftStructDeclaration> {
+  return map(
+    cat([
+      // opt(attributes),
+      opt(accessLevelModifier),
+      str('struct'),
+      whitespace,
+      structName,
+      whitespace0,
+      // opt(genericParameterClause),
+      // opt(typeInheritanceClause),
+      // opt(genericWhereClause),
+      structBody,
+    ]),
+    ([modifier, _struct, _space1, name, _space2, body]) => {
+      return <SwiftStructDeclaration>{
+        type: 'struct',
+        name: name,
+        accessLevelModifier: modifier.status == 'some' ? modifier.value : null,
+        body: body,
+      }
+    }
+  )(input);
+}

@@ -1,6 +1,11 @@
 import {ParserOutput} from "../../../types";
 import {declaration} from "./declaration";
-import {SwiftConstantDeclaration, SwiftDeclaration, SwiftImportDeclaration} from "../../../syntax/swift";
+import {
+  SwiftConstantDeclaration,
+  SwiftDeclaration,
+  SwiftImportDeclaration, SwiftInitializer, SwiftLiteral, SwiftLiteralExpression, SwiftPattern, SwiftPatternIdentifier,
+  SwiftPatternInitializer, SwiftPostfixExpressionPrimary, SwiftPrefixExpression
+} from "../../../syntax/swift";
 
 describe('declaration', () => {
   const parser = declaration;
@@ -44,6 +49,43 @@ describe('declaration', () => {
         attributes: null,
         kind: null,
         path: 'Foundation',
+      },
+      rest: [],
+    });
+  });
+
+  test('constant: let a = 1', () => {
+    const input = [...'let a = 1'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftDeclaration>>({
+      result: 'success',
+      data: <SwiftConstantDeclaration>{
+        type: 'constant',
+        patternInitializers: [
+          <SwiftPatternInitializer>{
+            pattern: <SwiftPatternIdentifier>{
+              type: 'identifier',
+              value: 'a',
+            },
+            initializer: <SwiftInitializer>{
+              prefix: <SwiftPrefixExpression>{
+                prefixOperator: null,
+                postfixExpression: <SwiftPostfixExpressionPrimary>{
+                  postfixType: 'primary',
+                  primaryType: 'literal',
+                  value: <SwiftLiteralExpression>{
+                    type: 'literal',
+                    value: <SwiftLiteral>{
+                      type: 'numeric',
+                      numericType: 'integer',
+                      value: '1',
+                    },
+                  },
+                },
+              }
+            },
+          }
+        ],
       },
       rest: [],
     });

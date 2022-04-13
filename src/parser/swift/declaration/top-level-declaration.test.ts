@@ -1,6 +1,12 @@
 import {topLevelDeclaration} from "./top-level-declaration";
 import {ParserOutput} from "../../../types";
-import {SwiftImportDeclaration, SwiftStatementDeclaration, SwiftTopLevelDeclaration} from "../../../syntax/swift";
+import {
+  SwiftAccessLevelModifier,
+  SwiftImportDeclaration,
+  SwiftStatementDeclaration,
+  SwiftStructDeclaration, SwiftStructMember,
+  SwiftTopLevelDeclaration
+} from "../../../syntax/swift";
 
 describe('top-level-declaration', () => {
   const parser = topLevelDeclaration;
@@ -31,6 +37,28 @@ describe('top-level-declaration', () => {
               attributes: null,
               kind: null,
               path: 'Foundation',
+            }
+          }
+        ]
+      },
+      rest: [],
+    });
+  });
+
+  test('struct Me {}', () => {
+    const input = [...'struct Me {}'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftTopLevelDeclaration>>({
+      result: 'success',
+      data: <SwiftTopLevelDeclaration>{
+        statements: [
+          <SwiftStatementDeclaration>{
+            type: 'declaration',
+            value: <SwiftStructDeclaration>{
+              type: 'struct',
+              name: "Me",
+              accessLevelModifier: null,
+              body: [],
             }
           }
         ]

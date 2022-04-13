@@ -1,6 +1,17 @@
 import {ParserOutput} from "../../../types";
-import {structDeclaration, structBody} from "./struct-declaration";
-import {SwiftStructDeclaration, SwiftStructMember} from "../../../syntax/swift";
+import {structBody, structDeclaration} from "./struct-declaration";
+import {
+  SwiftInitializer,
+  SwiftLiteral,
+  SwiftLiteralExpression,
+  SwiftPattern,
+  SwiftPatternInitializer,
+  SwiftPostfixExpressionPrimary,
+  SwiftPrefixExpression,
+  SwiftStructDeclaration,
+  SwiftStructMember,
+  SwiftStructMemberDeclaration
+} from "../../../syntax/swift";
 
 describe('structBody', () => {
   const parser = structBody;
@@ -22,29 +33,43 @@ describe('structBody', () => {
       rest: [],
     });
   });
-  //
-  // test('Input: { let a = 1 }', () => {
-  //   const input = [...'{ let a = 1 }'] as const;
-  //   const output = parser(input);
-  //   expect(output).toEqual<ParserOutput<SwiftStructMember[]>>({
-  //     result: 'success',
-  //     data: [
-  //       <SwiftStructMemberDeclaration>{
-  //         structMemberType: 'declaration',
-  //         type: 'constant',
-  //         patternInitializers: [
-  //           <SwiftPatternInitializer>{
-  //             pattern: "a",
-  //             initializer: <SwiftExpression>{
-  //
-  //             },
-  //           },
-  //         ]
-  //       }
-  //     ],
-  //     rest: [],
-  //   });
-  // });
+
+  test('Input: { let a = 1 }', () => {
+    const input = [...'{ let a = 1 }'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftStructMember[]>>({
+      result: 'success',
+      data: [
+        <SwiftStructMemberDeclaration>{
+          structMemberType: 'declaration',
+          type: 'constant',
+          patternInitializers: [
+            <SwiftPatternInitializer>{
+              pattern: <SwiftPattern>{type: 'identifier', value: "a"},
+              initializer: <SwiftInitializer>{
+                prefix: <SwiftPrefixExpression>{
+                  prefixOperator: null,
+                  postfixExpression: <SwiftPostfixExpressionPrimary>{
+                    postfixType: 'primary',
+                    primaryType: 'literal',
+                    value: <SwiftLiteralExpression>{
+                      type: 'literal',
+                      value: <SwiftLiteral>{
+                        type: 'numeric',
+                        numericType: 'integer',
+                        value: '1',
+                      },
+                    },
+                  },
+                }
+              },
+            },
+          ]
+        }
+      ],
+      rest: [],
+    });
+  });
 });
 
 describe('struct', () => {
@@ -58,8 +83,8 @@ describe('struct', () => {
     });
   });
 
-  test('Input: structDeclaration MyStruct {}', () => {
-    const input = [...'structDeclaration MyStruct {}'] as const;
+  test('Input: struct MyStruct {}', () => {
+    const input = [...'struct MyStruct {}'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftStructDeclaration>>({
       result: 'success',
