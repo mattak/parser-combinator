@@ -1,4 +1,5 @@
 import {
+  KotlinClassBody,
   KotlinClassMemberDeclaration,
   KotlinDeclaration,
   KotlinFile,
@@ -6,15 +7,18 @@ import {
   KotlinObjectDeclaration
 } from "../../../syntax/kotlin";
 import {
+  SwiftConstantDeclaration,
   SwiftDeclaration,
   SwiftStatement,
-  SwiftStatementDeclaration, SwiftStructDeclaration,
+  SwiftStatementDeclaration,
+  SwiftStructDeclaration,
+  SwiftStructMember, SwiftStructMemberDeclaration,
   SwiftTopLevelDeclaration
 } from "../../../syntax/swift";
 
 export function fileConverter(input: SwiftTopLevelDeclaration, supplement: KotlinFile | null): KotlinFile {
   return <KotlinFile>{
-    packageHeader: supplement?.packageHeader || '',
+    packageHeader: supplement?.packageHeader ?? '',
     importList: [
       ...(supplement?.importList ?? [])
     ],
@@ -71,10 +75,51 @@ export function declarationConverter(input: SwiftDeclaration): KotlinDeclaration
 }
 
 export function structDeclarationConverter(input: SwiftStructDeclaration): KotlinObjectDeclaration {
+  const members: KotlinClassMemberDeclaration[] = [] // input.body.map(structMemberConverter);
+
   return <KotlinObjectDeclaration>{
     type: 'object',
     modifiers: <KotlinModifiers>{modifiers: []},
     name: input.name,
-    body: <KotlinClassMemberDeclaration[]>[],
+    body: <KotlinClassBody>{
+      members: members,
+    },
   };
+}
+
+export function structMemberConverter(input: SwiftStructMember): KotlinClassMemberDeclaration {
+  switch (input.structMemberType) {
+    // case "declaration":
+    //   return structMemberDeclarationConverter(<SwiftStructMemberDeclaration>input)
+    // case "compiler-control-statement":
+    default:
+      throw Error(`not handled input.structMemberType: ${input.structMemberType}`);
+  }
+}
+
+export function structMemberDeclarationConverter(input: SwiftStructMemberDeclaration): KotlinClassMemberDeclaration {
+  switch (input.type) {
+    case 'import':
+    case 'constant':
+    case 'variable':
+    case 'typealias':
+    case 'function':
+    case 'enum':
+    case 'struct':
+    case 'class':
+    case 'actor':
+    case 'protocol':
+    case 'initializer':
+    case 'deinitializer':
+    case 'extension':
+    case 'subscript':
+    case 'operator':
+    case 'precedence-group':
+    default:
+      throw Error(`not handled input.type: ${input.structMemberType}`);
+  }
+}
+
+export function structConstantDeclarationConverter(input: SwiftConstantDeclaration): KotlinClassMemberDeclaration {
+  throw Error(`not handled: ${input}`);
 }

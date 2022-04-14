@@ -5,7 +5,7 @@ import {
   SwiftStructDeclaration,
   SwiftTopLevelDeclaration
 } from "../../../syntax/swift";
-import {KotlinFile, KotlinModifiers, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {KotlinClassBody, KotlinFile, KotlinModifiers, KotlinObjectDeclaration} from "../../../syntax/kotlin";
 
 describe('fileConverter', () => {
   const converter = fileConverter;
@@ -54,7 +54,9 @@ describe('fileConverter', () => {
           type: 'object',
           modifiers: <KotlinModifiers>{modifiers: []},
           name: 'MyStruct',
-          body: [],
+          body: <KotlinClassBody>{
+            members: [],
+          },
         },
       ],
     });

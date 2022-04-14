@@ -1,5 +1,5 @@
 import {kotlinObjectDeclarationPrinter} from "./object-declaration";
-import {KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {KotlinClassBody, KotlinObjectDeclaration} from "../../../syntax/kotlin";
 import {PrinterOutput} from "../../../printer/types";
 
 describe('kotlinObjectDeclarationPrinter', () => {
@@ -12,7 +12,9 @@ describe('kotlinObjectDeclarationPrinter', () => {
         type: 'object',
         modifiers: {modifiers: []},
         name: "MyStruct",
-        body: [],
+        body: <KotlinClassBody>{
+          members: [],
+        },
       }
     };
     const output = printer(input);

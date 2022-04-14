@@ -10,7 +10,11 @@ export interface KotlinObjectDeclaration extends KotlinDeclaration {
   type: 'object',
   modifiers: KotlinModifiers,
   name: string,
-  body: KotlinClassMemberDeclaration[],
+  body: KotlinClassBody,
+}
+
+export interface KotlinClassBody {
+  members: KotlinClassMemberDeclaration[],
 }
 
 export interface KotlinFunctionDeclaration extends KotlinDeclaration {
