@@ -17,8 +17,8 @@ function structMember(input: ParserInput): ParserOutput<SwiftStructMember> {
     map(
       declaration,
       (s) => <SwiftStructMemberDeclaration>{
-        structMemberType: 'declaration',
-        ...s
+        type: 'declaration',
+        value: s
       }),
     // compilerControlStatement,
   ])(input);

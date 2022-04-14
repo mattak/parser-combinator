@@ -1,6 +1,6 @@
 import {PrinterInput, PrinterOutput} from "../../types";
 import {KotlinDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
-import {kotlinObjectDeclarationPrinter} from "../../../converter/swift2kotlin/class/object-declaration";
+import {kotlinObjectDeclarationPrinter} from "../class/object-declaration";
 
 export function kotlinDeclarationPrinter(input: PrinterInput<KotlinDeclaration>): PrinterOutput {
   switch (input.data.type) {

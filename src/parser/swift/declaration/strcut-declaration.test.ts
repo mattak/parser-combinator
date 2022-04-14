@@ -1,6 +1,7 @@
 import {ParserOutput} from "../../../types";
 import {structBody, structDeclaration} from "./struct-declaration";
 import {
+  SwiftConstantDeclaration,
   SwiftInitializer,
   SwiftLiteral,
   SwiftLiteralExpression,
@@ -41,30 +42,32 @@ describe('structBody', () => {
       result: 'success',
       data: [
         <SwiftStructMemberDeclaration>{
-          structMemberType: 'declaration',
-          type: 'constant',
-          patternInitializers: [
-            <SwiftPatternInitializer>{
-              pattern: <SwiftPattern>{type: 'identifier', value: "a"},
-              initializer: <SwiftInitializer>{
-                prefix: <SwiftPrefixExpression>{
-                  prefixOperator: null,
-                  postfixExpression: <SwiftPostfixExpressionPrimary>{
-                    postfixType: 'primary',
-                    primaryType: 'literal',
-                    value: <SwiftLiteralExpression>{
-                      type: 'literal',
-                      value: <SwiftLiteral>{
-                        type: 'numeric',
-                        numericType: 'integer',
-                        value: '1',
+          type: 'declaration',
+          value: <SwiftConstantDeclaration>{
+            type: 'constant',
+            patternInitializers: [
+              <SwiftPatternInitializer>{
+                pattern: <SwiftPattern>{type: 'identifier', value: "a"},
+                initializer: <SwiftInitializer>{
+                  prefix: <SwiftPrefixExpression>{
+                    prefixOperator: null,
+                    postfixExpression: <SwiftPostfixExpressionPrimary>{
+                      postfixType: 'primary',
+                      primaryType: 'literal',
+                      value: <SwiftLiteralExpression>{
+                        type: 'literal',
+                        value: <SwiftLiteral>{
+                          type: 'numeric',
+                          numericType: 'integer',
+                          value: '1',
+                        },
                       },
                     },
-                  },
-                }
+                  }
+                },
               },
-            },
-          ]
+            ],
+          }
         }
       ],
       rest: [],

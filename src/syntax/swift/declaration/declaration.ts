@@ -38,11 +38,12 @@ export interface SwiftImportDeclaration extends SwiftDeclaration {
 
 // struct
 export interface SwiftStructMember {
-  structMemberType: 'declaration' | 'compiler-control-statement',
+  type: 'declaration' | 'compiler-control-statement',
 }
 
-export interface SwiftStructMemberDeclaration extends SwiftStructMember, SwiftDeclaration {
-  structMemberType: 'declaration',
+export interface SwiftStructMemberDeclaration extends SwiftStructMember {
+  type: 'declaration',
+  value: SwiftDeclaration,
 }
 
 export interface SwiftStructDeclaration extends SwiftDeclaration {

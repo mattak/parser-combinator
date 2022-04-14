@@ -1,6 +1,6 @@
 import {kotlinObjectDeclarationPrinter} from "./object-declaration";
 import {KotlinClassBody, KotlinObjectDeclaration} from "../../../syntax/kotlin";
-import {PrinterOutput} from "../../../printer/types";
+import {PrinterOutput} from "../../types";
 
 describe('kotlinObjectDeclarationPrinter', () => {
   const printer = kotlinObjectDeclarationPrinter;
@@ -24,4 +24,3 @@ describe('kotlinObjectDeclarationPrinter', () => {
     ]);
   });
 });
-

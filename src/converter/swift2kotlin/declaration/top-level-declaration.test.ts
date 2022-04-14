@@ -1,4 +1,4 @@
-import {fileConverter} from "./file";
+import {topLevelDeclarationConverter} from "./top-level-declaration";
 import {
   SwiftStatement,
   SwiftStatementDeclaration,
@@ -8,7 +8,7 @@ import {
 import {KotlinClassBody, KotlinFile, KotlinModifiers, KotlinObjectDeclaration} from "../../../syntax/kotlin";
 
 describe('fileConverter', () => {
-  const converter = fileConverter;
+  const converter = topLevelDeclarationConverter;
   test('Empty content', () => {
     const input = <SwiftTopLevelDeclaration>{
       statements: <SwiftStatement[]>[],

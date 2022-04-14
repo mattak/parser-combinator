@@ -1,11 +1,11 @@
-import {PrinterInput, PrinterOutput} from "../../../printer/types";
+import {PrinterInput, PrinterOutput} from "../../types";
 import {
   KotlinClassBody,
   KotlinClassMemberDeclaration,
   KotlinClassMemberDeclarationDeclaration,
   KotlinObjectDeclaration
 } from "../../../syntax/kotlin";
-import {kotlinDeclarationPrinter} from "../../../printer/kotlin/general/declaration";
+import {kotlinDeclarationPrinter} from "../general/declaration";
 
 export function kotlinObjectDeclarationPrinter(input: PrinterInput<KotlinObjectDeclaration>): PrinterOutput {
   const body = kotlinClassBodyPrinter({indentLevel: input.indentLevel, data: input.data.body});

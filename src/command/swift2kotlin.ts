@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import {topLevelDeclaration} from "../parser/swift/declaration/top-level-declaration";
-import {fileConverter} from "../converter/swift2kotlin/general/file";
+import {topLevelDeclarationConverter} from "../converter/swift2kotlin/declaration/top-level-declaration";
 import {KotlinFile} from "../syntax/kotlin";
 import {kotlinFilePrinter} from "../printer/kotlin/general/file";
 import * as util from "util";
@@ -25,7 +25,7 @@ async function main() {
     return;
   }
 
-  const kotlin = fileConverter(parsed.data, <KotlinFile>{
+  const kotlin = topLevelDeclarationConverter(parsed.data, <KotlinFile>{
     packageHeader: 'com.example'
   });
 
