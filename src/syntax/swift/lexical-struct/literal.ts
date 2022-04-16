@@ -12,3 +12,15 @@ export interface SwiftLiteral {
   type: SwiftLiteralType,
   value: string,
 }
+
+export interface SwiftNilLiteral extends SwiftLiteral {
+}
+
+export interface SwiftBooleanLiteral extends SwiftLiteral {
+}
+
+export interface SwiftStringLiteral extends SwiftLiteral {
+}
+
+export interface SwiftNumericLiteral extends SwiftLiteral {
+}
