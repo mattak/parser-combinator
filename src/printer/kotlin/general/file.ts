@@ -13,7 +13,7 @@ export const kotlinFilePrinter: Printer<KotlinFile> = input => {
   return [
     `package ${input.data.packageHeader}`,
     '',
-    ...input.data.importList,
+    ...input.data.importList.importHeaders.map(x => x.path),
     '',
     ...body.flat()
   ];

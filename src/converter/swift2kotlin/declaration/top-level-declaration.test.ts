@@ -1,63 +1,68 @@
-import {topLevelDeclarationConverter} from "./top-level-declaration";
+import {convert_topLevelDeclaration_file} from "./top-level-declaration";
 import {
+  SwiftImportDeclaration,
   SwiftStatement,
   SwiftStatementDeclaration,
   SwiftStructDeclaration,
   SwiftTopLevelDeclaration
 } from "../../../syntax/swift";
-import {KotlinClassBody, KotlinFile, KotlinModifiers, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {
+  KotlinClassBody, KotlinDeclaration,
+  KotlinFile, KotlinImportHeader,
+  KotlinImportList,
+  KotlinModifiers,
+  KotlinObjectDeclaration
+} from "../../../syntax/kotlin";
+import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
 
-describe('fileConverter', () => {
-  const converter = topLevelDeclarationConverter;
-  test('Empty content', () => {
+describe('topLevelDeclarationConverter', () => {
+  const converter = convert_topLevelDeclaration_file;
+  const table = <SwiftKotlinConvertTable>{
+    ...swiftKotlinDefaultConvertTable,
+    'statement': jest.fn().mockImplementation(x => {
+      return {}
+    }),
+    'packageHeader': jest.fn().mockImplementation(() => 'com.example.test'),
+  }
+
+  test('Empty', () => {
     const input = <SwiftTopLevelDeclaration>{
       statements: <SwiftStatement[]>[],
     };
-    const supplement = <KotlinFile>{
-      packageHeader: 'com.example',
-      importList: [],
-      topLevelObjects: [],
-    }
-    const output = converter(input, supplement);
+    const output = converter(table, input);
     expect(output).toEqual<KotlinFile>({
-      packageHeader: 'com.example',
-      importList: [],
+      packageHeader: 'com.example.test',
+      importList: <KotlinImportList>{importHeaders: []},
       topLevelObjects: [],
     });
   });
 
-  test('struct', () => {
+  test('import', () => {
     const input = <SwiftTopLevelDeclaration>{
       statements: <SwiftStatement[]>[
         <SwiftStatementDeclaration>{
           type: 'declaration',
-          value: <SwiftStructDeclaration>{
-            type: 'struct',
-            name: "MyStruct",
-            accessLevelModifier: null,
-            body: [],
+          value: <SwiftImportDeclaration>{
+            type: 'import',
+            attributes: null,
+            kind: null,
+            path: 'Foundation',
           }
         }
       ],
     };
-    const supplement = <KotlinFile>{
-      packageHeader: 'com.example',
-      importList: [],
-      topLevelObjects: [],
-    }
-    const output = converter(input, supplement);
+    const output = converter(table, input);
     expect(output).toEqual<KotlinFile>({
-      packageHeader: 'com.example',
-      importList: [],
+      packageHeader: 'com.example.test',
+      importList: <KotlinImportList>{
+        importHeaders: [
+          <KotlinImportHeader>{
+            path: 'Foundation',
+          }
+        ]
+      },
       topLevelObjects: [
-        <KotlinObjectDeclaration>{
-          type: 'object',
-          modifiers: <KotlinModifiers>{modifiers: []},
-          name: 'MyStruct',
-          body: <KotlinClassBody>{
-            members: [],
-          },
-        },
+        <KotlinDeclaration>{},
       ],
     });
   });

@@ -1,6 +1,6 @@
 export interface KotlinFile {
   packageHeader: string,
-  importList: string[],
+  importList: KotlinImportList,
   topLevelObjects: KotlinDeclaration[], // topLevelObject -> declaration
 }
 

@@ -1,18 +1,19 @@
-import {SwiftDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
+import {SwiftDeclaration, SwiftImportDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
 import {KotlinDeclaration} from "../../../syntax/kotlin";
-import {structDeclarationConverter} from "./struct-declaration";
+import {SwiftKotlinConvertTable} from "../swift-converter";
 
-export function declarationConverter(input: SwiftDeclaration): KotlinDeclaration {
+export function convert_declaration_declaration(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinDeclaration | null {
   switch (input.type) {
-    // case 'import':
-    //   return importDeclarationConverter(<SwiftImportDeclaration>input);
+    case 'import':
+      table['import-declaration'](table, <SwiftImportDeclaration>input);
+      return null;
     // case 'constant':
     // case 'variable':
     // case 'typealias':
     // case 'function':
     // case 'enum':
     case 'struct':
-      return structDeclarationConverter(<SwiftStructDeclaration>input);
+      return table['struct-declaration'](table, <SwiftStructDeclaration>input);
     // case 'class':
     // case 'actor':
     // case 'protocol':

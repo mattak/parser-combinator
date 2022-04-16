@@ -9,7 +9,7 @@ describe('kotlinPrint', () => {
       indentLevel: 0,
       data: <KotlinFile>{
         packageHeader: 'com.example',
-        importList: [],
+        importList: {importHeaders: []},
         topLevelObjects: [],
       }
     }

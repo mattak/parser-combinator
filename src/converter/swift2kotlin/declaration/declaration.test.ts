@@ -1,25 +1,35 @@
-import {declarationConverter} from "./declaration";
-import {SwiftDeclaration} from "../../../syntax/swift";
+import {convert_declaration_declaration} from "./declaration";
+import {SwiftDeclaration, SwiftImportDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
+import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
+import {KotlinDeclaration} from "../../../syntax/kotlin";
 
 describe('declaration', () => {
-  const converter = declarationConverter;
-
-  test('empty', () => {
-    const input = <SwiftDeclaration>{};
-    expect(() => {
-      converter(input);
-    }).toThrow()
-  })
+  const mockImport = jest.fn().mockImplementation(x => null);
+  const mockStruct = jest.fn().mockImplementation(x => null);
+  const converter = convert_declaration_declaration;
+  const table = <SwiftKotlinConvertTable>{
+    ...swiftKotlinDefaultConvertTable,
+    'import-declaration': mockImport,
+    'struct-declaration': mockStruct,
+  }
 
   test('struct', () => {
     const input = <SwiftDeclaration>{
       type: 'struct',
-      name: 'sample',
-      accessLevelModifier: null,
-      body: [],
+      value: <SwiftStructDeclaration>{}
     };
-    expect(() => {
-      converter(input);
-    }).not.toThrow()
+    const output = converter(table, input);
+    expect(output).toEqual(null);
+    expect(mockStruct).toBeCalledTimes(1);
+  })
+
+  test('import', () => {
+    const input = <SwiftDeclaration>{
+      type: 'import',
+      value: <SwiftImportDeclaration>{}
+    };
+    const output = converter(table, input);
+    expect(output).toEqual(null);
+    expect(mockImport).toBeCalledTimes(1);
   })
 });

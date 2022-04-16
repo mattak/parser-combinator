@@ -5,10 +5,10 @@ import {
   KotlinModifiers,
   KotlinObjectDeclaration
 } from "../../../syntax/kotlin";
-import {declarationConverter} from "./declaration";
+import {SwiftKotlinConvertTable} from "../swift-converter";
 
-export function structDeclarationConverter(input: SwiftStructDeclaration): KotlinObjectDeclaration {
-  const members: KotlinClassMemberDeclaration[] = input.body.map(structMemberConverter);
+export function convert_structDeclaration_objectDeclaration(table: SwiftKotlinConvertTable, input: SwiftStructDeclaration): KotlinObjectDeclaration {
+  const members: KotlinClassMemberDeclaration[] = input.body.map(x => table['struct-member'](table, x));
 
   return <KotlinObjectDeclaration>{
     type: 'object',
@@ -20,11 +20,11 @@ export function structDeclarationConverter(input: SwiftStructDeclaration): Kotli
   };
 }
 
-export function structMemberConverter(input: SwiftStructMember): KotlinClassMemberDeclaration {
+export function convert_structMember_classMember(table: SwiftKotlinConvertTable, input: SwiftStructMember): KotlinClassMemberDeclaration {
   switch (input.type) {
     case "declaration":
       const v = <SwiftStructMemberDeclaration>input;
-      const decl = declarationConverter(v.value);
+      const decl = table['declaration'](table, v.value);
       return <KotlinClassMemberDeclaration>{
         type: 'declaration',
         value: decl,
