@@ -21,8 +21,8 @@ export function postfixExpression(input: ParserInput): ParserOutput<SwiftPostfix
       primaryExpression,
       (s) => {
         return <SwiftPostfixExpressionPrimary>{
-          postfixType: 'primary',
-          ...s
+          type: 'primary',
+          value: s,
         }
       }
     ),

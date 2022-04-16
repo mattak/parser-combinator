@@ -2,12 +2,13 @@ import {arrayLiteral} from "./array-literal";
 import {ParserOutput} from "../../../types";
 import {
   SwiftArrayLiteral,
+  SwiftExpression,
   SwiftLiteral,
   SwiftLiteralExpression,
   SwiftPostfixExpressionPrimary,
-  SwiftPrefixExpression
+  SwiftPrefixExpression,
+  SwiftPrimaryExpression
 } from "../../../syntax/swift";
-import {SwiftExpression} from "../../../syntax/swift";
 
 describe('arrayLiteral', () => {
   const parser = arrayLiteral;
@@ -43,14 +44,16 @@ describe('arrayLiteral', () => {
             prefix: <SwiftPrefixExpression>{
               prefixOperator: null,
               postfixExpression: <SwiftPostfixExpressionPrimary>{
-                postfixType: 'primary',
-                primaryType: 'literal',
-                value: <SwiftLiteralExpression>{
+                type: 'primary',
+                value: <SwiftPrimaryExpression>{
                   type: 'literal',
-                  value: <SwiftLiteral>{
-                    type: 'numeric',
-                    numericType: 'integer',
-                    value: '1',
+                  value: <SwiftLiteralExpression>{
+                    type: 'literal',
+                    value: <SwiftLiteral>{
+                      type: 'numeric',
+                      numericType: 'integer',
+                      value: '1',
+                    }
                   }
                 }
               }
@@ -73,14 +76,16 @@ describe('arrayLiteral', () => {
             prefix: <SwiftPrefixExpression>{
               prefixOperator: null,
               postfixExpression: <SwiftPostfixExpressionPrimary>{
-                postfixType: 'primary',
-                primaryType: 'literal',
-                value: <SwiftLiteralExpression>{
+                type: 'primary',
+                value: <SwiftPrimaryExpression>{
                   type: 'literal',
-                  value: <SwiftLiteral>{
-                    type: 'numeric',
-                    numericType: 'integer',
-                    value: '1',
+                  value: <SwiftLiteralExpression>{
+                    type: 'literal',
+                    value: <SwiftLiteral>{
+                      type: 'numeric',
+                      numericType: 'integer',
+                      value: '1',
+                    }
                   }
                 }
               }
@@ -90,14 +95,16 @@ describe('arrayLiteral', () => {
             prefix: <SwiftPrefixExpression>{
               prefixOperator: null,
               postfixExpression: <SwiftPostfixExpressionPrimary>{
-                postfixType: 'primary',
-                primaryType: 'literal',
-                value: <SwiftLiteralExpression>{
+                type: 'primary',
+                value: <SwiftPrimaryExpression>{
                   type: 'literal',
-                  value: <SwiftLiteral>{
-                    type: 'numeric',
-                    numericType: 'integer',
-                    value: '2',
+                  value: <SwiftLiteralExpression>{
+                    type: 'literal',
+                    value: <SwiftLiteral>{
+                      type: 'numeric',
+                      numericType: 'integer',
+                      value: '2',
+                    }
                   }
                 }
               }

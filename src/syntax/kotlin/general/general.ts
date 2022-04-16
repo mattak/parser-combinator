@@ -15,3 +15,11 @@ export interface KotlinTypeAliasDeclaration extends KotlinDeclaration {
   from: string,
   to: string,
 }
+
+export interface KotlinImportList {
+  importHeaders: KotlinImportHeader[],
+}
+
+export interface KotlinImportHeader {
+  path: string,
+}

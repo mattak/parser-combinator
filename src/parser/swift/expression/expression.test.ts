@@ -3,7 +3,8 @@ import {expression} from "./expression";
 import {
   SwiftExpression,
   SwiftLiteralExpression,
-  SwiftPostfixExpressionPrimary
+  SwiftPostfixExpressionPrimary,
+  SwiftPrimaryExpression
 } from "../../../syntax/swift/expression/expression";
 
 describe('expression', () => {
@@ -26,16 +27,18 @@ describe('expression', () => {
         prefix: {
           prefixOperator: null,
           postfixExpression: <SwiftPostfixExpressionPrimary>{
-            postfixType: 'primary',
-            primaryType: 'literal',
-            value: <SwiftLiteralExpression>{
+            type: 'primary',
+            value: <SwiftPrimaryExpression>{
               type: 'literal',
-              value: {
-                type: 'numeric',
-                numericType: 'integer',
-                value: '1',
-              }
-            },
+              value: <SwiftLiteralExpression>{
+                type: 'literal',
+                value: {
+                  type: 'numeric',
+                  numericType: 'integer',
+                  value: '1',
+                }
+              },
+            }
           },
         }
       },

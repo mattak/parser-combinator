@@ -1,7 +1,10 @@
 import {SwiftLiteral} from "../lexical-struct/literal";
 
 export interface SwiftExpression {
+  // try?
+  // await?
   prefix: SwiftPrefixExpression,
+  // infix?
 }
 
 export interface SwiftPrefixExpression {
@@ -20,10 +23,11 @@ export type SwiftPostfixExpressionType = 'primary'
   | 'optional-chain';
 
 export interface SwiftPostfixExpression {
-  postfixType: SwiftPostfixExpressionType,
+  type: SwiftPostfixExpressionType,
 }
 
-export interface SwiftPostfixExpressionPrimary extends SwiftPostfixExpression, SwiftPrimaryExpression {
+export interface SwiftPostfixExpressionPrimary extends SwiftPostfixExpression {
+  value: SwiftPrimaryExpression,
 }
 
 export type SwiftLiteralExpressionType = 'literal' | 'array' | 'dictionary' | 'playground';
@@ -55,15 +59,15 @@ export type SwiftPrimaryExpressionType =
   | 'key-path-string';
 
 export interface SwiftPrimaryExpression {
-  primaryType: SwiftPrimaryExpressionType,
+  type: SwiftPrimaryExpressionType,
 }
 
 export interface SwiftPrimaryExpressionIdentifier extends SwiftPrimaryExpression {
-  primaryType: 'identifier',
+  type: 'identifier',
   value: string,
 }
 
 export interface SwiftPrimaryExpressionLiteral extends SwiftPrimaryExpression {
-  primaryType: 'literal',
+  type: 'literal',
   value: SwiftLiteralExpression,
 }

@@ -1,6 +1,11 @@
 import {constantDeclaration} from "./constant-declaration";
 import {ParserOutput} from "../../../types";
-import {SwiftConstantDeclaration, SwiftLiteralExpression, SwiftPostfixExpressionPrimary} from "../../../syntax/swift";
+import {
+  SwiftConstantDeclaration,
+  SwiftLiteralExpression,
+  SwiftPostfixExpressionPrimary,
+  SwiftPrimaryExpression
+} from "../../../syntax/swift";
 
 describe('constant-declaration', () => {
   const parser = constantDeclaration;
@@ -60,16 +65,18 @@ describe('constant-declaration', () => {
               prefix: {
                 prefixOperator: null,
                 postfixExpression: <SwiftPostfixExpressionPrimary>{
-                  postfixType: 'primary',
-                  primaryType: 'literal',
-                  value: <SwiftLiteralExpression>{
+                  type: 'primary',
+                  value: <SwiftPrimaryExpression>{
                     type: 'literal',
-                    value: {
-                      type: 'numeric',
-                      numericType: 'integer',
-                      value: '1',
-                    }
-                  },
+                    value: <SwiftLiteralExpression>{
+                      type: 'literal',
+                      value: {
+                        type: 'numeric',
+                        numericType: 'integer',
+                        value: '1',
+                      }
+                    },
+                  }
                 },
               }
             },

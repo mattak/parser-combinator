@@ -5,6 +5,7 @@ import {structDeclarationConverter} from "./struct-declaration";
 export function declarationConverter(input: SwiftDeclaration): KotlinDeclaration {
   switch (input.type) {
     // case 'import':
+    //   return importDeclarationConverter(<SwiftImportDeclaration>input);
     // case 'constant':
     // case 'variable':
     // case 'typealias':

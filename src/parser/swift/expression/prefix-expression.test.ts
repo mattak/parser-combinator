@@ -1,6 +1,11 @@
 import {ParserOutput} from "../../../types";
 import {prefixExpression} from "./prefix-expression";
-import {SwiftLiteral, SwiftLiteralExpression, SwiftPrefixExpression} from "../../../syntax/swift";
+import {
+  SwiftLiteral,
+  SwiftLiteralExpression,
+  SwiftPrefixExpression,
+  SwiftPrimaryExpression
+} from "../../../syntax/swift";
 
 describe('prefix-expression', () => {
   const parser = prefixExpression;
@@ -21,15 +26,17 @@ describe('prefix-expression', () => {
       data: <SwiftPrefixExpression>{
         prefixOperator: null,
         postfixExpression: {
-          postfixType: 'primary',
-          primaryType: 'literal',
-          value: <SwiftLiteralExpression>{
+          type: 'primary',
+          value: <SwiftPrimaryExpression>{
             type: 'literal',
-            value: <SwiftLiteral>{
-              type: 'numeric',
-              numericType: 'integer',
-              value: '1',
-            },
+            value: <SwiftLiteralExpression>{
+              type: 'literal',
+              value: <SwiftLiteral>{
+                type: 'numeric',
+                numericType: 'integer',
+                value: '1',
+              },
+            }
           }
         }
       },

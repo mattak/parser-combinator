@@ -4,7 +4,7 @@ import {
   SwiftConstantDeclaration,
   SwiftDeclaration,
   SwiftImportDeclaration, SwiftInitializer, SwiftLiteral, SwiftLiteralExpression, SwiftPattern, SwiftPatternIdentifier,
-  SwiftPatternInitializer, SwiftPostfixExpressionPrimary, SwiftPrefixExpression
+  SwiftPatternInitializer, SwiftPostfixExpressionPrimary, SwiftPrefixExpression, SwiftPrimaryExpression
 } from "../../../syntax/swift";
 
 describe('declaration', () => {
@@ -71,16 +71,18 @@ describe('declaration', () => {
               prefix: <SwiftPrefixExpression>{
                 prefixOperator: null,
                 postfixExpression: <SwiftPostfixExpressionPrimary>{
-                  postfixType: 'primary',
-                  primaryType: 'literal',
-                  value: <SwiftLiteralExpression>{
+                  type: 'primary',
+                  value: <SwiftPrimaryExpression>{
                     type: 'literal',
-                    value: <SwiftLiteral>{
-                      type: 'numeric',
-                      numericType: 'integer',
-                      value: '1',
+                    value: <SwiftLiteralExpression>{
+                      type: 'literal',
+                      value: <SwiftLiteral>{
+                        type: 'numeric',
+                        numericType: 'integer',
+                        value: '1',
+                      },
                     },
-                  },
+                  }
                 },
               }
             },

@@ -24,7 +24,7 @@ describe('primary-expression', () => {
     expect(output).toEqual<ParserOutput<SwiftPrimaryExpression>>({
       result: 'success',
       data: <SwiftPrimaryExpression>{
-        primaryType: 'identifier',
+        type: 'identifier',
         value: 'a'
       },
       rest: [],
@@ -37,7 +37,7 @@ describe('primary-expression', () => {
     expect(output).toEqual<ParserOutput<SwiftPrimaryExpression>>({
       result: 'success',
       data: <SwiftPrimaryExpressionLiteral>{
-        primaryType: 'literal',
+        type: 'literal',
         value: <SwiftLiteralExpression>{
           type: 'literal',
           value: <SwiftLiteral>{

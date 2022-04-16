@@ -4,7 +4,7 @@ import {
   SwiftLiteral,
   SwiftLiteralExpression,
   SwiftPostfixExpression,
-  SwiftPostfixExpressionPrimary
+  SwiftPostfixExpressionPrimary, SwiftPrimaryExpression
 } from "../../../syntax/swift";
 
 describe('postfix-expression', () => {
@@ -24,15 +24,17 @@ describe('postfix-expression', () => {
     expect(output).toEqual<ParserOutput<SwiftPostfixExpression>>({
       result: 'success',
       data: <SwiftPostfixExpressionPrimary>{
-        postfixType: 'primary',
-        primaryType: 'literal',
-        value: <SwiftLiteralExpression>{
+        type: 'primary',
+        value: <SwiftPrimaryExpression>{
           type: 'literal',
-          value: <SwiftLiteral>{
-            type: 'numeric',
-            numericType: 'integer',
-            value: '1',
-          },
+          value: <SwiftLiteralExpression>{
+            type: 'literal',
+            value: <SwiftLiteral>{
+              type: 'numeric',
+              numericType: 'integer',
+              value: '1',
+            },
+          }
         }
       },
       rest: [],

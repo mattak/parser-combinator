@@ -16,7 +16,7 @@ export function primaryExpression(input: ParserInput): ParserOutput<SwiftPrimary
       ]),
       ([s]) => {
         return <SwiftPrimaryExpression>{
-          primaryType: 'identifier',
+          type: 'identifier',
           value: s,
         }
       }
@@ -26,7 +26,7 @@ export function primaryExpression(input: ParserInput): ParserOutput<SwiftPrimary
       literalExpression,
       (s) => {
         return <SwiftPrimaryExpression>{
-          primaryType: 'literal',
+          type: 'literal',
           value: s,
         }
       }

@@ -8,7 +8,7 @@ import {
   SwiftPattern,
   SwiftPatternInitializer,
   SwiftPostfixExpressionPrimary,
-  SwiftPrefixExpression,
+  SwiftPrefixExpression, SwiftPrimaryExpression,
   SwiftStructDeclaration,
   SwiftStructMember,
   SwiftStructMemberDeclaration
@@ -52,16 +52,18 @@ describe('structBody', () => {
                   prefix: <SwiftPrefixExpression>{
                     prefixOperator: null,
                     postfixExpression: <SwiftPostfixExpressionPrimary>{
-                      postfixType: 'primary',
-                      primaryType: 'literal',
-                      value: <SwiftLiteralExpression>{
+                      type: 'primary',
+                      value: <SwiftPrimaryExpression>{
                         type: 'literal',
-                        value: <SwiftLiteral>{
-                          type: 'numeric',
-                          numericType: 'integer',
-                          value: '1',
+                        value: <SwiftLiteralExpression>{
+                          type: 'literal',
+                          value: <SwiftLiteral>{
+                            type: 'numeric',
+                            numericType: 'integer',
+                            value: '1',
+                          },
                         },
-                      },
+                      }
                     },
                   }
                 },
