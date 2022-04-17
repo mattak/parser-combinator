@@ -3,17 +3,12 @@ import {KotlinFile} from "../../../syntax/kotlin";
 import {kotlinDeclarationPrinter} from "./declaration";
 
 export const kotlinFilePrinter: Printer<KotlinFile> = input => {
-  const body = input.data.topLevelObjects.map(x => {
-    return kotlinDeclarationPrinter({
-      indentLevel: input.indentLevel,
-      data: x,
-    })
-  });
+  const body = input.topLevelObjects.map(x => kotlinDeclarationPrinter(x, 0));
 
   return [
-    `package ${input.data.packageHeader}`,
+    `package ${input.packageHeader}`,
     '',
-    ...input.data.importList.importHeaders.map(x => x.path),
+    ...input.importList.importHeaders.map(x => x.path),
     '',
     ...body.flat()
   ];

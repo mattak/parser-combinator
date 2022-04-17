@@ -1,4 +1,4 @@
-import {PrinterInput, PrinterOutput} from "../../types";
+import {PrinterOutput} from "../../types";
 import {
   KotlinClassBody,
   KotlinClassMemberDeclaration,
@@ -7,19 +7,19 @@ import {
 } from "../../../syntax/kotlin";
 import {kotlinDeclarationPrinter} from "../general/declaration";
 
-export function kotlinObjectDeclarationPrinter(input: PrinterInput<KotlinObjectDeclaration>): PrinterOutput {
-  const body = kotlinClassBodyPrinter({indentLevel: input.indentLevel, data: input.data.body});
+export function kotlinObjectDeclarationPrinter(input: KotlinObjectDeclaration, depth: number): PrinterOutput {
+  const body = kotlinClassBodyPrinter(input.body, depth);
 
   return [
-    `object ${input.data.name} {`,
+    `object ${input.name} {`,
     ...body,
     `}`,
   ];
 }
 
-export function kotlinClassBodyPrinter(input: PrinterInput<KotlinClassBody>): PrinterOutput {
-  const results = input.data.members
-    .map(x => kotlinClassMemberDeclarationPrinter({indentLevel: input.indentLevel + 1, data: x}))
+export function kotlinClassBodyPrinter(input: KotlinClassBody, depth: number): PrinterOutput {
+  const results = input.members
+    .map(x => kotlinClassMemberDeclarationPrinter(x, depth + 1))
     .flat()
 
   return [
@@ -27,12 +27,12 @@ export function kotlinClassBodyPrinter(input: PrinterInput<KotlinClassBody>): Pr
   ];
 }
 
-export function kotlinClassMemberDeclarationPrinter(input: PrinterInput<KotlinClassMemberDeclaration>): PrinterOutput {
-  switch (input.data.type) {
+export function kotlinClassMemberDeclarationPrinter(input: KotlinClassMemberDeclaration, depth: number): PrinterOutput {
+  switch (input.type) {
     case "declaration":
-      const value = (<KotlinClassMemberDeclarationDeclaration>(input.data)).value;
-      return kotlinDeclarationPrinter({indentLevel: input.indentLevel, data: value});
+      const value = (<KotlinClassMemberDeclarationDeclaration>(input)).value;
+      return kotlinDeclarationPrinter(value, depth);
     default:
-      throw Error(`not implemented type ${input.data.type}`);
+      throw Error(`not implemented type ${input.type}`);
   }
 }

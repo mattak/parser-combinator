@@ -6,20 +6,17 @@ describe('declaration', () => {
   const printer = kotlinDeclarationPrinter;
 
   test('object', () => {
-    const input = {
-      indentLevel: 0,
-      data: <KotlinDeclarationObjectDeclaration>{
-        type: 'object',
-        value: <KotlinObjectDeclaration>{
-          modifiers: {modifiers: []},
-          name: 'Name',
-          body: <KotlinClassBody>{
-            members: [],
-          },
-        }
+    const input = <KotlinDeclarationObjectDeclaration>{
+      type: 'object',
+      value: <KotlinObjectDeclaration>{
+        modifiers: {modifiers: []},
+        name: 'Name',
+        body: <KotlinClassBody>{
+          members: [],
+        },
       }
     };
-    const output = printer(input);
+    const output = printer(input, 0);
     expect(output).toEqual<PrinterOutput>([
       'object Name {',
       '}',
