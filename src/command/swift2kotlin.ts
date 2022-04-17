@@ -4,7 +4,7 @@ import {convert_topLevelDeclaration_file} from "../converter/swift2kotlin/declar
 import {KotlinFile} from "../syntax/kotlin";
 import {kotlinFilePrinter} from "../printer/kotlin/general/file";
 import * as util from "util";
-import {swiftKotlinDefaultConvertTable} from "../converter/swift2kotlin/swift-converter";
+import {defaultSwiftKotlinConvertTable} from "../converter/swift2kotlin/swift-converter";
 
 async function main() {
   if (process.argv.length <= 2) {
@@ -26,7 +26,7 @@ async function main() {
     return;
   }
 
-  const kotlin = convert_topLevelDeclaration_file(swiftKotlinDefaultConvertTable, parsed.data);
+  const kotlin = convert_topLevelDeclaration_file(defaultSwiftKotlinConvertTable, parsed.data);
   const result = kotlinFilePrinter({indentLevel: 0, data: kotlin});
   console.log(result.join('\n'));
 }

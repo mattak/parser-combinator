@@ -38,7 +38,7 @@ export interface SwiftKotlinConvertTable {
   'packageHeader': Converter<null, string>,
 }
 
-export const swiftKotlinDefaultConvertTable: SwiftKotlinConvertTable = {
+export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   // swift
   'top-level-declaration': convert_topLevelDeclaration_file,
   'statement': convert_statement_declaration,

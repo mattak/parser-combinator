@@ -1,13 +1,13 @@
 import {convert_declaration_declaration} from "./declaration";
 import {SwiftDeclaration, SwiftImportDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
-import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
+import {SwiftKotlinConvertTable, defaultSwiftKotlinConvertTable} from "../swift-converter";
 
 describe('declaration', () => {
   const mockImport = jest.fn().mockImplementation(x => null);
   const mockStruct = jest.fn().mockImplementation(x => null);
   const converter = convert_declaration_declaration;
   const table = <SwiftKotlinConvertTable>{
-    ...swiftKotlinDefaultConvertTable,
+    ...defaultSwiftKotlinConvertTable,
     'import-declaration': mockImport,
     'struct-declaration': mockStruct,
   }

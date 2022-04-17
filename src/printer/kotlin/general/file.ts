@@ -1,9 +1,8 @@
-import {Printer} from "../../types";
 import {KotlinFile} from "../../../syntax/kotlin";
-import {kotlinDeclarationPrinter} from "./declaration";
+import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
-export const kotlinFilePrinter: Printer<KotlinFile> = input => {
-  const body = input.topLevelObjects.map(x => kotlinDeclarationPrinter(x, 0));
+export function kotlinFilePrinter(table: KotlinPrinterTable, input: KotlinFile, depth: number): PrinterOutput {
+  const body = input.topLevelObjects.map(x => table['declaration'](table, x, 0));
 
   return [
     `package ${input.packageHeader}`,

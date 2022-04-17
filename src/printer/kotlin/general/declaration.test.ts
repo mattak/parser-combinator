@@ -1,25 +1,22 @@
-import {PrinterOutput} from "../../types";
 import {kotlinDeclarationPrinter} from "./declaration";
-import {KotlinClassBody, KotlinDeclarationObjectDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {KotlinDeclarationObjectDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
 describe('declaration', () => {
   const printer = kotlinDeclarationPrinter;
+  const mock = jest.fn().mockImplementation(() => []);
+  const table = <KotlinPrinterTable>{
+    ...defaultKotlinPrinterTable,
+    'object-declaration': mock,
+  };
 
   test('object', () => {
     const input = <KotlinDeclarationObjectDeclaration>{
       type: 'object',
-      value: <KotlinObjectDeclaration>{
-        modifiers: {modifiers: []},
-        name: 'Name',
-        body: <KotlinClassBody>{
-          members: [],
-        },
-      }
+      value: <KotlinObjectDeclaration>{}
     };
-    const output = printer(input, 0);
-    expect(output).toEqual<PrinterOutput>([
-      'object Name {',
-      '}',
-    ]);
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>([]);
+    expect(mock).toHaveBeenCalledTimes(1);
   });
 });

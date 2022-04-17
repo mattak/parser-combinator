@@ -1,9 +1,14 @@
 import {kotlinObjectDeclarationPrinter} from "./object-declaration";
 import {KotlinClassBody, KotlinObjectDeclaration} from "../../../syntax/kotlin";
-import {PrinterOutput} from "../../types";
+import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
 describe('kotlinObjectDeclarationPrinter', () => {
   const printer = kotlinObjectDeclarationPrinter;
+  const mock = jest.fn().mockImplementation(() => []);
+  const table = <KotlinPrinterTable>{
+    ...defaultKotlinPrinterTable,
+    'class-body': mock,
+  };
 
   test('Empty', () => {
     const input = <KotlinObjectDeclaration>{
@@ -14,7 +19,7 @@ describe('kotlinObjectDeclarationPrinter', () => {
         members: [],
       },
     };
-    const output = printer(input, 0);
+    const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>([
       'object MyStruct {',
       '}',

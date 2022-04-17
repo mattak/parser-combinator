@@ -13,12 +13,12 @@ import {
   KotlinModifiers,
   KotlinObjectDeclaration
 } from "../../../syntax/kotlin";
-import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
+import {SwiftKotlinConvertTable, defaultSwiftKotlinConvertTable} from "../swift-converter";
 
 describe('topLevelDeclarationConverter', () => {
   const converter = convert_topLevelDeclaration_file;
   const table = <SwiftKotlinConvertTable>{
-    ...swiftKotlinDefaultConvertTable,
+    ...defaultSwiftKotlinConvertTable,
     'statement': jest.fn().mockImplementation(x => {
       return {}
     }),

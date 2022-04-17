@@ -12,12 +12,12 @@ import {
   SwiftStructDeclaration,
   SwiftStructMember, SwiftStructMemberDeclaration
 } from "../../../syntax/swift";
-import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
+import {SwiftKotlinConvertTable, defaultSwiftKotlinConvertTable} from "../swift-converter";
 
 describe('convert_structDeclaration_objectDeclaration', () => {
   const converter = convert_structDeclaration_objectDeclaration;
   const table = <SwiftKotlinConvertTable>{
-    ...swiftKotlinDefaultConvertTable,
+    ...defaultSwiftKotlinConvertTable,
     'struct-member': jest.fn().mockImplementation(x => <KotlinClassMemberDeclaration>{})
   }
 
@@ -62,7 +62,7 @@ describe('convert_structDeclaration_objectDeclaration', () => {
 describe('convert_structMember_classMember', () => {
   const converter = convert_structMember_classMember;
   const table = <SwiftKotlinConvertTable>{
-    ...swiftKotlinDefaultConvertTable,
+    ...defaultSwiftKotlinConvertTable,
     'declaration': jest.fn().mockImplementation(x => <KotlinDeclaration>{})
   }
 
