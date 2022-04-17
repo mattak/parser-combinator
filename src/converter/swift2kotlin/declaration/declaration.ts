@@ -1,4 +1,9 @@
-import {SwiftDeclaration, SwiftImportDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
+import {
+  SwiftConstantDeclaration,
+  SwiftDeclaration,
+  SwiftImportDeclaration,
+  SwiftStructDeclaration
+} from "../../../syntax/swift";
 import {KotlinDeclaration} from "../../../syntax/kotlin";
 import {SwiftKotlinConvertTable} from "../swift-converter";
 
@@ -7,7 +12,8 @@ export function convert_declaration_declaration(table: SwiftKotlinConvertTable, 
     case 'import':
       table['import-declaration'](table, <SwiftImportDeclaration>input);
       return null;
-    // case 'constant':
+    case 'constant':
+      return table['constant-declaration'](table, <SwiftConstantDeclaration>input);
     // case 'variable':
     // case 'typealias':
     // case 'function':

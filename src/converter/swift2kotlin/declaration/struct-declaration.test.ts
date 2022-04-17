@@ -30,7 +30,6 @@ describe('convert_structDeclaration_objectDeclaration', () => {
     };
     const output = converter(table, input);
     expect(output).toEqual<KotlinObjectDeclaration>({
-      type: 'object',
       modifiers: <KotlinModifiers>{modifiers: []},
       name: 'sample',
       body: <KotlinClassBody>{members: []},
@@ -49,7 +48,6 @@ describe('convert_structDeclaration_objectDeclaration', () => {
     };
     const output = converter(table, input);
     expect(output).toEqual<KotlinObjectDeclaration>({
-      type: 'object',
       modifiers: <KotlinModifiers>{modifiers: []},
       name: 'sample',
       body: <KotlinClassBody>{

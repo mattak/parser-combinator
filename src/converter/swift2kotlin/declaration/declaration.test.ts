@@ -1,7 +1,6 @@
 import {convert_declaration_declaration} from "./declaration";
 import {SwiftDeclaration, SwiftImportDeclaration, SwiftStructDeclaration} from "../../../syntax/swift";
 import {SwiftKotlinConvertTable, swiftKotlinDefaultConvertTable} from "../swift-converter";
-import {KotlinDeclaration} from "../../../syntax/kotlin";
 
 describe('declaration', () => {
   const mockImport = jest.fn().mockImplementation(x => null);

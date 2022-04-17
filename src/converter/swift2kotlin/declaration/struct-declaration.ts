@@ -11,7 +11,6 @@ export function convert_structDeclaration_objectDeclaration(table: SwiftKotlinCo
   const members: KotlinClassMemberDeclaration[] = input.body.map(x => table['struct-member'](table, x));
 
   return <KotlinObjectDeclaration>{
-    type: 'object',
     modifiers: <KotlinModifiers>{modifiers: []},
     name: input.name,
     body: <KotlinClassBody>{

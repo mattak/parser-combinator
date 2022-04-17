@@ -1,5 +1,5 @@
 import {PrinterInput, PrinterOutput} from "../../types";
-import {KotlinDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {KotlinDeclaration, KotlinDeclarationObjectDeclaration} from "../../../syntax/kotlin";
 import {kotlinObjectDeclarationPrinter} from "../class/object-declaration";
 
 export function kotlinDeclarationPrinter(input: PrinterInput<KotlinDeclaration>): PrinterOutput {
@@ -9,7 +9,7 @@ export function kotlinDeclarationPrinter(input: PrinterInput<KotlinDeclaration>)
     case "object":
       return kotlinObjectDeclarationPrinter({
         indentLevel: input.indentLevel,
-        data: <KotlinObjectDeclaration>(input.data)
+        data: (<KotlinDeclarationObjectDeclaration>(input.data)).value,
       });
     // case "property":
     // case "typeAlias":

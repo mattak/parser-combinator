@@ -1,13 +1,11 @@
-import {KotlinDeclaration} from "../general/general";
 import {KotlinModifiers} from "../modifiers/modifiers";
 import {KotlinClassMemberDeclaration} from "../class-members/class-members";
 
-export interface KotlinClassDeclaration extends KotlinDeclaration {
-  type: 'class',
+export interface KotlinClassDeclaration {
+//   type: 'class',
 }
 
-export interface KotlinObjectDeclaration extends KotlinDeclaration {
-  type: 'object',
+export interface KotlinObjectDeclaration {
   modifiers: KotlinModifiers,
   name: string,
   body: KotlinClassBody,
@@ -15,12 +13,4 @@ export interface KotlinObjectDeclaration extends KotlinDeclaration {
 
 export interface KotlinClassBody {
   members: KotlinClassMemberDeclaration[],
-}
-
-export interface KotlinFunctionDeclaration extends KotlinDeclaration {
-  type: 'function',
-}
-
-export interface KotlinPropertyDeclaration extends KotlinDeclaration {
-  type: 'property',
 }
