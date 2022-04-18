@@ -1,4 +1,8 @@
-import {KotlinDeclaration, KotlinDeclarationObjectDeclaration} from "../../../syntax/kotlin";
+import {
+  KotlinDeclaration,
+  KotlinDeclarationObjectDeclaration,
+  KotlinDeclarationPropertyDeclaration
+} from "../../../syntax/kotlin";
 import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
 export function kotlinDeclarationPrinter(table: KotlinPrinterTable, input: KotlinDeclaration, depth: number): PrinterOutput {
@@ -7,7 +11,8 @@ export function kotlinDeclarationPrinter(table: KotlinPrinterTable, input: Kotli
     // case "function":
     case "object":
       return table['object-declaration'](table, (<KotlinDeclarationObjectDeclaration>input).value, 0)
-    // case "property":
+    case "property":
+      return table['property-declaration'](table, (<KotlinDeclarationPropertyDeclaration>input).value, depth)
     // case "typeAlias":
     default:
       throw new Error(`Not handled type: ${input.type}`)

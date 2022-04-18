@@ -4,12 +4,12 @@ export interface KotlinExpression {
 
 export interface KotlinDisjunction {
   // conjunction ('||' conjunction)*
-  conjunction: KotlinConjunction[],
+  conjunctions: KotlinConjunction[],
 }
 
 export interface KotlinConjunction {
   // equality ('&&' equality)*
-  equality: KotlinEquality[],
+  equalities: KotlinEquality[],
 }
 
 export interface KotlinEquality {

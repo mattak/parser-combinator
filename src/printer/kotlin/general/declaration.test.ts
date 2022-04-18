@@ -1,13 +1,23 @@
 import {kotlinDeclarationPrinter} from "./declaration";
-import {KotlinDeclarationObjectDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {
+  KotlinDeclarationObjectDeclaration,
+  KotlinDeclarationPropertyDeclaration,
+  KotlinObjectDeclaration,
+  KotlinPropertyDeclaration
+} from "../../../syntax/kotlin";
 import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
 describe('declaration', () => {
   const printer = kotlinDeclarationPrinter;
-  const mock = jest.fn().mockImplementation(() => []);
+  const objMock = jest.fn().mockImplementation(() => [
+    'object Entity {',
+    '}',
+  ]);
+  const propMock = jest.fn().mockImplementation(() => ['val value']);
   const table = <KotlinPrinterTable>{
     ...defaultKotlinPrinterTable,
-    'object-declaration': mock,
+    'object-declaration': objMock,
+    'property-declaration': propMock,
   };
 
   test('object', () => {
@@ -16,7 +26,17 @@ describe('declaration', () => {
       value: <KotlinObjectDeclaration>{}
     };
     const output = printer(table, input, 0);
-    expect(output).toEqual<PrinterOutput>([]);
-    expect(mock).toHaveBeenCalledTimes(1);
+    expect(output).toEqual<PrinterOutput>(['object Entity {', '}']);
+    expect(objMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('property', () => {
+    const input = <KotlinDeclarationPropertyDeclaration>{
+      type: 'property',
+      value: <KotlinPropertyDeclaration>{}
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>(['val value']);
+    expect(objMock).toHaveBeenCalledTimes(1);
   });
 });
