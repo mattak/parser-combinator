@@ -22,25 +22,24 @@ export type SwiftPostfixExpressionType = 'primary'
   | 'forced-value'
   | 'optional-chain';
 
-export interface SwiftPostfixExpression {
-  type: SwiftPostfixExpressionType,
-}
+export type SwiftPostfixExpression = SwiftPostfixExpressionPrimary
 
-export interface SwiftPostfixExpressionPrimary extends SwiftPostfixExpression {
+export interface SwiftPostfixExpressionPrimary {
+  type: 'primary',
   value: SwiftPrimaryExpression,
 }
 
 export type SwiftLiteralExpressionType = 'literal' | 'array' | 'dictionary' | 'playground';
 
-export interface SwiftLiteralExpression {
-  type: SwiftLiteralExpressionType,
-}
+export type SwiftLiteralExpression = SwiftLiteralExpressionLiteral | SwiftLiteralExpressionArray
 
-export interface SwiftLiteralExpressionLiteral extends SwiftLiteralExpression {
+export interface SwiftLiteralExpressionLiteral {
+  type: 'literal',
   value: SwiftLiteral,
 }
 
-export interface SwiftLiteralExpressionArray extends SwiftLiteralExpression {
+export interface SwiftLiteralExpressionArray {
+  type: 'array',
   expressions: SwiftExpression,
 }
 
@@ -58,16 +57,14 @@ export type SwiftPrimaryExpressionType =
   | 'selector'
   | 'key-path-string';
 
-export interface SwiftPrimaryExpression {
-  type: SwiftPrimaryExpressionType,
-}
+export type SwiftPrimaryExpression = SwiftPrimaryExpressionIdentifier | SwiftPrimaryExpressionLiteral
 
-export interface SwiftPrimaryExpressionIdentifier extends SwiftPrimaryExpression {
+export interface SwiftPrimaryExpressionIdentifier {
   type: 'identifier',
   value: string,
 }
 
-export interface SwiftPrimaryExpressionLiteral extends SwiftPrimaryExpression {
+export interface SwiftPrimaryExpressionLiteral {
   type: 'literal',
   value: SwiftLiteralExpression,
 }

@@ -2,6 +2,10 @@ import {
   SwiftConstantDeclaration,
   SwiftDeclaration,
   SwiftImportDeclaration,
+  SwiftInitializer,
+  SwiftLiteral,
+  SwiftPattern,
+  SwiftPatternInitializer,
   SwiftStatement,
   SwiftStructDeclaration,
   SwiftStructMember,
@@ -19,7 +23,13 @@ import {
   convert_structMember_classMember
 } from "./declaration/struct-declaration";
 import {convert_declaration_declaration} from "./declaration/declaration";
-import {convert_constantDeclaration_declaration} from "./declaration/constant-declaration";
+import {
+  convert_constantDeclaration_propertyDeclaration,
+  convert_initializer_expression,
+  convert_pattern_variableDeclaration,
+  convert_patternInitializer_propertyDeclaration
+} from "./declaration/constant-declaration";
+import {convert_literal_literalConstant} from "./lexical-struct/literal";
 
 export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) => To;
 
@@ -32,6 +42,10 @@ export interface SwiftKotlinConvertTable {
   'struct-declaration': Converter<SwiftStructDeclaration, any>,
   'struct-member': Converter<SwiftStructMember, any>,
   'constant-declaration': Converter<SwiftConstantDeclaration, any>,
+  'pattern-initializer': Converter<SwiftPatternInitializer, any>,
+  'pattern': Converter<SwiftPattern, any>,
+  'initializer': Converter<SwiftInitializer, any>,
+  'literal': Converter<SwiftLiteral, any>,
 
   // kotlin
   'importList': Converter<SwiftImportDeclaration[], KotlinImportList>,
@@ -46,7 +60,11 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'import-declaration': convert_importDeclaration_importHeader,
   'struct-declaration': convert_structDeclaration_objectDeclaration,
   'struct-member': convert_structMember_classMember,
-  'constant-declaration': convert_constantDeclaration_declaration,
+  'constant-declaration': convert_constantDeclaration_propertyDeclaration,
+  'pattern-initializer': convert_patternInitializer_propertyDeclaration,
+  'pattern': convert_pattern_variableDeclaration,
+  'initializer': convert_initializer_expression,
+  'literal': convert_literal_literalConstant,
 
   // kotlin
   'importList': convert_importDeclarations_importList,

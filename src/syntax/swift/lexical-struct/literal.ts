@@ -8,19 +8,23 @@ export type SwiftLiteralBoolean = 'true' | 'false';
 
 export type SwiftLiteralType = 'numeric' | 'string' | 'boolean' | 'nil';
 
-export interface SwiftLiteral {
-  type: SwiftLiteralType,
+export type SwiftLiteral = SwiftNilLiteral | SwiftBooleanLiteral | SwiftStringLiteral | SwiftNumericLiteral
+
+export interface SwiftNilLiteral {
+  type: 'nil',
+}
+
+export interface SwiftBooleanLiteral {
+  type: 'boolean',
+  value: boolean,
+}
+
+export interface SwiftStringLiteral {
+  type: 'string',
   value: string,
 }
 
-export interface SwiftNilLiteral extends SwiftLiteral {
-}
-
-export interface SwiftBooleanLiteral extends SwiftLiteral {
-}
-
-export interface SwiftStringLiteral extends SwiftLiteral {
-}
-
-export interface SwiftNumericLiteral extends SwiftLiteral {
+export interface SwiftNumericLiteral {
+  type: 'numeric',
+  value: string,
 }

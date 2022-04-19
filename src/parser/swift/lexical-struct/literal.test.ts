@@ -14,16 +14,16 @@ describe('literal', () => {
   })
 
   const values = [
-    {type: <SwiftLiteralType>"nil", input: 'nil', expect: 'nil', extraExpect: {}},
-    {type: <SwiftLiteralType>"boolean", input: 'true', expect: 'true', extraExpect: {}},
-    {type: <SwiftLiteralType>"numeric", input: '1', expect: '1', extraExpect: {numericType: 'integer'}},
-    {type: <SwiftLiteralType>"string", input: '"string"', expect: 'string', extraExpect: {}},
+    {type: "nil", input: 'nil', expect: 'nil', extraExpect: {}},
+    {type: "boolean", input: 'true', expect: true, extraExpect: {}},
+    {type: "numeric", input: '1', expect: '1', extraExpect: {numericType: 'integer'}},
+    {type: "string", input: '"string"', expect: 'string', extraExpect: {}},
   ];
   for (let v of values) {
     test(v.type, () => {
       const input = [...`${v.input}`] as const;
       const output = parser(input);
-      expect(output).toEqual<ParserOutput<SwiftLiteral>>({
+      expect(output).toEqual<ParserOutput<unknown>>({
         result: 'success',
         data: {
           type: v.type,

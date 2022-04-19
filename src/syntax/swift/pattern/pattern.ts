@@ -8,18 +8,14 @@ export type SwiftPatternType =
   | 'type-casting'
   | 'expression'
 
-export interface SwiftPattern {
-  type: SwiftPatternType;
-  value: string;
-}
+export type SwiftPattern = SwiftPatternIdentifier | SwiftPatternWildcard
 
-export interface SwiftPatternIdentifier extends SwiftPattern {
+export interface SwiftPatternIdentifier {
   type: 'identifier';
   value: string;
 }
 
-export interface SwiftPatternWildcard extends SwiftPattern {
+export interface SwiftPatternWildcard {
   type: 'wildcard';
   value: '_';
 }
-

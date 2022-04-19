@@ -11,15 +11,15 @@ import {integerLiteral} from "./integer-literal";
 import {floatingPointLiteral} from "./floating-point-literal";
 import {booleanLiteral} from "./boolean-literal";
 import {nilLiteral} from "./nil-literal";
-import {SwiftLiteral} from "../../../syntax/swift";
+import {SwiftBooleanLiteral, SwiftLiteral, SwiftLiteralBoolean} from "../../../syntax/swift";
 
 export const literal: Parser<SwiftLiteral> = or([
   map(
     booleanLiteral,
     (s) => {
-      return <SwiftLiteral>{
+      return <SwiftBooleanLiteral>{
         type: 'boolean',
-        value: s
+        value: s === 'true'
       }
     }
   ),

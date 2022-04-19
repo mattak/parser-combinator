@@ -100,11 +100,9 @@ export type KotlinPrimaryExpressionType = 'parenthesizedExpression'
   | 'jumpExpression'
   ;
 
-export interface KotlinPrimaryExpression {
-  type: KotlinPrimaryExpressionType,
-}
+export type KotlinPrimaryExpression = KotlinPrimaryExpressionLiteralConstant
 
-export interface KotlinPrimaryExpressionLiteralConstant extends KotlinPrimaryExpression {
+export interface KotlinPrimaryExpressionLiteralConstant {
   type: 'literalConstant',
   value: KotlinLiteralConstant,
 }
@@ -120,6 +118,49 @@ export type KotlinLiteralConstantType = 'boolean'
   | 'unsigned'
   ;
 
-export interface KotlinLiteralConstant {
-  type: KotlinLiteralConstantType,
+export type KotlinLiteralConstant =
+  KotlinBooleanLiteral
+  | KotlinIntegerLiteral
+  | KotlinNullLiteral
+  | KotlinLongLiteral
+  | KotlinCharacterLiteral
+
+export interface KotlinBooleanLiteral {
+  type: 'boolean',
+  value: boolean,
+}
+
+export interface KotlinNullLiteral {
+  type: 'null',
+}
+
+export interface KotlinIntegerLiteral {
+  type: 'integer',
+  value: number,
+}
+
+export interface KotlinLongLiteral {
+  type: 'long',
+  value: KotlinIntegerLiteral,
+  suffix: 'L' | 'l' | null,
+}
+
+export interface KotlinRealLiteral {
+  type: 'real',
+  value: KotlinFloatLiteral | KotlinDoubleLiteral,
+}
+
+export interface KotlinCharacterLiteral {
+  type: 'character',
+  value: string,
+}
+
+export interface KotlinFloatLiteral {
+  type: 'float',
+  value: number,
+}
+
+export interface KotlinDoubleLiteral {
+  type: 'double',
+  value: number,
 }
