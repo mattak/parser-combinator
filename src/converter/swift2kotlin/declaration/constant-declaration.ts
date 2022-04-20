@@ -1,35 +1,7 @@
 import {SwiftKotlinConvertTable} from "../swift-converter";
 import {KotlinPropertyDeclaration, KotlinVariableDeclaration} from "../../../syntax/kotlin";
-import {
-  SwiftConstantDeclaration,
-  SwiftInitializer,
-  SwiftLiteral,
-  SwiftLiteralExpression,
-  SwiftPattern,
-  SwiftPatternInitializer
-} from "../../../syntax/swift";
-import {
-  KotlinAdditiveExpression,
-  KotlinAsExpression,
-  KotlinBooleanLiteral,
-  KotlinComparison,
-  KotlinConjunction,
-  KotlinDisjunction,
-  KotlinElvisExpression,
-  KotlinEquality,
-  KotlinExpression,
-  KotlinGenericCallLikeComparison,
-  KotlinInfixFunctionCall,
-  KotlinInfixOperation,
-  KotlinIntegerLiteral,
-  KotlinLiteralConstant,
-  KotlinMultiplicativeExpression,
-  KotlinNullLiteral,
-  KotlinPostfixUnaryExpression,
-  KotlinPrefixUnaryExpression,
-  KotlinPrimaryExpression,
-  KotlinRangeExpression
-} from "../../../syntax/kotlin/expressions/expressions";
+import {SwiftConstantDeclaration, SwiftInitializer, SwiftPattern, SwiftPatternInitializer} from "../../../syntax/swift";
+import {KotlinExpression} from "../../../syntax/kotlin/expressions/expressions";
 
 export function convert_constantDeclaration_propertyDeclaration(table: SwiftKotlinConvertTable, input: SwiftConstantDeclaration): KotlinPropertyDeclaration[] {
   return input.patternInitializers.map(x => table['pattern-initializer'](table, x));
@@ -61,60 +33,5 @@ export function convert_pattern_variableDeclaration(table: SwiftKotlinConvertTab
 }
 
 export function convert_initializer_expression(table: SwiftKotlinConvertTable, input: SwiftInitializer): KotlinExpression {
-  const postfixExpression = input.prefix.postfixExpression
-  switch (postfixExpression.type) {
-    case "primary":
-      const primaryExpression = postfixExpression.value
-      switch (primaryExpression.type) {
-        case "literal":
-          const literalExpression: SwiftLiteralExpression = primaryExpression.value
-          switch (literalExpression.type) {
-            case "literal":
-              const literal = literalExpression.value
-              const literalConstant = table['literal'](table, literal);
-              return <KotlinExpression>{
-                disjunction: <KotlinDisjunction>{
-                  conjunctions: [
-                    <KotlinConjunction>{
-                      equalities: [
-                        <KotlinEquality>{
-                          comparison: <KotlinComparison>{
-                            genericCallLikeComparison: <KotlinGenericCallLikeComparison>{
-                              infixOperation: <KotlinInfixOperation>{
-                                elvisExpression: <KotlinElvisExpression>{
-                                  infixFunctionCall: <KotlinInfixFunctionCall>{
-                                    rangeExpression: <KotlinRangeExpression>{
-                                      additiveExpression: <KotlinAdditiveExpression>{
-                                        multiplicativeExpression: <KotlinMultiplicativeExpression>{
-                                          asExpression: <KotlinAsExpression>{
-                                            prefixUnaryExpression: <KotlinPrefixUnaryExpression>{
-                                              postfixUnaryExpression: <KotlinPostfixUnaryExpression>{
-                                                primaryExpression: <KotlinPrimaryExpression>{
-                                                  type: 'literalConstant',
-                                                  value: literalConstant,
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                            },
-                            nextGenericCallLikeComparisons: [],
-                          },
-                          nextComparisons: [],
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-          }
-      }
-  }
-
-  throw Error(`not implemented converter of: ${input}`)
+  return table['expression'](table, input);
 }

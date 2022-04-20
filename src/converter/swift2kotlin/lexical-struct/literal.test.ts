@@ -1,13 +1,15 @@
 import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
-import {SwiftBooleanLiteral, SwiftNilLiteral, SwiftNumericLiteral} from "../../../syntax/swift";
+import {SwiftBooleanLiteral, SwiftNilLiteral, SwiftNumericLiteral, SwiftStringLiteral} from "../../../syntax/swift";
 import {
   KotlinBooleanLiteral,
   KotlinIntegerLiteral,
-  KotlinNullLiteral
+  KotlinNullLiteral,
+  KotlinPrimaryExpressionStringLiteral
 } from "../../../syntax/kotlin/expressions/expressions";
-import {convert_literal_literalConstant} from "./literal";
+import {convert_literal_literalConstant, convert_literal_primaryExpression} from "./literal";
+import {KotlinLineStringLiteral} from "../../../syntax/kotlin/expressions/string-literal";
 
-describe('convert_pattern_variableDeclaration', () => {
+describe('convert_literal_literalConstant', () => {
   const converter = convert_literal_literalConstant;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
@@ -45,5 +47,30 @@ describe('convert_pattern_variableDeclaration', () => {
       type: 'integer',
       value: 1,
     });
+  })
+});
+
+describe('convert_literal_primaryExpression', () => {
+  const converter = convert_literal_primaryExpression;
+  const table = <SwiftKotlinConvertTable>{
+    ...defaultSwiftKotlinConvertTable,
+    'literal__primary-expression': convert_literal_primaryExpression,
+  }
+
+  test('string', () => {
+    const input = <SwiftStringLiteral>{
+      type: 'string',
+      value: 'a',
+    };
+    const output = converter(table, input);
+    expect(output).toEqual(
+      <KotlinPrimaryExpressionStringLiteral>{
+        type: 'stringLiteral',
+        value: <KotlinLineStringLiteral>{
+          type: 'line',
+          value: 'a',
+        }
+      }
+    );
   })
 });

@@ -1,3 +1,6 @@
+import {KotlinStringLiteral} from "./string-literal";
+import {KotlinSimpleIdentifier} from "../identifiers/simple-identifier";
+
 export interface KotlinExpression {
   disjunction: KotlinDisjunction,
 }
@@ -101,10 +104,23 @@ export type KotlinPrimaryExpressionType = 'parenthesizedExpression'
   ;
 
 export type KotlinPrimaryExpression = KotlinPrimaryExpressionLiteralConstant
+  | KotlinPrimaryExpressionStringLiteral
+  | KotlinPrimaryExpressionSimpleIdentifier
+  ;
 
 export interface KotlinPrimaryExpressionLiteralConstant {
   type: 'literalConstant',
   value: KotlinLiteralConstant,
+}
+
+export interface KotlinPrimaryExpressionStringLiteral {
+  type: 'stringLiteral',
+  value: KotlinStringLiteral,
+}
+
+export interface KotlinPrimaryExpressionSimpleIdentifier {
+  type: 'simpleIdentifier',
+  value: KotlinSimpleIdentifier,
 }
 
 export type KotlinLiteralConstantType = 'boolean'
