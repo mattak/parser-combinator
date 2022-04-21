@@ -50,4 +50,23 @@ describe('primary-expression', () => {
       rest: [],
     });
   });
+
+  test('Input: literal true', () => {
+    const input = [...'true'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftPrimaryExpression>>({
+      result: 'success',
+      data: <SwiftPrimaryExpressionLiteral>{
+        type: 'literal',
+        value: <SwiftLiteralExpression>{
+          type: 'literal',
+          value: <SwiftLiteral>{
+            type: 'boolean',
+            value: true,
+          },
+        }
+      },
+      rest: [],
+    });
+  });
 });

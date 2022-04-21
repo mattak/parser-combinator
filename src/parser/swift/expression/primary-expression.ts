@@ -8,6 +8,16 @@ import {SwiftPrimaryExpression} from "../../../syntax/swift";
 
 export function primaryExpression(input: ParserInput): ParserOutput<SwiftPrimaryExpression> {
   return or([
+    // literal
+    map(
+      literalExpression,
+      (s) => {
+        return <SwiftPrimaryExpression>{
+          type: 'literal',
+          value: s,
+        }
+      }
+    ),
     // identifier
     map(
       cat([
@@ -17,16 +27,6 @@ export function primaryExpression(input: ParserInput): ParserOutput<SwiftPrimary
       ([s]) => {
         return <SwiftPrimaryExpression>{
           type: 'identifier',
-          value: s,
-        }
-      }
-    ),
-    // literal
-    map(
-      literalExpression,
-      (s) => {
-        return <SwiftPrimaryExpression>{
-          type: 'literal',
           value: s,
         }
       }

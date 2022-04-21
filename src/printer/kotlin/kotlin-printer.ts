@@ -3,7 +3,8 @@ import {
   KotlinClassMemberDeclaration,
   KotlinDeclaration,
   KotlinFile,
-  KotlinObjectDeclaration, KotlinPropertyDeclaration,
+  KotlinObjectDeclaration,
+  KotlinPropertyDeclaration,
   KotlinVariableDeclaration
 } from "../../syntax/kotlin";
 import {kotlinFilePrinter} from "./general/file";
@@ -13,25 +14,17 @@ import {
   kotlinClassMemberDeclarationPrinter,
   kotlinObjectDeclarationPrinter
 } from "./class/object-declaration";
-import {
-  kotlinAdditiveExpressionPrinter,
-  kotlinAsExpressionPrinter, kotlinComparisonPrinter, kotlinConjunctionPrinter, kotlinDisjunctionPrinter,
-  kotlinElvisExpressionPrinter, kotlinEqualityPrinter,
-  kotlinExpressionPrinter, kotlinGenericCallLikeComparisonPrinter,
-  kotlinInfixFunctionCallPrinter, kotlinInfixOperationPrinter,
-  kotlinLiteralConstantPrinter,
-  kotlinMultiplicativeExpressionPrinter,
-  kotlinPostfixUnaryExpressionPrinter,
-  kotlinPrefixUnaryExpressionPrinter,
-  kotlinPrimaryExpressionPrinter, kotlinPropertyDeclarationPrinter,
-  kotlinRangeExpressionPrinter,
-  kotlinVariableDeclarationPrinter
-} from "./class-members/property-declaration";
+import {kotlinPropertyDeclarationPrinter, kotlinVariableDeclarationPrinter} from "./class-members/property-declaration";
 import {
   KotlinAdditiveExpression,
-  KotlinAsExpression, KotlinComparison, KotlinConjunction, KotlinDisjunction,
-  KotlinElvisExpression, KotlinEquality,
-  KotlinExpression, KotlinGenericCallLikeComparison,
+  KotlinAsExpression,
+  KotlinComparison,
+  KotlinConjunction,
+  KotlinDisjunction,
+  KotlinElvisExpression,
+  KotlinEquality,
+  KotlinExpression,
+  KotlinGenericCallLikeComparison,
   KotlinInfixFunctionCall,
   KotlinInfixOperation,
   KotlinLiteralConstant,
@@ -41,6 +34,27 @@ import {
   KotlinPrimaryExpression,
   KotlinRangeExpression
 } from "../../syntax/kotlin/expressions/expressions";
+import {
+  kotlinAdditiveExpressionPrinter,
+  kotlinAsExpressionPrinter,
+  kotlinComparisonPrinter,
+  kotlinConjunctionPrinter,
+  kotlinDisjunctionPrinter,
+  kotlinElvisExpressionPrinter,
+  kotlinEqualityPrinter,
+  kotlinExpressionPrinter,
+  kotlinGenericCallLikeComparisonPrinter,
+  kotlinInfixFunctionCallPrinter,
+  kotlinInfixOperationPrinter,
+  kotlinMultiplicativeExpressionPrinter,
+  kotlinPostfixUnaryExpressionPrinter,
+  kotlinPrefixUnaryExpressionPrinter,
+  kotlinRangeExpressionPrinter,
+} from "./expressions/expression";
+import {kotlinLiteralConstantPrinter} from "./expressions/literal-constant";
+import {kotlinPrimaryExpressionPrinter} from "./expressions/primary-expression";
+import {KotlinStringLiteral} from "../../syntax/kotlin/expressions/string-literal";
+import {kotlinStringLiteralPrinter} from "./expressions/string-literal";
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
@@ -71,6 +85,7 @@ export interface KotlinPrinterTable {
   'postfix-unary-expression': KotlinPrinter<KotlinPostfixUnaryExpression>,
   'primary-expression': KotlinPrinter<KotlinPrimaryExpression>
   'literal-constant': KotlinPrinter<KotlinLiteralConstant>,
+  'string-literal': KotlinPrinter<KotlinStringLiteral>,
 }
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
@@ -98,4 +113,5 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'postfix-unary-expression': kotlinPostfixUnaryExpressionPrinter,
   'primary-expression': kotlinPrimaryExpressionPrinter,
   'literal-constant': kotlinLiteralConstantPrinter,
+  'string-literal': kotlinStringLiteralPrinter,
 }
