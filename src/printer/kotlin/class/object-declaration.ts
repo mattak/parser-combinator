@@ -1,10 +1,5 @@
-import {
-  KotlinClassBody,
-  KotlinClassMemberDeclaration,
-  KotlinClassMemberDeclarationDeclaration,
-  KotlinObjectDeclaration
-} from "../../../syntax/kotlin";
-import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
+import {KotlinClassBody, KotlinClassMemberDeclaration, KotlinObjectDeclaration} from "../../../syntax/kotlin";
+import {kotlinIndent, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 
 export function kotlinObjectDeclarationPrinter(table: KotlinPrinterTable, input: KotlinObjectDeclaration, depth: number): PrinterOutput {
   const body = table['class-body'](table, input.body, depth);
@@ -20,6 +15,7 @@ export function kotlinClassBodyPrinter(table: KotlinPrinterTable, input: KotlinC
   const results = input.members
     .map(x => table['class-member-declaration'](table, x, depth + 1))
     .flat()
+    .map(x => kotlinIndent + x)
 
   return [
     ...results

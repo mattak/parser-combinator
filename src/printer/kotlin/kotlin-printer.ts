@@ -44,6 +44,7 @@ import {
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
+export const kotlinIndent = "    ";
 
 export interface KotlinPrinterTable {
   'file': KotlinPrinter<KotlinFile>,

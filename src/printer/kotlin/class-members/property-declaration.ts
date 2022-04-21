@@ -26,12 +26,14 @@ export function kotlinPropertyDeclarationPrinter(table: KotlinPrinterTable, inpu
   const expression = input.expression !== null
     ? ['=', ...table['expression'](table, input.expression, depth)]
     : [];
+
+  const line = [
+    input.type,
+    ...declaration,
+    ...expression,
+  ].join(' ');
   return [
-    [
-      input.type,
-      ...declaration,
-      ...expression,
-    ].join(' '),
+    line
   ];
 }
 
@@ -160,17 +162,26 @@ export function kotlinPrimaryExpressionPrinter(table: KotlinPrinterTable, input:
 
 export function kotlinLiteralConstantPrinter(table: KotlinPrinterTable, input: KotlinLiteralConstant, depth: number): PrinterOutput {
   switch (input.type) {
-    // case 'boolean':
-    // case 'integer':
+    case 'boolean':
+      return [
+        input.value.toString(),
+      ]
+    case 'integer':
+      return [
+        input.value.toString(),
+      ]
     // case 'hex':
     // case 'bin':
-    // case 'character':
+    case 'character':
+      return [
+        input.value
+      ]
     // case 'real':
     case 'null':
       return ['null']
     // case 'long':
     // case 'unsigned':
     default:
-      return []
+      throw new Error(`Not handled type: ${JSON.stringify(input, null, 2)}`);
   }
 }
