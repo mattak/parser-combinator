@@ -75,6 +75,77 @@ describe('structBody', () => {
       rest: [],
     });
   });
+
+  test('Input: { let a = 1; let b = 2 }', () => {
+    const input = [..."{ let a = 1\n let b = 2 }"] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftStructMember[]>>({
+      result: 'success',
+      data: [
+        <SwiftStructMemberDeclaration>{
+          type: 'declaration',
+          value: <SwiftConstantDeclaration>{
+            type: 'constant',
+            patternInitializers: [
+              <SwiftPatternInitializer>{
+                pattern: <SwiftPattern>{type: 'identifier', value: "a"},
+                initializer: <SwiftInitializer>{
+                  prefix: <SwiftPrefixExpression>{
+                    prefixOperator: null,
+                    postfixExpression: <SwiftPostfixExpressionPrimary>{
+                      type: 'primary',
+                      value: <SwiftPrimaryExpression>{
+                        type: 'literal',
+                        value: <SwiftLiteralExpression>{
+                          type: 'literal',
+                          value: <SwiftLiteral>{
+                            type: 'numeric',
+                            numericType: 'integer',
+                            value: '1',
+                          },
+                        },
+                      }
+                    },
+                  }
+                },
+              },
+            ],
+          }
+        },
+        <SwiftStructMemberDeclaration>{
+          type: 'declaration',
+          value: <SwiftConstantDeclaration>{
+            type: 'constant',
+            patternInitializers: [
+              <SwiftPatternInitializer>{
+                pattern: <SwiftPattern>{type: 'identifier', value: "b"},
+                initializer: <SwiftInitializer>{
+                  prefix: <SwiftPrefixExpression>{
+                    prefixOperator: null,
+                    postfixExpression: <SwiftPostfixExpressionPrimary>{
+                      type: 'primary',
+                      value: <SwiftPrimaryExpression>{
+                        type: 'literal',
+                        value: <SwiftLiteralExpression>{
+                          type: 'literal',
+                          value: <SwiftLiteral>{
+                            type: 'numeric',
+                            numericType: 'integer',
+                            value: '2',
+                          },
+                        },
+                      }
+                    },
+                  }
+                },
+              },
+            ],
+          }
+        },
+      ],
+      rest: [],
+    });
+  });
 });
 
 describe('struct', () => {

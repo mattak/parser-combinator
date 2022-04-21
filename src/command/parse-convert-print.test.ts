@@ -39,14 +39,16 @@ describe('struct', () => {
 
   test('struct and val:"sample"', () => {
     const input = `struct Sample {
-    let a = "sample" 
+    let a = "sample1" 
+    let b = "sample2" 
 }`.split('');
     const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
     const outputExpect = `package com.example.test
 
 
 object Sample {
-    val a = "sample"
+    val a = "sample1"
+    val b = "sample2"
 }`;
     expect(output).toEqual(outputExpect);
   })

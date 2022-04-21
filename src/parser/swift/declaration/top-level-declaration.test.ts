@@ -1,10 +1,9 @@
 import {topLevelDeclaration} from "./top-level-declaration";
 import {ParserOutput} from "../../../types";
 import {
-  SwiftAccessLevelModifier,
   SwiftImportDeclaration,
   SwiftStatementDeclaration,
-  SwiftStructDeclaration, SwiftStructMember,
+  SwiftStructDeclaration,
   SwiftTopLevelDeclaration
 } from "../../../syntax/swift";
 

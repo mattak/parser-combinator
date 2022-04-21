@@ -1,6 +1,6 @@
 import type {Parser, ParserInput} from './types';
 import {char} from "./char";
-import {cat, not, rep} from "./combinators";
+import {cat, not, or, rep} from "./combinators";
 
 type MapFunc = <T, U>(p: Parser<T>, f: (a: T) => U) => Parser<U>;
 export const map: MapFunc = (p, f) => input => {
@@ -63,6 +63,15 @@ export const list: ListFunc = (p, delimiter) => map(
   ]),
   ([first, rest]) => [first, ...rest.map(([, r]) => r)]
 );
+
+type List0Func = <T, U>(p: Parser<T>, delimiter: Parser<unknown>) => Parser<T[]>;
+export const list0: List0Func = (p, delimiter) => or([
+  list(p, delimiter),
+  map(
+    opt(delimiter),
+    (_) => [],
+  )
+])
 
 type ListWithTailDelimiter = <T, U>(p: Parser<T>, delimiter: Parser<unknown>) => Parser<T[]>;
 export const listWithTailDelimiter: ListWithTailDelimiter = (p, delimiter) => map(

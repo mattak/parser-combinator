@@ -1,4 +1,4 @@
-import {map, str, opt, diff, list, nextMatch, listWithTailDelimiter} from './util';
+import {map, str, opt, diff, list, nextMatch, listWithTailDelimiter, list0} from './util';
 import type {Option} from './util';
 import {char, digit, Digit} from './char';
 import type {ParserInput, ParserOutput} from "./types";
@@ -166,6 +166,50 @@ describe('list(digit, char(","))', () => {
     expect(output).toEqual<ParserOutput<Digit[]>>({
       result: 'success',
       data: ['1', '2', '3', '4', '5'],
+      rest: [],
+    });
+  });
+});
+
+describe('list0(digit, char(" "))', () => {
+  const parser = list0(digit, char(' '));
+
+  test('Empty input', () => {
+    const input = [] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit[]>>({
+      result: 'success',
+      data: [],
+      rest: [],
+    });
+  });
+
+  test('input: delimiter', () => {
+    const input = [...' '] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit[]>>({
+      result: 'success',
+      data: [],
+      rest: [],
+    });
+  });
+
+  test('input: 1', () => {
+    const input = [...'1'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit[]>>({
+      result: 'success',
+      data: ['1'],
+      rest: [],
+    });
+  });
+
+  test('input: 1 2', () => {
+    const input = [...'1 2'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit[]>>({
+      result: 'success',
+      data: ['1', '2'],
       rest: [],
     });
   });

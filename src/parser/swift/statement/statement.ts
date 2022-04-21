@@ -1,5 +1,5 @@
 import {ParserInput, ParserOutput} from "../../../types";
-import {SwiftStatement, SwiftStatementDeclaration} from "../../../syntax/swift/statement/statement";
+import {SwiftStatement, SwiftStatementDeclaration} from "../../../syntax/swift";
 import {cat, or} from "../../../combinators";
 import {declaration} from "../declaration/declaration";
 import {char} from "../../../char";

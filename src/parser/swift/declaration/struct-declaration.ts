@@ -1,6 +1,6 @@
 import {Parser, ParserInput, ParserOutput} from "../../../types";
-import {cat, or, rep} from "../../../combinators";
-import {map, opt, str} from "../../../util";
+import {cat, or} from "../../../combinators";
+import {list0, map, opt, str} from "../../../util";
 import {identifier} from "../lexical-struct/identifier";
 import {char} from "../../../char";
 import {accessLevelModifier} from "./declaration-modifier";
@@ -29,7 +29,7 @@ export function structBody(input: ParserInput): ParserOutput<SwiftStructMember[]
     cat([
       char('{'),
       whitespace0,
-      rep(structMember),
+      list0(structMember, whitespace),
       whitespace0,
       char('}'),
     ]),
