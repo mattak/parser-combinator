@@ -17,31 +17,33 @@ export interface KotlinImportHeader {
 
 export type KotlinDeclarationType = 'class' | 'object' | 'function' | 'property' | 'typeAlias';
 
-export interface KotlinDeclaration {
-  type: KotlinDeclarationType,
-}
+export type KotlinDeclaration = KotlinDeclarationClassDeclaration
+  | KotlinDeclarationObjectDeclaration
+  | KotlinDeclarationFunctionDeclaration
+  | KotlinDeclarationPropertyDeclaration
+  | KotlinDeclarationTypeAliasDeclaration
 
-export interface KotlinDeclarationClassDeclaration extends KotlinDeclaration {
+export interface KotlinDeclarationClassDeclaration {
   type: 'class',
   value: KotlinClassDeclaration,
 }
 
-export interface KotlinDeclarationObjectDeclaration extends KotlinDeclaration {
+export interface KotlinDeclarationObjectDeclaration {
   type: 'object',
   value: KotlinObjectDeclaration,
 }
 
-export interface KotlinDeclarationFunctionDeclaration extends KotlinDeclaration {
+export interface KotlinDeclarationFunctionDeclaration {
   type: 'function',
   value: KotlinFunctionDeclaration,
 }
 
-export interface KotlinDeclarationPropertyDeclaration extends KotlinDeclaration {
+export interface KotlinDeclarationPropertyDeclaration {
   type: 'property',
   value: KotlinPropertyDeclaration,
 }
 
-export interface KotlinDeclarationTypeAliasDeclaration extends KotlinDeclaration {
+export interface KotlinDeclarationTypeAliasDeclaration {
   type: 'typeAlias',
   value: KotlinTypeAliasDeclaration,
 }

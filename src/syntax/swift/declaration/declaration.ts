@@ -19,9 +19,7 @@ type SwiftDeclarationType = 'import'
   | 'operator'
   | 'precedence-group';
 
-export interface SwiftDeclaration {
-  type: SwiftDeclarationType,
-}
+export type SwiftDeclaration = SwiftImportDeclaration | SwiftStructDeclaration | SwiftConstantDeclaration
 
 // top-level
 export interface SwiftTopLevelDeclaration {
@@ -29,7 +27,7 @@ export interface SwiftTopLevelDeclaration {
 }
 
 // import
-export interface SwiftImportDeclaration extends SwiftDeclaration {
+export interface SwiftImportDeclaration {
   type: 'import',
   attributes: null,
   kind: null,
@@ -46,7 +44,7 @@ export interface SwiftStructMemberDeclaration extends SwiftStructMember {
   value: SwiftDeclaration,
 }
 
-export interface SwiftStructDeclaration extends SwiftDeclaration {
+export interface SwiftStructDeclaration {
   type: 'struct',
   name: string,
   accessLevelModifier: SwiftAccessLevelModifier | null,
@@ -54,7 +52,7 @@ export interface SwiftStructDeclaration extends SwiftDeclaration {
 }
 
 // constant
-export interface SwiftConstantDeclaration extends SwiftDeclaration {
+export interface SwiftConstantDeclaration {
   type: 'constant',
   patternInitializers: SwiftPatternInitializer[],
 }

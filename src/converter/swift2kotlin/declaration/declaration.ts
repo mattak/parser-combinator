@@ -4,22 +4,44 @@ import {
   SwiftImportDeclaration,
   SwiftStructDeclaration
 } from "../../../syntax/swift";
-import {KotlinDeclaration} from "../../../syntax/kotlin";
+import {
+  KotlinDeclaration,
+  KotlinDeclarationPropertyDeclaration,
+  KotlinImportHeader,
+  KotlinPropertyDeclaration
+} from "../../../syntax/kotlin";
 import {SwiftKotlinConvertTable} from "../swift-converter";
 
-export function convert_declaration_declaration(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinDeclaration | null {
+export function convert_declaration_importHeader(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinImportHeader | null {
   switch (input.type) {
     case 'import':
-      table['import-declaration'](table, <SwiftImportDeclaration>input);
-      return null;
+      return table['import-declaration'](table, <SwiftImportDeclaration>input);
+    default:
+      return null
+  }
+}
+
+export function convert_declaration_declaration(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinDeclaration[] {
+  switch (input.type) {
+    case 'import':
+      return [];
     case 'constant':
-      return table['constant-declaration'](table, <SwiftConstantDeclaration>input);
+      // KotlinPropertyDeclaration[]
+      const properties = table['constant-declaration'](table, <SwiftConstantDeclaration>input);
+      return properties.map(x => {
+        return <KotlinDeclarationPropertyDeclaration>{
+          type: 'property',
+          value: x
+        }
+      });
     // case 'variable':
     // case 'typealias':
     // case 'function':
     // case 'enum':
     case 'struct':
-      return table['struct-declaration'](table, <SwiftStructDeclaration>input);
+      return <KotlinDeclaration[]>[
+        table['struct-declaration'](table, <SwiftStructDeclaration>input)
+      ];
     // case 'class':
     // case 'actor':
     // case 'protocol':
@@ -31,6 +53,6 @@ export function convert_declaration_declaration(table: SwiftKotlinConvertTable, 
     // case 'precedence-group':
     //   break;
     default:
-      throw Error(`not handled input.type: ${input.type}`);
+      throw Error(`not handled input: ${input}`);
   }
 }

@@ -1,12 +1,12 @@
 import {SwiftStatement, SwiftStatementDeclaration} from "../../../syntax/swift";
-import {KotlinDeclaration} from "../../../syntax/kotlin";
+import {KotlinDeclaration, KotlinDeclarationPropertyDeclaration} from "../../../syntax/kotlin";
 import {SwiftKotlinConvertTable} from "../swift-converter";
 
-export function convert_statement_declaration(table: SwiftKotlinConvertTable, input: SwiftStatement): KotlinDeclaration {
+export function convert_statement_declaration(table: SwiftKotlinConvertTable, input: SwiftStatement): KotlinDeclaration[] {
   switch (input.type) {
     case "declaration":
       return table['declaration'](table, (<SwiftStatementDeclaration>input).value);
-      // return declarationConverter((<SwiftStatementDeclaration>input).value);
+    // return declarationConverter((<SwiftStatementDeclaration>input).value);
     // case 'loop-statement':
     //   break;
     // case 'branch-statement':

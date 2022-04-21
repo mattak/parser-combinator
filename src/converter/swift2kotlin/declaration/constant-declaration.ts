@@ -3,7 +3,7 @@ import {KotlinPropertyDeclaration, KotlinVariableDeclaration} from "../../../syn
 import {SwiftConstantDeclaration, SwiftInitializer, SwiftPattern, SwiftPatternInitializer} from "../../../syntax/swift";
 import {KotlinExpression} from "../../../syntax/kotlin/expressions/expressions";
 
-export function convert_constantDeclaration_propertyDeclaration(table: SwiftKotlinConvertTable, input: SwiftConstantDeclaration): KotlinPropertyDeclaration[] {
+export function convert_constantDeclaration_propertyDeclarations(table: SwiftKotlinConvertTable, input: SwiftConstantDeclaration): KotlinPropertyDeclaration[] {
   return input.patternInitializers.map(x => table['pattern-initializer'](table, x));
 }
 

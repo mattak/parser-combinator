@@ -13,7 +13,7 @@ import {
 } from "../../../syntax/swift";
 import {KotlinPropertyDeclaration, KotlinVariableDeclaration} from "../../../syntax/kotlin";
 import {
-  convert_constantDeclaration_propertyDeclaration,
+  convert_constantDeclaration_propertyDeclarations,
   convert_initializer_expression,
   convert_pattern_variableDeclaration
 } from "./constant-declaration";
@@ -38,7 +38,7 @@ import {
 } from "../../../syntax/kotlin/expressions/expressions";
 
 describe('convert_constantDeclaration_propertyDeclaration', () => {
-  const converter = convert_constantDeclaration_propertyDeclaration;
+  const converter = convert_constantDeclaration_propertyDeclarations;
   const mock = jest.fn().mockImplementation(() => <KotlinPropertyDeclaration>{})
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,

@@ -4,8 +4,8 @@ import {
   SwiftExpression,
   SwiftImportDeclaration,
   SwiftInitializer,
-  SwiftLiteral, SwiftLiteralExpression,
-  SwiftLiteralExpressionLiteral,
+  SwiftLiteral,
+  SwiftLiteralExpression,
   SwiftPattern,
   SwiftPatternInitializer,
   SwiftPrimaryExpression,
@@ -20,14 +20,21 @@ import {
   convert_importDeclaration_importHeader,
   convert_importDeclarations_importList
 } from "./declaration/import-declaration";
-import {KotlinImportHeader, KotlinImportList} from "../../syntax/kotlin";
+import {
+  KotlinClassDeclaration,
+  KotlinDeclaration,
+  KotlinImportHeader,
+  KotlinImportList,
+  KotlinObjectDeclaration,
+  KotlinPropertyDeclaration
+} from "../../syntax/kotlin";
 import {
   convert_structDeclaration_objectDeclaration,
   convert_structMember_classMember
 } from "./declaration/struct-declaration";
 import {convert_declaration_declaration} from "./declaration/declaration";
 import {
-  convert_constantDeclaration_propertyDeclaration,
+  convert_constantDeclaration_propertyDeclarations,
   convert_initializer_expression,
   convert_pattern_variableDeclaration,
   convert_patternInitializer_propertyDeclaration
@@ -46,11 +53,11 @@ export interface SwiftKotlinConvertTable {
   // swift
   'top-level-declaration': Converter<SwiftTopLevelDeclaration, any>,
   'statement': Converter<SwiftStatement, any>,
-  'declaration': Converter<SwiftDeclaration, any>,
+  'declaration': Converter<SwiftDeclaration, KotlinDeclaration[]>,
   'import-declaration': Converter<SwiftImportDeclaration, KotlinImportHeader>,
-  'struct-declaration': Converter<SwiftStructDeclaration, any>,
+  'struct-declaration': Converter<SwiftStructDeclaration, KotlinObjectDeclaration | KotlinClassDeclaration>,
   'struct-member': Converter<SwiftStructMember, any>,
-  'constant-declaration': Converter<SwiftConstantDeclaration, any>,
+  'constant-declaration': Converter<SwiftConstantDeclaration, KotlinPropertyDeclaration[]>,
   'pattern-initializer': Converter<SwiftPatternInitializer, any>,
   'pattern': Converter<SwiftPattern, any>,
   'initializer': Converter<SwiftInitializer, any>,
@@ -73,7 +80,7 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'import-declaration': convert_importDeclaration_importHeader,
   'struct-declaration': convert_structDeclaration_objectDeclaration,
   'struct-member': convert_structMember_classMember,
-  'constant-declaration': convert_constantDeclaration_propertyDeclaration,
+  'constant-declaration': convert_constantDeclaration_propertyDeclarations,
   'pattern-initializer': convert_patternInitializer_propertyDeclaration,
   'pattern': convert_pattern_variableDeclaration,
   'initializer': convert_initializer_expression,
