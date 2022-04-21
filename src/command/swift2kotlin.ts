@@ -29,7 +29,7 @@ async function main() {
     return;
   }
   console.log('parsed:');
-  console.log(util.inspect(parsed.data, false, null, true));
+  console.log(JSON.stringify(parsed.data, null, 2))
 
   // convert
   const converterTable: SwiftKotlinConvertTable = {
@@ -38,7 +38,7 @@ async function main() {
   };
   const converted = convert_topLevelDeclaration_file(converterTable, parsed.data);
   console.log('converted:');
-  console.log(util.inspect(converted, false, null, true));
+  console.log(JSON.stringify(converted, null, 2))
 
   // printer
   const printerTable: KotlinPrinterTable = {

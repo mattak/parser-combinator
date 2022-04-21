@@ -5,7 +5,7 @@ import {
   SwiftStructDeclaration
 } from "../../../syntax/swift";
 import {
-  KotlinDeclaration,
+  KotlinDeclaration, KotlinDeclarationClassDeclaration,
   KotlinDeclarationPropertyDeclaration,
   KotlinImportHeader,
   KotlinPropertyDeclaration
@@ -21,7 +21,7 @@ export function convert_declaration_importHeader(table: SwiftKotlinConvertTable,
   }
 }
 
-export function convert_declaration_declaration(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinDeclaration[] {
+export function convert_declaration_declarations(table: SwiftKotlinConvertTable, input: SwiftDeclaration): KotlinDeclaration[] {
   switch (input.type) {
     case 'import':
       return [];
@@ -39,8 +39,8 @@ export function convert_declaration_declaration(table: SwiftKotlinConvertTable, 
     // case 'function':
     // case 'enum':
     case 'struct':
-      return <KotlinDeclaration[]>[
-        table['struct-declaration'](table, <SwiftStructDeclaration>input)
+      return [
+        table['struct-declaration'](table, <SwiftStructDeclaration>input),
       ];
     // case 'class':
     // case 'actor':

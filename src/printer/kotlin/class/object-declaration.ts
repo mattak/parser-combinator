@@ -29,7 +29,7 @@ export function kotlinClassBodyPrinter(table: KotlinPrinterTable, input: KotlinC
 export function kotlinClassMemberDeclarationPrinter(table: KotlinPrinterTable, input: KotlinClassMemberDeclaration, depth: number): PrinterOutput {
   switch (input.type) {
     case "declaration":
-      const value = (<KotlinClassMemberDeclarationDeclaration>(input)).value;
+      const value = input.value;
       return table['declaration'](table, value, depth);
     default:
       throw Error(`not implemented type ${input.type}`);

@@ -1,4 +1,4 @@
-import {convert_declaration_declaration, convert_declaration_importHeader} from "./declaration";
+import {convert_declaration_declarations, convert_declaration_importHeader} from "./declaration";
 import {
   SwiftConstantDeclaration,
   SwiftImportDeclaration,
@@ -16,7 +16,7 @@ import {
 describe('convert_declaration_declaration', () => {
   const mockStruct = jest.fn().mockImplementation(x => <KotlinObjectDeclaration>{});
   const mockConst = jest.fn().mockImplementation(x => [<KotlinPropertyDeclaration>{}]);
-  const converter = convert_declaration_declaration;
+  const converter = convert_declaration_declarations;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
     'struct-declaration': mockStruct,

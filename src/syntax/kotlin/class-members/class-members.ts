@@ -8,11 +8,9 @@ export type KotlinClassMemberDeclarationType = 'declaration'
   | 'secondaryConstructor'
   ;
 
-export interface KotlinClassMemberDeclaration {
-  type: KotlinClassMemberDeclarationType,
-}
+export type KotlinClassMemberDeclaration = KotlinClassMemberDeclarationDeclaration
 
-export interface KotlinClassMemberDeclarationDeclaration extends KotlinClassMemberDeclaration {
+export interface KotlinClassMemberDeclarationDeclaration {
   type: 'declaration',
   value: KotlinDeclaration,
 }

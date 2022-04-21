@@ -1,8 +1,11 @@
-import {convert_structDeclaration_objectDeclaration, convert_structMember_classMember} from "./struct-declaration";
+import {
+  convert_structDeclaration_objectDeclaration,
+  convert_structMember_classMemberDeclarations
+} from "./struct-declaration";
 import {
   KotlinClassBody, KotlinClassMemberDeclaration,
   KotlinClassMemberDeclarationDeclaration,
-  KotlinDeclaration,
+  KotlinDeclaration, KotlinDeclarationObjectDeclaration,
   KotlinModifiers,
   KotlinObjectDeclaration
 } from "../../../syntax/kotlin";
@@ -18,7 +21,7 @@ describe('convert_structDeclaration_objectDeclaration', () => {
   const converter = convert_structDeclaration_objectDeclaration;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
-    'struct-member': jest.fn().mockImplementation(x => <KotlinClassMemberDeclaration>{})
+    'struct-member': jest.fn().mockImplementation(x => [<KotlinClassMemberDeclaration>{}])
   }
 
   test('empty', () => {
@@ -29,11 +32,16 @@ describe('convert_structDeclaration_objectDeclaration', () => {
       body: [],
     };
     const output = converter(table, input);
-    expect(output).toEqual<KotlinObjectDeclaration>({
-      modifiers: <KotlinModifiers>{modifiers: []},
-      name: 'sample',
-      body: <KotlinClassBody>{members: []},
-    });
+    expect(output).toEqual<KotlinDeclarationObjectDeclaration>(
+      <KotlinDeclarationObjectDeclaration>{
+        type: 'object',
+        value: {
+          modifiers: <KotlinModifiers>{modifiers: []},
+          name: 'sample',
+          body: <KotlinClassBody>{members: []},
+        },
+      }
+    );
   });
 
   test('member', () => {
@@ -47,23 +55,28 @@ describe('convert_structDeclaration_objectDeclaration', () => {
       }],
     };
     const output = converter(table, input);
-    expect(output).toEqual<KotlinObjectDeclaration>({
-      modifiers: <KotlinModifiers>{modifiers: []},
-      name: 'sample',
-      body: <KotlinClassBody>{
-        members: [
-          <KotlinClassMemberDeclaration>{}
-        ]
-      },
-    });
+    expect(output).toEqual<KotlinDeclarationObjectDeclaration>(
+      <KotlinDeclarationObjectDeclaration>{
+        type: 'object',
+        value: {
+          modifiers: <KotlinModifiers>{modifiers: []},
+          name: 'sample',
+          body: <KotlinClassBody>{
+            members: [
+              <KotlinClassMemberDeclaration>{}
+            ]
+          },
+        }
+      }
+    );
   });
 });
 
-describe('convert_structMember_classMember', () => {
-  const converter = convert_structMember_classMember;
+describe('convert_structMember_classMemberDeclarations', () => {
+  const converter = convert_structMember_classMemberDeclarations;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
-    'declaration': jest.fn().mockImplementation(x => <KotlinDeclaration>{})
+    'declaration': jest.fn().mockImplementation(x => [<KotlinDeclaration>{}])
   }
 
   test('declaration', () => {
@@ -72,9 +85,9 @@ describe('convert_structMember_classMember', () => {
       value: <SwiftDeclaration>{},
     };
     const output = converter(table, input);
-    expect(output).toEqual({
+    expect(output).toEqual([<KotlinClassMemberDeclaration>{
       type: 'declaration',
       value: <KotlinDeclaration>{}
-    });
+    }]);
   });
 });

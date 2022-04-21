@@ -4,6 +4,7 @@ import {
   KotlinDeclarationPropertyDeclaration
 } from "../../../syntax/kotlin";
 import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
+import * as util from "util";
 
 export function kotlinDeclarationPrinter(table: KotlinPrinterTable, input: KotlinDeclaration, depth: number): PrinterOutput {
   switch (input.type) {
@@ -15,6 +16,6 @@ export function kotlinDeclarationPrinter(table: KotlinPrinterTable, input: Kotli
       return table['property-declaration'](table, (<KotlinDeclarationPropertyDeclaration>input).value, depth)
     // case "typeAlias":
     default:
-      throw new Error(`Not handled type: ${input.type}`)
+      throw new Error(`Not handled type: ${util.inspect(input, false, null)}`)
   }
 }

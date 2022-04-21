@@ -21,7 +21,7 @@ import {
   convert_importDeclarations_importList
 } from "./declaration/import-declaration";
 import {
-  KotlinClassDeclaration,
+  KotlinClassDeclaration, KotlinClassMemberDeclaration,
   KotlinDeclaration,
   KotlinImportHeader,
   KotlinImportList,
@@ -30,9 +30,9 @@ import {
 } from "../../syntax/kotlin";
 import {
   convert_structDeclaration_objectDeclaration,
-  convert_structMember_classMember
+  convert_structMember_classMemberDeclarations
 } from "./declaration/struct-declaration";
-import {convert_declaration_declaration} from "./declaration/declaration";
+import {convert_declaration_declarations} from "./declaration/declaration";
 import {
   convert_constantDeclaration_propertyDeclarations,
   convert_initializer_expression,
@@ -55,8 +55,8 @@ export interface SwiftKotlinConvertTable {
   'statement': Converter<SwiftStatement, any>,
   'declaration': Converter<SwiftDeclaration, KotlinDeclaration[]>,
   'import-declaration': Converter<SwiftImportDeclaration, KotlinImportHeader>,
-  'struct-declaration': Converter<SwiftStructDeclaration, KotlinObjectDeclaration | KotlinClassDeclaration>,
-  'struct-member': Converter<SwiftStructMember, any>,
+  'struct-declaration': Converter<SwiftStructDeclaration, KotlinDeclaration>,
+  'struct-member': Converter<SwiftStructMember, KotlinClassMemberDeclaration[]>,
   'constant-declaration': Converter<SwiftConstantDeclaration, KotlinPropertyDeclaration[]>,
   'pattern-initializer': Converter<SwiftPatternInitializer, any>,
   'pattern': Converter<SwiftPattern, any>,
@@ -76,10 +76,10 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   // swift
   'top-level-declaration': convert_topLevelDeclaration_file,
   'statement': convert_statement_declaration,
-  'declaration': convert_declaration_declaration,
+  'declaration': convert_declaration_declarations,
   'import-declaration': convert_importDeclaration_importHeader,
   'struct-declaration': convert_structDeclaration_objectDeclaration,
-  'struct-member': convert_structMember_classMember,
+  'struct-member': convert_structMember_classMemberDeclarations,
   'constant-declaration': convert_constantDeclaration_propertyDeclarations,
   'pattern-initializer': convert_patternInitializer_propertyDeclaration,
   'pattern': convert_pattern_variableDeclaration,
