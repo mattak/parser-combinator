@@ -3,8 +3,11 @@ import {
   KotlinClassMemberDeclaration,
   KotlinDeclaration,
   KotlinFile,
+  KotlinFunctionDeclaration,
+  KotlinFunctionValueParameter,
+  KotlinFunctionValueParameters,
   KotlinImportList,
-  KotlinObjectDeclaration,
+  KotlinObjectDeclaration, KotlinParameter,
   KotlinPropertyDeclaration,
   KotlinVariableDeclaration
 } from "../../syntax/kotlin";
@@ -56,6 +59,23 @@ import {kotlinLiteralConstantPrinter} from "./expressions/literal-constant";
 import {kotlinPrimaryExpressionPrinter} from "./expressions/primary-expression";
 import {KotlinStringLiteral} from "../../syntax/kotlin/expressions/string-literal";
 import {kotlinStringLiteralPrinter} from "./expressions/string-literal";
+import {
+  kotlinFunctionDeclarationPrinter,
+  kotlinFunctionValueParameterPrinter,
+  kotlinFunctionValueParametersPrinter, kotlinParameterPrinter
+} from "./class-members/function-declaration";
+import {
+  KotlinNullableType,
+  KotlinParenthesizedType,
+  KotlinType,
+  KotlinTypeReference
+} from "../../syntax/kotlin/types/type";
+import {
+  kotlinNullableTypePrinter,
+  kotlinParenthesizedTypePrinter,
+  kotlinTypePrinter,
+  kotlinTypeReferencePrinter
+} from "./type/type";
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
@@ -70,6 +90,10 @@ export interface KotlinPrinterTable {
   'class-member-declaration': KotlinPrinter<KotlinClassMemberDeclaration>,
   'property-declaration': KotlinPrinter<KotlinPropertyDeclaration>,
   'variable-declaration': KotlinPrinter<KotlinVariableDeclaration>,
+  'function-declaration': KotlinPrinter<KotlinFunctionDeclaration>,
+  'function-value-parameters': KotlinPrinter<KotlinFunctionValueParameters>,
+  'function-value-parameter': KotlinPrinter<KotlinFunctionValueParameter>,
+  'parameter': KotlinPrinter<KotlinParameter>,
   'expression': KotlinPrinter<KotlinExpression>,
   'disjunction': KotlinPrinter<KotlinDisjunction>,
   'conjunction': KotlinPrinter<KotlinConjunction>,
@@ -88,6 +112,10 @@ export interface KotlinPrinterTable {
   'primary-expression': KotlinPrinter<KotlinPrimaryExpression>
   'literal-constant': KotlinPrinter<KotlinLiteralConstant>,
   'string-literal': KotlinPrinter<KotlinStringLiteral>,
+  'type': KotlinPrinter<KotlinType>,
+  'type-reference': KotlinPrinter<KotlinTypeReference>,
+  'parenthesized-type': KotlinPrinter<KotlinParenthesizedType>,
+  'nullable-type': KotlinPrinter<KotlinNullableType>,
 }
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
@@ -99,6 +127,10 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'class-member-declaration': kotlinClassMemberDeclarationPrinter,
   'property-declaration': kotlinPropertyDeclarationPrinter,
   'variable-declaration': kotlinVariableDeclarationPrinter,
+  'function-declaration': kotlinFunctionDeclarationPrinter,
+  'function-value-parameters': kotlinFunctionValueParametersPrinter,
+  'function-value-parameter': kotlinFunctionValueParameterPrinter,
+  'parameter': kotlinParameterPrinter,
   'expression': kotlinExpressionPrinter,
   'disjunction': kotlinDisjunctionPrinter,
   'conjunction': kotlinConjunctionPrinter,
@@ -117,4 +149,8 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'primary-expression': kotlinPrimaryExpressionPrinter,
   'literal-constant': kotlinLiteralConstantPrinter,
   'string-literal': kotlinStringLiteralPrinter,
+  'type': kotlinTypePrinter,
+  'type-reference': kotlinTypeReferencePrinter,
+  'parenthesized-type': kotlinParenthesizedTypePrinter,
+  'nullable-type': kotlinNullableTypePrinter,
 }

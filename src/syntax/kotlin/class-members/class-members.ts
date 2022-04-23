@@ -1,5 +1,4 @@
 import {KotlinDeclaration} from "../general/general";
-import {KotlinType} from "../types/type";
 import {KotlinExpression} from "../expressions/expressions";
 
 export type KotlinClassMemberDeclarationType = 'declaration'
@@ -13,29 +12,6 @@ export type KotlinClassMemberDeclaration = KotlinClassMemberDeclarationDeclarati
 export interface KotlinClassMemberDeclarationDeclaration {
   type: 'declaration',
   value: KotlinDeclaration,
-}
-
-export interface KotlinFunctionDeclaration {
-  // modifiers:
-  // fun
-  // typeParameters?
-  // receiveType?
-  name: string,
-  parameters: KotlinFunctionValueParameter[],
-  // returnType?
-  // typeConstraints
-  // body:
-}
-
-export interface KotlinFunctionValueParameter {
-  // modifier:
-  parameter: KotlinParameter,
-  // expression:
-}
-
-export interface KotlinParameter {
-  key: string,
-  value: KotlinType,
 }
 
 export interface KotlinPropertyDeclaration {
