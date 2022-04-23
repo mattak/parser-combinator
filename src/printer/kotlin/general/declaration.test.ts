@@ -1,7 +1,8 @@
 import {kotlinDeclarationPrinter} from "./declaration";
 import {
+  KotlinDeclarationFunctionDeclaration,
   KotlinDeclarationObjectDeclaration,
-  KotlinDeclarationPropertyDeclaration,
+  KotlinDeclarationPropertyDeclaration, KotlinFunctionDeclaration, KotlinFunctionValueParameter,
   KotlinObjectDeclaration,
   KotlinPropertyDeclaration
 } from "../../../syntax/kotlin";
@@ -14,10 +15,12 @@ describe('declaration', () => {
     '}',
   ]);
   const propMock = jest.fn().mockImplementation(() => ['val value']);
+  const funMock = jest.fn().mockImplementation(() => ['fun sample() {}']);
   const table = <KotlinPrinterTable>{
     ...defaultKotlinPrinterTable,
     'object-declaration': objMock,
     'property-declaration': propMock,
+    'function-declaration': funMock,
   };
 
   test('object', () => {
@@ -38,5 +41,15 @@ describe('declaration', () => {
     const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>(['val value']);
     expect(objMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('function', () => {
+    const input = <KotlinDeclarationFunctionDeclaration>{
+      type: 'function',
+      value: <KotlinFunctionDeclaration>{}
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>(['fun sample() {}']);
+    expect(funMock).toHaveBeenCalledTimes(1);
   });
 });
