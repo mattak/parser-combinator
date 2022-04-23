@@ -11,31 +11,29 @@ describe('struct', () => {
     ...defaultKotlinPrinterTable,
   };
 
-//   test('struct', () => {
-//     const input = `struct Sample {
-// }`.split('');
-//     const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
-//     const outputExpect = `package com.example.test
-//
-//
-// object Sample {
-// }`;
-//     expect(output).toEqual(outputExpect);
-//   })
-//
-//   test('struct and val1', () => {
-//     const input = `struct Sample {
-//     let a = 1
-// }`.split('');
-//     const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
-//     const outputExpect = `package com.example.test
-//
-//
-// object Sample {
-//     val a = 1
-// }`;
-//     expect(output).toEqual(outputExpect);
-//   })
+  test('struct', () => {
+    const input = `struct Sample {
+}`.split('');
+    const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
+    const outputExpect = `package com.example.test
+
+object Sample {
+}`;
+    expect(output).toEqual(outputExpect);
+  })
+
+  test('struct and val1', () => {
+    const input = `struct Sample {
+    let a = 1
+}`.split('');
+    const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
+    const outputExpect = `package com.example.test
+
+object Sample {
+    val a = 1
+}`;
+    expect(output).toEqual(outputExpect);
+  })
 
   test('struct and val:"sample"', () => {
     const input = `struct Sample {
@@ -44,7 +42,6 @@ describe('struct', () => {
 }`.split('');
     const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
     const outputExpect = `package com.example.test
-
 
 object Sample {
     val a = "sample1"

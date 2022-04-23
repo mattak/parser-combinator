@@ -3,11 +3,12 @@ import {
   KotlinClassMemberDeclaration,
   KotlinDeclaration,
   KotlinFile,
+  KotlinImportList,
   KotlinObjectDeclaration,
   KotlinPropertyDeclaration,
   KotlinVariableDeclaration
 } from "../../syntax/kotlin";
-import {kotlinFilePrinter} from "./general/file";
+import {kotlinFilePrinter, kotlinImportListPrinter} from "./general/file";
 import {kotlinDeclarationPrinter} from "./general/declaration";
 import {
   kotlinClassBodyPrinter,
@@ -62,6 +63,7 @@ export const kotlinIndent = "    ";
 
 export interface KotlinPrinterTable {
   'file': KotlinPrinter<KotlinFile>,
+  'import-list': KotlinPrinter<KotlinImportList>,
   'declaration': KotlinPrinter<KotlinDeclaration>,
   'object-declaration': KotlinPrinter<KotlinObjectDeclaration>,
   'class-body': KotlinPrinter<KotlinClassBody>,
@@ -90,6 +92,7 @@ export interface KotlinPrinterTable {
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'file': kotlinFilePrinter,
+  'import-list': kotlinImportListPrinter,
   'declaration': kotlinDeclarationPrinter,
   'object-declaration': kotlinObjectDeclarationPrinter,
   'class-body': kotlinClassBodyPrinter,
