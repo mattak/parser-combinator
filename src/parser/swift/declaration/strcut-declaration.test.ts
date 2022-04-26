@@ -8,7 +8,8 @@ import {
   SwiftPattern,
   SwiftPatternInitializer,
   SwiftPostfixExpressionPrimary,
-  SwiftPrefixExpression, SwiftPrimaryExpression,
+  SwiftPrefixExpression,
+  SwiftPrimaryExpression,
   SwiftStructDeclaration,
   SwiftStructMember,
   SwiftStructMemberDeclaration
@@ -76,7 +77,7 @@ describe('structBody', () => {
     });
   });
 
-  test('Input: { let a = 1; let b = 2 }', () => {
+  test('Input: { let a = 1\n let b = 2 }', () => {
     const input = [..."{ let a = 1\n let b = 2 }"] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftStructMember[]>>({

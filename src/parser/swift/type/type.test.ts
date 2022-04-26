@@ -1,5 +1,5 @@
 import {type} from "./type";
-import {SwiftType, SwiftTypeIdentifierType} from "../../../syntax/swift";
+import {SwiftType, SwiftTypeIdentifier} from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
 
 describe('type', ()=> {
@@ -18,7 +18,7 @@ describe('type', ()=> {
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftType>>({
       result: 'success',
-      data: <SwiftTypeIdentifierType>{
+      data: <SwiftTypeIdentifier>{
         type: 'type-identifier',
         name: 'a',
         genericArguments: [],

@@ -11,13 +11,18 @@ export type SwiftTypeType = 'function'
   | 'any'
   | 'self';
 
-export interface SwiftType {
-  type: SwiftTypeType;
+export type SwiftType = SwiftTypeIdentifier
+
+export interface SwiftTypeIdentifier {
+  type: 'type-identifier',
+  name: string,
+  genericArguments: SwiftType[],
+  innerType: SwiftTypeIdentifier | null,
 }
 
-export interface SwiftTypeIdentifierType extends SwiftType {
-  type: 'type-identifier';
-  name: string;
-  genericArguments: SwiftType[];
-  innerType: SwiftTypeIdentifierType | null;
+export interface SwiftTypeAnnotation {
+  // type-annotation :== <attributes>? 'inout'? <type>
+  attributes: null,
+  isInout: boolean,
+  type: SwiftType,
 }

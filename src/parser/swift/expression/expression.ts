@@ -7,7 +7,7 @@ import {ParserInput, ParserOutput} from "../../../types";
 import {cat} from "../../../combinators";
 import {prefixExpression} from "./prefix-expression";
 import {map} from "../../../util";
-import {SwiftExpression} from "../../../syntax/swift/expression/expression";
+import {SwiftExpression} from "../../../syntax/swift";
 
 export function expression(input: ParserInput): ParserOutput<SwiftExpression> {
   return map(

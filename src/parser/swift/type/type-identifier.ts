@@ -6,16 +6,16 @@ import {cat, or} from "../../../combinators";
 import {identifier} from "../lexical-struct/identifier";
 import {genericArgumentClause} from "../generic-parameters/generic-argument";
 import {char} from "../../../char";
-import {SwiftTypeIdentifierType} from "../../../syntax/swift";
+import {SwiftTypeIdentifier} from "../../../syntax/swift";
 
-function typeIdentifier1(input: ParserInput): ParserOutput<SwiftTypeIdentifierType> {
+function typeIdentifier1(input: ParserInput): ParserOutput<SwiftTypeIdentifier> {
   return map(
     cat([
       identifier,
       opt(genericArgumentClause)
     ]),
     ([id, args]) => {
-      return <SwiftTypeIdentifierType>{
+      return <SwiftTypeIdentifier>{
         type: 'type-identifier',
         name: id,
         genericArguments: args.status === 'some' ? args.value : [],
@@ -24,7 +24,7 @@ function typeIdentifier1(input: ParserInput): ParserOutput<SwiftTypeIdentifierTy
     })(input);
 }
 
-function typeIdentifier2(input: ParserInput): ParserOutput<SwiftTypeIdentifierType> {
+function typeIdentifier2(input: ParserInput): ParserOutput<SwiftTypeIdentifier> {
   return map(
     cat([
       identifier,
@@ -33,7 +33,7 @@ function typeIdentifier2(input: ParserInput): ParserOutput<SwiftTypeIdentifierTy
       typeIdentifier,
     ]),
     ([id, args, , innerType]) => {
-      return <SwiftTypeIdentifierType>{
+      return <SwiftTypeIdentifier>{
         type: 'type-identifier',
         name: id,
         genericArguments: args.status === 'some' ? args.value : [],
@@ -43,7 +43,7 @@ function typeIdentifier2(input: ParserInput): ParserOutput<SwiftTypeIdentifierTy
   )(input);
 }
 
-export function typeIdentifier(input: ParserInput): ParserOutput<SwiftTypeIdentifierType> {
+export function typeIdentifier(input: ParserInput): ParserOutput<SwiftTypeIdentifier> {
   return or([
     typeIdentifier2,
     typeIdentifier1,

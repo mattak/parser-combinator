@@ -12,29 +12,33 @@ import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {expression} from "../expression/expression";
 import {SwiftConstantDeclaration, SwiftInitializer, SwiftPatternInitializer} from "../../../syntax/swift";
 
-const initializer: Parser<SwiftInitializer> = map(
-  cat([
-    whitespace0,
-    char('='),
-    whitespace0,
-    expression
-  ]),
-  ([, , , ex]) => {
-    return ex
-  }
-);
-
-const patternInitializer: Parser<SwiftPatternInitializer> = map(
-  cat([
-    pattern,
-    opt(initializer),
-  ]),
-  ([p, i]) => {
-    return {
-      pattern: p,
-      initializer: i.status === 'some' ? i.value : null
+const initializer: Parser<SwiftInitializer> = input => {
+  return map(
+    cat([
+      whitespace0,
+      char('='),
+      whitespace0,
+      expression
+    ]),
+    ([, , , ex]) => {
+      return ex
     }
-  });
+  )(input);
+}
+
+const patternInitializer: Parser<SwiftPatternInitializer> = input => {
+  return map(
+    cat([
+      pattern,
+      opt(initializer),
+    ]),
+    ([p, i]) => {
+      return {
+        pattern: p,
+        initializer: i.status === 'some' ? i.value : null
+      }
+    })(input);
+}
 
 export function constantDeclaration(input: ParserInput): ParserOutput<SwiftConstantDeclaration> {
   return map(

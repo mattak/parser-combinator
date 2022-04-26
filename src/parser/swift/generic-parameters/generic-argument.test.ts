@@ -1,6 +1,6 @@
 import {genericArgumentClause} from "./generic-argument";
 import {ParserOutput} from "../../../types";
-import {SwiftType, SwiftTypeIdentifierType} from "../../../syntax/swift";
+import {SwiftType, SwiftTypeIdentifier} from "../../../syntax/swift";
 
 describe('genericArgumentClause', () => {
   const parser = genericArgumentClause;
@@ -19,7 +19,7 @@ describe('genericArgumentClause', () => {
     expect(output).toEqual<ParserOutput<SwiftType[]>>({
       result: 'success',
       data: [
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'Hello',
           genericArguments: [],
@@ -36,13 +36,13 @@ describe('genericArgumentClause', () => {
     expect(output).toEqual<ParserOutput<SwiftType[]>>({
       result: 'success',
       data: [
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'Hello',
           genericArguments: [],
           innerType: null,
         },
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'World',
           genericArguments: [],
@@ -59,13 +59,13 @@ describe('genericArgumentClause', () => {
     expect(output).toEqual<ParserOutput<SwiftType[]>>({
       result: 'success',
       data: [
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'Hello',
           genericArguments: [],
           innerType: null,
         },
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'World',
           genericArguments: [],
@@ -81,13 +81,13 @@ describe('genericArgumentClause', () => {
     expect(output).toEqual<ParserOutput<SwiftType[]>>({
       result: 'success',
       data: [
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'Hello',
           genericArguments: [],
           innerType: null,
         },
-        <SwiftTypeIdentifierType>{
+        <SwiftTypeIdentifier>{
           type: 'type-identifier',
           name: 'World',
           genericArguments: [],

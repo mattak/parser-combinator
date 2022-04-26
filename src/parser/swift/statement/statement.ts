@@ -15,7 +15,7 @@ export function statement(input: ParserInput): ParserOutput<SwiftStatement> {
         whitespace0,
         opt(char(';'))
       ]),
-      ([dec, _space, _terminator]) => {
+      ([dec, ,]) => {
         return <SwiftStatementDeclaration>{
           type: 'declaration',
           value: dec,
