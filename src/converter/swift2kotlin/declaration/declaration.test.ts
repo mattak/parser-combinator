@@ -1,13 +1,18 @@
 import {convert_declaration_declarations, convert_declaration_importHeader} from "./declaration";
 import {
   SwiftConstantDeclaration,
+  SwiftFunctionDeclaration,
+  SwiftFunctionHead,
+  SwiftFunctionSignature,
   SwiftImportDeclaration,
   SwiftPatternInitializer,
   SwiftStructDeclaration
 } from "../../../syntax/swift";
 import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
 import {
+  KotlinDeclarationFunctionDeclaration,
   KotlinDeclarationPropertyDeclaration,
+  KotlinFunctionDeclaration,
   KotlinImportHeader,
   KotlinObjectDeclaration,
   KotlinPropertyDeclaration
@@ -16,11 +21,13 @@ import {
 describe('convert_declaration_declaration', () => {
   const mockStruct = jest.fn().mockImplementation(x => <KotlinObjectDeclaration>{});
   const mockConst = jest.fn().mockImplementation(x => [<KotlinPropertyDeclaration>{}]);
+  const mockFunction = jest.fn().mockImplementation(x => <KotlinFunctionDeclaration>{});
   const converter = convert_declaration_declarations;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
     'struct-declaration': mockStruct,
     'constant-declaration': mockConst,
+    'function-declaration': mockFunction,
   }
 
   test('struct', () => {
@@ -58,6 +65,24 @@ describe('convert_declaration_declaration', () => {
       <KotlinDeclarationPropertyDeclaration>{
         type: 'property',
         value: <KotlinPropertyDeclaration>{},
+      }
+    ]);
+  })
+
+  test('function', () => {
+    const input = <SwiftFunctionDeclaration>{
+      type: 'function',
+      head: <SwiftFunctionHead>{},
+      name: 'run',
+      signature: <SwiftFunctionSignature>{},
+      genericWhere: null,
+      body: null,
+    };
+    const output = converter(table, input);
+    expect(output).toEqual([
+      <KotlinDeclarationFunctionDeclaration>{
+        type: 'function',
+        value: <KotlinFunctionDeclaration>{},
       }
     ]);
   })

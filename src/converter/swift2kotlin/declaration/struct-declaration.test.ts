@@ -3,19 +3,19 @@ import {
   convert_structMember_classMemberDeclarations
 } from "./struct-declaration";
 import {
-  KotlinClassBody, KotlinClassMemberDeclaration,
-  KotlinClassMemberDeclarationDeclaration,
-  KotlinDeclaration, KotlinDeclarationObjectDeclaration,
-  KotlinModifiers,
-  KotlinObjectDeclaration
+  KotlinClassBody,
+  KotlinClassMemberDeclaration,
+  KotlinDeclaration,
+  KotlinDeclarationObjectDeclaration,
+  KotlinModifiers
 } from "../../../syntax/kotlin";
 import {
   SwiftDeclaration,
-  SwiftImportDeclaration,
   SwiftStructDeclaration,
-  SwiftStructMember, SwiftStructMemberDeclaration
+  SwiftStructMember,
+  SwiftStructMemberDeclaration
 } from "../../../syntax/swift";
-import {SwiftKotlinConvertTable, defaultSwiftKotlinConvertTable} from "../swift-converter";
+import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
 
 describe('convert_structDeclaration_objectDeclaration', () => {
   const converter = convert_structDeclaration_objectDeclaration;

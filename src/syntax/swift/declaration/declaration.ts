@@ -1,6 +1,7 @@
 import {SwiftStatement} from "../statement/statement";
 import {SwiftPattern} from "../pattern/pattern";
 import {SwiftExpression} from "../expression/expression";
+import {SwiftFunctionDeclaration} from "./function-declaration";
 
 type SwiftDeclarationType = 'import'
   | 'constant'
@@ -19,7 +20,11 @@ type SwiftDeclarationType = 'import'
   | 'operator'
   | 'precedence-group';
 
-export type SwiftDeclaration = SwiftImportDeclaration | SwiftStructDeclaration | SwiftConstantDeclaration
+export type SwiftDeclaration =
+  SwiftImportDeclaration
+  | SwiftStructDeclaration
+  | SwiftConstantDeclaration
+  | SwiftFunctionDeclaration
 
 // top-level
 export interface SwiftTopLevelDeclaration {

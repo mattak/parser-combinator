@@ -1,14 +1,14 @@
 import {
   SwiftConstantDeclaration,
-  SwiftDeclaration,
+  SwiftDeclaration, SwiftFunctionDeclaration,
   SwiftImportDeclaration,
   SwiftStructDeclaration
 } from "../../../syntax/swift";
 import {
-  KotlinDeclaration, KotlinDeclarationClassDeclaration,
-  KotlinDeclarationPropertyDeclaration,
-  KotlinImportHeader,
-  KotlinPropertyDeclaration
+  KotlinDeclaration,
+  KotlinDeclarationFunctionDeclaration,
+  KotlinDeclarationPropertyDeclaration, KotlinFunctionDeclaration,
+  KotlinImportHeader
 } from "../../../syntax/kotlin";
 import {SwiftKotlinConvertTable} from "../swift-converter";
 
@@ -26,7 +26,6 @@ export function convert_declaration_declarations(table: SwiftKotlinConvertTable,
     case 'import':
       return [];
     case 'constant':
-      // KotlinPropertyDeclaration[]
       const properties = table['constant-declaration'](table, <SwiftConstantDeclaration>input);
       return properties.map(x => {
         return <KotlinDeclarationPropertyDeclaration>{
@@ -36,7 +35,13 @@ export function convert_declaration_declarations(table: SwiftKotlinConvertTable,
       });
     // case 'variable':
     // case 'typealias':
-    // case 'function':
+    case 'function':
+      return <KotlinDeclaration[]>[
+        <KotlinDeclarationFunctionDeclaration>{
+          type: 'function',
+          value: table['function-declaration'](table, <SwiftFunctionDeclaration>input),
+        },
+      ];
     // case 'enum':
     case 'struct':
       return [

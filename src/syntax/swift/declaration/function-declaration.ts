@@ -19,6 +19,7 @@ import {SwiftExpression} from "../expression/expression";
 import {SwiftStatement} from "../statement/statement";
 
 export interface SwiftFunctionDeclaration {
+  type: 'function',
   head: SwiftFunctionHead,
   name: SwiftFunctionName,
   // <generic-parameter-clause>?

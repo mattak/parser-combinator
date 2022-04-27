@@ -2,17 +2,21 @@ import {
   SwiftConstantDeclaration,
   SwiftDeclaration,
   SwiftExpression,
+  SwiftFunctionDeclaration,
+  SwiftFunctionSignature,
   SwiftImportDeclaration,
   SwiftInitializer,
   SwiftLiteral,
   SwiftLiteralExpression,
+  SwiftParameter,
   SwiftPattern,
   SwiftPatternInitializer,
   SwiftPrimaryExpression,
   SwiftStatement,
   SwiftStructDeclaration,
   SwiftStructMember,
-  SwiftTopLevelDeclaration
+  SwiftTopLevelDeclaration,
+  SwiftTypeAnnotation
 } from "../../syntax/swift";
 import {convert_null_packageHeader, convert_topLevelDeclaration_file} from "./declaration/top-level-declaration";
 import {convert_statement_declaration} from "./statement/statement";
@@ -21,12 +25,17 @@ import {
   convert_importDeclarations_importList
 } from "./declaration/import-declaration";
 import {
-  KotlinClassDeclaration, KotlinClassMemberDeclaration,
+  KotlinClassMemberDeclaration,
   KotlinDeclaration,
+  KotlinFunctionDeclaration,
+  KotlinFunctionValueParameter,
+  KotlinFunctionValueParameters,
   KotlinImportHeader,
   KotlinImportList,
-  KotlinObjectDeclaration,
-  KotlinPropertyDeclaration
+  KotlinLiteralConstant, KotlinParameter,
+  KotlinPrimaryExpression,
+  KotlinPropertyDeclaration,
+  KotlinType
 } from "../../syntax/kotlin";
 import {
   convert_structDeclaration_objectDeclaration,
@@ -45,7 +54,12 @@ import {
   convert_literalExpression_primaryExpression,
   convert_primaryExpression_primaryExpression
 } from "./expression/expression";
-import {KotlinLiteralConstant, KotlinPrimaryExpression} from "../../syntax/kotlin/expressions/expressions";
+import {convert_typeAnnotation_type} from "./type/type-annotation";
+import {
+  convert_functionDeclaration_functionDeclaration,
+  convert_functionSignature_functionValueParameters,
+  convert_parameter_functionValueParameter, convert_parameter_parameter
+} from "./declaration/function-declaration";
 
 export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) => To;
 
@@ -66,6 +80,11 @@ export interface SwiftKotlinConvertTable {
   'expression': Converter<SwiftExpression, any>,
   'primary-expression': Converter<SwiftPrimaryExpression, any>,
   'literal-expression': Converter<SwiftLiteralExpression, any>,
+  'type-annotation__type': Converter<SwiftTypeAnnotation, KotlinType>,
+  'function-declaration': Converter<SwiftFunctionDeclaration, KotlinFunctionDeclaration>,
+  'function-signature': Converter<SwiftFunctionSignature, KotlinFunctionValueParameters>,
+  'parameter__functionValueParameter': Converter<SwiftParameter, KotlinFunctionValueParameter>,
+  'parameter__parameter': Converter<SwiftParameter, KotlinParameter>,
 
   // kotlin
   'importList': Converter<SwiftImportDeclaration[], KotlinImportList>,
@@ -89,6 +108,11 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'expression': convert_expression_expression,
   'primary-expression': convert_primaryExpression_primaryExpression,
   'literal-expression': convert_literalExpression_primaryExpression,
+  'type-annotation__type': convert_typeAnnotation_type,
+  'function-declaration': convert_functionDeclaration_functionDeclaration,
+  'function-signature': convert_functionSignature_functionValueParameters,
+  'parameter__functionValueParameter': convert_parameter_functionValueParameter,
+  'parameter__parameter': convert_parameter_parameter,
 
   // kotlin
   'importList': convert_importDeclarations_importList,
