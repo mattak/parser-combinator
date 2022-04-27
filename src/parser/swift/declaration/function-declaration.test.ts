@@ -6,14 +6,13 @@ import {
   parameterList
 } from "./function-declaration";
 import {
-  SwiftDefaultArgumentClause,
-  SwiftExternalParameterName,
-  SwiftFunctionBody,
-  SwiftFunctionDeclaration, SwiftFunctionHead, SwiftFunctionName,
-  SwiftFunctionSignature, SwiftLocalParameterName,
+  SwiftFunctionDeclaration,
+  SwiftFunctionHead,
+  SwiftFunctionSignature,
   SwiftParameter,
-  SwiftParameterClause, SwiftParameterList
-} from "../../../syntax/swift/declaration/function-declaration";
+  SwiftParameterClause,
+  SwiftParameterList
+} from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
 import {SwiftType, SwiftTypeAnnotation} from "../../../syntax/swift";
 

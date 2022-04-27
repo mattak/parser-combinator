@@ -10,7 +10,7 @@ import {
   SwiftParameter,
   SwiftParameterClause,
   SwiftParameterList
-} from "../../../syntax/swift/declaration/function-declaration";
+} from "../../../syntax/swift";
 import {list0, map, opt, str} from "../../../util";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {identifier} from "../lexical-struct/identifier";
