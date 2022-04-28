@@ -70,4 +70,17 @@ fun run(a: Sample) {
 }`;
     expect(output).toEqual(outputExpect);
   })
+
+  test('func run(a: Sample) { let a = 1 }', () => {
+    const input = `func run(a: Sample) {
+    let a = 1
+}`.split('');
+    const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
+    const outputExpect = `package com.example.test
+
+fun run(a: Sample) {
+    val a = 1
+}`;
+    expect(output).toEqual(outputExpect);
+  })
 })
