@@ -20,4 +20,3 @@ export function parseConvertPrint(input: string[], converterTable: SwiftKotlinCo
   // printer
   return kotlinFilePrinter(printerTable, converted, 0);
 }
-

@@ -1,9 +1,10 @@
 import {ParserOutput} from "../../../types";
 import {statement} from "./statement";
 import {
+  SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionSignature,
-  SwiftImportDeclaration,
+  SwiftImportDeclaration, SwiftStatement,
   SwiftStatementDeclaration
 } from "../../../syntax/swift";
 
@@ -54,7 +55,9 @@ describe('statement', () => {
             result: null,
           },
           genericWhere: null,
-          body: null,
+          body: <SwiftFunctionBody>{
+            statements: [],
+          },
         },
       },
       rest: [],

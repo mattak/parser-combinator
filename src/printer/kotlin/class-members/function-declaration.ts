@@ -14,12 +14,11 @@ export function kotlinFunctionDeclarationPrinter(
 ): PrinterOutput {
   const name = input.name.value;
   const parameters = table['function-value-parameters'](table, input.parameters, depth);
-  const body = input.body !== null ? table['function-body'](table, input.body, depth) : [];
+  const body = input.body !== null ? table['function-body'](table, input.body, depth) : ['{', '}'];
 
   return [
-    `fun ${name}${parameters} {`,
-    ...body,
-    '}',
+    `fun ${name}${parameters} ${body[0]}`,
+    ...body.slice(1),
   ];
 }
 

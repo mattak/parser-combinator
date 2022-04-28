@@ -6,12 +6,20 @@ import {
   parameterList
 } from "./function-declaration";
 import {
+  SwiftConstantDeclaration,
+  SwiftDeclaration,
+  SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionHead,
-  SwiftFunctionSignature,
+  SwiftFunctionSignature, SwiftInitializer,
   SwiftParameter,
   SwiftParameterClause,
   SwiftParameterList,
+  SwiftPattern, SwiftPatternIdentifier,
+  SwiftPatternInitializer,
+  SwiftStatement,
+  SwiftStatementDeclaration,
+  SwiftStatementType,
   SwiftType,
   SwiftTypeAnnotation
 } from "../../../syntax/swift";
@@ -290,7 +298,9 @@ describe('functionDeclaration', () => {
           result: null,
         },
         genericWhere: null,
-        body: null,
+        body: <SwiftFunctionBody>{
+          statements: [],
+        },
       },
       rest: [],
     });
@@ -329,7 +339,49 @@ describe('functionDeclaration', () => {
           result: null,
         },
         genericWhere: null,
-        body: null,
+        body: <SwiftFunctionBody>{
+          statements: [],
+        },
+      },
+      rest: [],
+    });
+  });
+
+  test('Input: func run() { let a }', () => {
+    const input = [...'func run() { let a }'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
+      result: 'success',
+      data: <SwiftFunctionDeclaration>{
+        type: 'function',
+        head: <SwiftFunctionHead>{},
+        name: 'run',
+        signature: <SwiftFunctionSignature>{
+          parameters: <SwiftParameter[]>[],
+          isAsync: false,
+          isThrows: false,
+          result: null,
+        },
+        genericWhere: null,
+        body: <SwiftFunctionBody>{
+          statements: [
+            <SwiftStatementDeclaration>{
+              type: 'declaration',
+              value: <SwiftConstantDeclaration>{
+                type: 'constant',
+                patternInitializers: [
+                  <SwiftPatternInitializer>{
+                    pattern: <SwiftPatternIdentifier>{
+                      type: 'identifier',
+                      value: 'a',
+                    },
+                    initializer: null,
+                  },
+                ],
+              },
+            }
+          ],
+        },
       },
       rest: [],
     });

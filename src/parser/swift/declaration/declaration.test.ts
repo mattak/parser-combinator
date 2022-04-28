@@ -2,7 +2,7 @@ import {ParserOutput} from "../../../types";
 import {declaration} from "./declaration";
 import {
   SwiftConstantDeclaration,
-  SwiftDeclaration,
+  SwiftDeclaration, SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionSignature,
   SwiftImportDeclaration,
@@ -118,7 +118,9 @@ describe('declaration', () => {
           result: null,
         },
         genericWhere: null,
-        body: null,
+        body: <SwiftFunctionBody>{
+          statements: [],
+        },
       },
       rest: [],
     });

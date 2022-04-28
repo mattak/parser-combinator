@@ -1,11 +1,21 @@
 import {SwiftKotlinConvertTable} from "../swift-converter";
-import {SwiftFunctionDeclaration, SwiftFunctionSignature, SwiftParameter} from "../../../syntax/swift";
 import {
+  SwiftFunctionBody,
+  SwiftFunctionDeclaration,
+  SwiftFunctionSignature,
+  SwiftParameter
+} from "../../../syntax/swift";
+import {
+  KotlinBlock,
+  KotlinFunctionBody,
+  KotlinFunctionBodyBlock,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
   KotlinParameter,
-  KotlinSimpleIdentifier
+  KotlinSimpleIdentifier,
+  KotlinStatement,
+  KotlinStatementDeclaration
 } from "../../../syntax/kotlin";
 
 export function convert_functionDeclaration_functionDeclaration(
@@ -15,7 +25,7 @@ export function convert_functionDeclaration_functionDeclaration(
   return <KotlinFunctionDeclaration>{
     name: <KotlinSimpleIdentifier>{value: input.name},
     parameters: table['function-signature'](table, input.signature),
-    body: null,
+    body: input.body !== null ? table['function-body'](table, input.body) : null,
   }
 }
 
@@ -43,5 +53,25 @@ export function convert_parameter_parameter(
   return <KotlinParameter>{
     key: <KotlinSimpleIdentifier>{value: input.localName},
     type: table['type-annotation__type'](table, input.type)
+  }
+}
+
+export function convert_functionBody_functionBody(
+  table: SwiftKotlinConvertTable,
+  input: SwiftFunctionBody,
+): KotlinFunctionBody {
+  const statements = input.statements
+    .flatMap(x => table['statement'](table, x))
+    .map(x => <KotlinStatement>{
+      value: <KotlinStatementDeclaration>{
+        type: 'declaration',
+        value: x,
+      }
+    });
+  return <KotlinFunctionBodyBlock>{
+    type: "block",
+    value: <KotlinBlock>{
+      statements: statements,
+    },
   }
 }

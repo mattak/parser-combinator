@@ -2,6 +2,7 @@ import {
   SwiftConstantDeclaration,
   SwiftDeclaration,
   SwiftExpression,
+  SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionSignature,
   SwiftImportDeclaration,
@@ -27,12 +28,14 @@ import {
 import {
   KotlinClassMemberDeclaration,
   KotlinDeclaration,
+  KotlinFunctionBody,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
   KotlinImportHeader,
   KotlinImportList,
-  KotlinLiteralConstant, KotlinParameter,
+  KotlinLiteralConstant,
+  KotlinParameter,
   KotlinPrimaryExpression,
   KotlinPropertyDeclaration,
   KotlinType
@@ -56,9 +59,11 @@ import {
 } from "./expression/expression";
 import {convert_typeAnnotation_type} from "./type/type-annotation";
 import {
+  convert_functionBody_functionBody,
   convert_functionDeclaration_functionDeclaration,
   convert_functionSignature_functionValueParameters,
-  convert_parameter_functionValueParameter, convert_parameter_parameter
+  convert_parameter_functionValueParameter,
+  convert_parameter_parameter
 } from "./declaration/function-declaration";
 
 export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) => To;
@@ -66,7 +71,7 @@ export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) 
 export interface SwiftKotlinConvertTable {
   // swift
   'top-level-declaration': Converter<SwiftTopLevelDeclaration, any>,
-  'statement': Converter<SwiftStatement, any>,
+  'statement': Converter<SwiftStatement, KotlinDeclaration[]>,
   'declaration': Converter<SwiftDeclaration, KotlinDeclaration[]>,
   'import-declaration': Converter<SwiftImportDeclaration, KotlinImportHeader>,
   'struct-declaration': Converter<SwiftStructDeclaration, KotlinDeclaration>,
@@ -85,6 +90,7 @@ export interface SwiftKotlinConvertTable {
   'function-signature': Converter<SwiftFunctionSignature, KotlinFunctionValueParameters>,
   'parameter__functionValueParameter': Converter<SwiftParameter, KotlinFunctionValueParameter>,
   'parameter__parameter': Converter<SwiftParameter, KotlinParameter>,
+  'function-body': Converter<SwiftFunctionBody, KotlinFunctionBody>,
 
   // kotlin
   'importList': Converter<SwiftImportDeclaration[], KotlinImportList>,
@@ -113,6 +119,7 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'function-signature': convert_functionSignature_functionValueParameters,
   'parameter__functionValueParameter': convert_parameter_functionValueParameter,
   'parameter__parameter': convert_parameter_parameter,
+  'function-body': convert_functionBody_functionBody,
 
   // kotlin
   'importList': convert_importDeclarations_importList,

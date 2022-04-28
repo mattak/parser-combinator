@@ -11,11 +11,11 @@ export type SwiftPatternType =
 export type SwiftPattern = SwiftPatternIdentifier | SwiftPatternWildcard
 
 export interface SwiftPatternIdentifier {
-  type: 'identifier';
-  value: string;
+  type: 'identifier',
+  value: string,
 }
 
 export interface SwiftPatternWildcard {
-  type: 'wildcard';
-  value: '_';
+  type: 'wildcard',
+  value: '_',
 }

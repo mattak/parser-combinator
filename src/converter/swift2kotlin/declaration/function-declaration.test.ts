@@ -1,22 +1,25 @@
 import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
 import {
-  KotlinExpression,
+  KotlinBlock,
+  KotlinExpression, KotlinFunctionBody, KotlinFunctionBodyBlock,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
-  KotlinParameter,
+  KotlinParameter, KotlinStatement, KotlinStatementDeclaration,
   KotlinType
 } from "../../../syntax/kotlin";
 import {
-  SwiftExpression,
+  SwiftDeclaration,
+  SwiftExpression, SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionHead,
   SwiftFunctionSignature,
-  SwiftParameter,
+  SwiftParameter, SwiftStatement, SwiftStatementDeclaration, SwiftStatementType,
   SwiftType,
   SwiftTypeAnnotation
 } from "../../../syntax/swift";
 import {
+  convert_functionBody_functionBody,
   convert_functionDeclaration_functionDeclaration,
   convert_parameter_functionValueParameter,
   convert_parameter_parameter
@@ -102,12 +105,70 @@ describe('convert_parameter_parameter', () => {
   });
 });
 
+describe('convert_functionBody_functionBody', () => {
+  const converter = convert_functionBody_functionBody;
+  const stMock = jest.fn().mockImplementation(x => <SwiftStatement[]>[
+    <SwiftStatement>{},
+    <SwiftStatement>{},
+  ])
+  const table = <SwiftKotlinConvertTable>{
+    ...defaultSwiftKotlinConvertTable,
+    'statement': stMock,
+  }
+
+  test('block: empty', () => {
+    const input = <SwiftFunctionBody>{
+      statements: [],
+    };
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinFunctionBodyBlock>({
+      type: 'block',
+      value: <KotlinBlock>{
+        statements: [],
+      },
+    });
+  });
+
+  test('block', () => {
+    const input = <SwiftFunctionBody>{
+      statements: [
+        <SwiftStatementDeclaration>{
+          type: 'declaration',
+          value: <SwiftDeclaration>{},
+        },
+      ],
+    };
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinFunctionBodyBlock>({
+      type: 'block',
+      value: <KotlinBlock>{
+        statements: [
+          <KotlinStatement>{
+            value: <KotlinStatementDeclaration>{
+              type: 'declaration',
+              value: {}
+            }
+          },
+          <KotlinStatement>{
+            value: <KotlinStatementDeclaration>{
+              type: 'declaration',
+              value: {}
+            }
+          },
+        ],
+      },
+    });
+  });
+});
+
 describe('convert_functionDeclaration_functionDeclaration', () => {
   const converter = convert_functionDeclaration_functionDeclaration;
   const signatureMock = jest.fn().mockImplementation(x => <KotlinFunctionValueParameters>[])
+  const functionMock = jest.fn().mockImplementation(x => <KotlinFunctionBody>{})
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
     'function-signature': signatureMock,
+    'function-body': functionMock,
   }
 
   test('func run(key:Type){}', () => {
@@ -125,6 +186,25 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
         name: {value: 'run'},
         parameters: [],
         body: null,
+      },
+    );
+  });
+
+  test('func run(key:Type){ <statement> }', () => {
+    const input = <SwiftFunctionDeclaration>{
+      type: 'function',
+      head: <SwiftFunctionHead>{},
+      name: 'run',
+      signature: <SwiftFunctionSignature>{},
+      genericWhere: null,
+      body: <SwiftFunctionBody>{},
+    };
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinFunctionDeclaration>(
+      <KotlinFunctionDeclaration>{
+        name: {value: 'run'},
+        parameters: [],
+        body: <KotlinFunctionBody>{},
       },
     );
   });

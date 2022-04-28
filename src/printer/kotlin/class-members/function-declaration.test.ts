@@ -1,14 +1,20 @@
 import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 import {
   KotlinBlock,
-  KotlinExpression,
+  KotlinDeclaration,
+  KotlinDeclarationFunctionDeclaration,
+  KotlinDeclarationObjectDeclaration,
+  KotlinDeclarationPropertyDeclaration,
+  KotlinExpression, KotlinFunctionBody,
   KotlinFunctionBodyBlock,
   KotlinFunctionBodyExpression,
   KotlinFunctionDeclaration,
-  KotlinFunctionValueParameter,
+  KotlinFunctionValueParameter, KotlinFunctionValueParameters,
   KotlinParameter,
   KotlinSimpleIdentifier,
   KotlinStatement,
+  KotlinStatementDeclaration,
+  KotlinStatementExpression,
   KotlinType
 } from "../../../syntax/kotlin";
 import {
@@ -23,6 +29,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
   const printer = kotlinFunctionDeclarationPrinter;
   const mockWithoutParameter = jest.fn().mockImplementation(() => ['()']);
   const mockWithParameter1 = jest.fn().mockImplementation(() => ['(a: Int)']);
+  const mockWithBody = jest.fn().mockImplementation(() => ['{', 'val a = 1', '}']);
 
   test('plain', () => {
     const input = <KotlinFunctionDeclaration>{
@@ -58,6 +65,45 @@ describe('kotlinFunctionDeclarationPrinter', () => {
       '}',
     ]);
     expect(mockWithParameter1).toHaveBeenCalledTimes(1);
+  });
+
+  test('with body', () => {
+    const input = <KotlinFunctionDeclaration>{
+      name: <KotlinSimpleIdentifier>{value: "run"},
+      parameters: [<KotlinFunctionValueParameter>{}],
+      body: <KotlinFunctionBodyBlock>{
+        type: 'block',
+        value: <KotlinBlock>{
+          statements: [
+            <KotlinStatement>{
+              value: <KotlinStatementDeclaration>{
+                type: 'declaration',
+                value: <KotlinDeclarationFunctionDeclaration>{
+                  type: 'function',
+                  value: <KotlinFunctionDeclaration>{
+                    name: {value: 'run'},
+                    parameters: [],
+                    body: null,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    };
+    const table = <KotlinPrinterTable>{
+      ...defaultKotlinPrinterTable,
+      'function-value-parameters': mockWithoutParameter,
+      'function-body': mockWithBody,
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>([
+      'fun run() {',
+      'val a = 1',
+      '}',
+    ]);
+    expect(mockWithBody).toHaveBeenCalledTimes(1);
   });
 });
 

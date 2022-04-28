@@ -9,7 +9,8 @@ import {
   SwiftFunctionSignature,
   SwiftParameter,
   SwiftParameterClause,
-  SwiftParameterList
+  SwiftParameterList,
+  SwiftStatement
 } from "../../../syntax/swift";
 import {list0, map, opt, str} from "../../../util";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
@@ -18,7 +19,6 @@ import {char} from "../../../char";
 import {typeAnnotation} from "../type/type-annotation";
 import {expression} from "../expression/expression";
 import {codeBlock} from "./code-block";
-import {SwiftStatement} from "../../../syntax/swift";
 
 export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunctionDeclaration> {
   // <function-declaration> ::=
@@ -36,7 +36,7 @@ export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunct
       // genericWhereClause,
       functionBody,
     ]),
-    ([head, , name, , signature]) => {
+    ([head, , name, , signature, , body]) => {
       return <SwiftFunctionDeclaration>{
         type: 'function',
         head: head,
@@ -44,7 +44,7 @@ export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunct
         // <generic-parameter-clause>?
         signature: signature,
         genericWhere: null,
-        body: null,
+        body: body,
       }
     })(input);
 }

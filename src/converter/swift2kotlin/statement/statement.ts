@@ -1,5 +1,5 @@
 import {SwiftStatement, SwiftStatementDeclaration} from "../../../syntax/swift";
-import {KotlinDeclaration, KotlinDeclarationPropertyDeclaration} from "../../../syntax/kotlin";
+import {KotlinDeclaration} from "../../../syntax/kotlin";
 import {SwiftKotlinConvertTable} from "../swift-converter";
 
 export function convert_statement_declaration(table: SwiftKotlinConvertTable, input: SwiftStatement): KotlinDeclaration[] {
