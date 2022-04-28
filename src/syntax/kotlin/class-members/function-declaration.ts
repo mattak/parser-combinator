@@ -1,6 +1,7 @@
 import {KotlinExpression} from "../expressions/expressions";
 import {KotlinSimpleIdentifier} from "../identifiers/simple-identifier";
 import {KotlinType} from "../types/type";
+import {KotlinBlock} from "../statements/block";
 
 export interface KotlinFunctionDeclaration {
   // modifiers?
@@ -11,11 +12,19 @@ export interface KotlinFunctionDeclaration {
   parameters: KotlinFunctionValueParameters,
   // (':' type)?
   // typeConstraints?
-  functionBody: KotlinFunctionBody | null,
+  body: KotlinFunctionBody | null,
 }
 
-export interface KotlinFunctionBody {
-  // block | '=' expression
+export type KotlinFunctionBody = KotlinFunctionBodyBlock | KotlinFunctionBodyExpression
+
+export interface KotlinFunctionBodyBlock {
+  type: 'block',
+  value: KotlinBlock,
+}
+
+export interface KotlinFunctionBodyExpression {
+  type: 'expression',
+  value: KotlinExpression,
 }
 
 // '(' (functionValueParameter (',' functionValueParameter)* ','?)? ')'

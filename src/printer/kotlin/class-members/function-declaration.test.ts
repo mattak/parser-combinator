@@ -1,13 +1,23 @@
 import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
-import {KotlinFunctionDeclaration, KotlinFunctionValueParameter, KotlinParameter} from "../../../syntax/kotlin";
 import {
+  KotlinBlock,
+  KotlinExpression,
+  KotlinFunctionBodyBlock,
+  KotlinFunctionBodyExpression,
+  KotlinFunctionDeclaration,
+  KotlinFunctionValueParameter,
+  KotlinParameter,
+  KotlinSimpleIdentifier,
+  KotlinStatement,
+  KotlinType
+} from "../../../syntax/kotlin";
+import {
+  kotlinFunctionBodyPrinter,
   kotlinFunctionDeclarationPrinter,
   kotlinFunctionValueParameterPrinter,
-  kotlinFunctionValueParametersPrinter, kotlinParameterPrinter
+  kotlinFunctionValueParametersPrinter,
+  kotlinParameterPrinter
 } from "./function-declaration";
-import {KotlinSimpleIdentifier} from "../../../syntax/kotlin/identifiers/simple-identifier";
-import {KotlinExpression} from "../../../syntax/kotlin/expressions/expressions";
-import {KotlinType} from "../../../syntax/kotlin/types/type";
 
 describe('kotlinFunctionDeclarationPrinter', () => {
   const printer = kotlinFunctionDeclarationPrinter;
@@ -18,7 +28,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
     const input = <KotlinFunctionDeclaration>{
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [],
-      functionBody: null,
+      body: null,
     };
     const table = <KotlinPrinterTable>{
       ...defaultKotlinPrinterTable,
@@ -36,7 +46,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
     const input = <KotlinFunctionDeclaration>{
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [<KotlinFunctionValueParameter>{}],
-      functionBody: null,
+      body: null,
     };
     const table = <KotlinPrinterTable>{
       ...defaultKotlinPrinterTable,
@@ -137,5 +147,42 @@ describe('kotlinParameterPrinter', () => {
       'a: Type',
     ]);
     expect(mockType).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('kotlinFunctionBodyPrinter', () => {
+  const printer = kotlinFunctionBodyPrinter;
+  const mockBlock = jest.fn().mockImplementation(() => ['val a = 1']);
+  const mockExpression = jest.fn().mockImplementation(() => ['1']);
+  const table = <KotlinPrinterTable>{
+    ...defaultKotlinPrinterTable,
+    'block': mockBlock,
+    'expression': mockExpression,
+  };
+
+  test('block', () => {
+    const input = <KotlinFunctionBodyBlock>{
+      type: 'block',
+      value: <KotlinBlock>{
+        statements: [
+          <KotlinStatement>{},
+        ],
+      },
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>([
+      'val a = 1',
+    ]);
+  });
+
+  test('expression', () => {
+    const input = <KotlinFunctionBodyExpression>{
+      type: 'expression',
+      value: <KotlinExpression>{},
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>([
+      '= 1',
+    ]);
   });
 });

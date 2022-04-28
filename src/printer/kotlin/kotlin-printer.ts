@@ -1,14 +1,40 @@
 import {
+  KotlinAdditiveExpression,
+  KotlinAsExpression,
+  KotlinBlock,
   KotlinClassBody,
   KotlinClassMemberDeclaration,
+  KotlinComparison,
+  KotlinConjunction,
   KotlinDeclaration,
-  KotlinFile,
+  KotlinDisjunction,
+  KotlinElvisExpression,
+  KotlinEquality,
+  KotlinExpression,
+  KotlinFile, KotlinFunctionBody,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
+  KotlinGenericCallLikeComparison,
   KotlinImportList,
-  KotlinObjectDeclaration, KotlinParameter,
+  KotlinInfixFunctionCall,
+  KotlinInfixOperation,
+  KotlinLiteralConstant,
+  KotlinMultiplicativeExpression,
+  KotlinNullableType,
+  KotlinObjectDeclaration,
+  KotlinParameter,
+  KotlinParenthesizedType,
+  KotlinPostfixUnaryExpression,
+  KotlinPrefixUnaryExpression,
+  KotlinPrimaryExpression,
   KotlinPropertyDeclaration,
+  KotlinRangeExpression,
+  KotlinStatement,
+  KotlinStatements,
+  KotlinStringLiteral,
+  KotlinType,
+  KotlinTypeReference,
   KotlinVariableDeclaration
 } from "../../syntax/kotlin";
 import {kotlinFilePrinter, kotlinImportListPrinter} from "./general/file";
@@ -19,25 +45,6 @@ import {
   kotlinObjectDeclarationPrinter
 } from "./class/object-declaration";
 import {kotlinPropertyDeclarationPrinter, kotlinVariableDeclarationPrinter} from "./class-members/property-declaration";
-import {
-  KotlinAdditiveExpression,
-  KotlinAsExpression,
-  KotlinComparison,
-  KotlinConjunction,
-  KotlinDisjunction,
-  KotlinElvisExpression,
-  KotlinEquality,
-  KotlinExpression,
-  KotlinGenericCallLikeComparison,
-  KotlinInfixFunctionCall,
-  KotlinInfixOperation,
-  KotlinLiteralConstant,
-  KotlinMultiplicativeExpression,
-  KotlinPostfixUnaryExpression,
-  KotlinPrefixUnaryExpression,
-  KotlinPrimaryExpression,
-  KotlinRangeExpression
-} from "../../syntax/kotlin/expressions/expressions";
 import {
   kotlinAdditiveExpressionPrinter,
   kotlinAsExpressionPrinter,
@@ -57,25 +64,22 @@ import {
 } from "./expressions/expression";
 import {kotlinLiteralConstantPrinter} from "./expressions/literal-constant";
 import {kotlinPrimaryExpressionPrinter} from "./expressions/primary-expression";
-import {KotlinStringLiteral} from "../../syntax/kotlin/expressions/string-literal";
 import {kotlinStringLiteralPrinter} from "./expressions/string-literal";
 import {
+  kotlinFunctionBodyPrinter,
   kotlinFunctionDeclarationPrinter,
   kotlinFunctionValueParameterPrinter,
-  kotlinFunctionValueParametersPrinter, kotlinParameterPrinter
+  kotlinFunctionValueParametersPrinter,
+  kotlinParameterPrinter
 } from "./class-members/function-declaration";
-import {
-  KotlinNullableType,
-  KotlinParenthesizedType,
-  KotlinType,
-  KotlinTypeReference
-} from "../../syntax/kotlin/types/type";
 import {
   kotlinNullableTypePrinter,
   kotlinParenthesizedTypePrinter,
   kotlinTypePrinter,
   kotlinTypeReferencePrinter
 } from "./type/type";
+import {kotlinStatementPrinter, kotlinStatementsPrinter} from "./statements/statement";
+import {kotlinBlockPrinter} from "./statements/block";
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
@@ -116,6 +120,10 @@ export interface KotlinPrinterTable {
   'type-reference': KotlinPrinter<KotlinTypeReference>,
   'parenthesized-type': KotlinPrinter<KotlinParenthesizedType>,
   'nullable-type': KotlinPrinter<KotlinNullableType>,
+  'statement': KotlinPrinter<KotlinStatement>,
+  'statements': KotlinPrinter<KotlinStatements>,
+  'block': KotlinPrinter<KotlinBlock>,
+  'function-body': KotlinPrinter<KotlinFunctionBody>,
 }
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
@@ -153,4 +161,8 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'type-reference': kotlinTypeReferencePrinter,
   'parenthesized-type': kotlinParenthesizedTypePrinter,
   'nullable-type': kotlinNullableTypePrinter,
+  'statement': kotlinStatementPrinter,
+  'statements': kotlinStatementsPrinter,
+  'block': kotlinBlockPrinter,
+  'function-body': kotlinFunctionBodyPrinter,
 }

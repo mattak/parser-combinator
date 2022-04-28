@@ -4,7 +4,7 @@ import {
   KotlinParenthesizedType,
   KotlinType,
   KotlinTypeReference
-} from "../../../syntax/kotlin/types/type";
+} from "../../../syntax/kotlin";
 
 export function kotlinTypePrinter(
   table: KotlinPrinterTable,

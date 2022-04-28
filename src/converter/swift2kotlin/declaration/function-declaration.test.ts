@@ -124,7 +124,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
       <KotlinFunctionDeclaration>{
         name: {value: 'run'},
         parameters: [],
-        functionBody: null,
+        body: null,
       },
     );
   });

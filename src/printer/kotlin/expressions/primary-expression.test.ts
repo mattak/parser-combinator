@@ -2,7 +2,7 @@ import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../k
 import {
   KotlinLiteralConstant,
   KotlinPrimaryExpressionLiteralConstant
-} from "../../../syntax/kotlin/expressions/expressions";
+} from "../../../syntax/kotlin";
 import {kotlinPrimaryExpressionPrinter} from "./primary-expression";
 
 describe('kotlinPrimaryExpressionPrinter', () => {

@@ -1,5 +1,6 @@
 import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 import {
+  KotlinFunctionBody,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
@@ -12,11 +13,12 @@ export function kotlinFunctionDeclarationPrinter(
   depth: number,
 ): PrinterOutput {
   const name = input.name.value;
-  const parameters = table['function-value-parameters'](table, input.parameters, depth)
-  // FIXME: implement body
+  const parameters = table['function-value-parameters'](table, input.parameters, depth);
+  const body = input.body !== null ? table['function-body'](table, input.body, depth) : [];
 
   return [
     `fun ${name}${parameters} {`,
+    ...body,
     '}',
   ];
 }
@@ -56,4 +58,19 @@ export function kotlinParameterPrinter(
   const prefix = input.key.value;
   const suffix = table['type'](table, input.type, depth)
   return [`${prefix}: ${suffix}`]
+}
+
+export function kotlinFunctionBodyPrinter(
+  table: KotlinPrinterTable,
+  input: KotlinFunctionBody,
+  depth: number,
+): PrinterOutput {
+  switch (input.type) {
+    case "expression":
+      return [
+        '= ' + table['expression'](table, input.value, depth)[0],
+      ]
+    case "block":
+      return table['block'](table, input.value, depth)
+  }
 }

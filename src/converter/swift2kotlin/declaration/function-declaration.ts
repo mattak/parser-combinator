@@ -15,7 +15,7 @@ export function convert_functionDeclaration_functionDeclaration(
   return <KotlinFunctionDeclaration>{
     name: <KotlinSimpleIdentifier>{value: input.name},
     parameters: table['function-signature'](table, input.signature),
-    functionBody: null,
+    body: null,
   }
 }
 

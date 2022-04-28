@@ -12,7 +12,7 @@ import {
   KotlinType,
   KotlinTypeReference,
   KotlinUserType
-} from "../../../syntax/kotlin/types/type";
+} from "../../../syntax/kotlin";
 
 describe('kotlinTypePrinter', () => {
   const printer = kotlinTypePrinter;
