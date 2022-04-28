@@ -15,7 +15,7 @@ import {
   KotlinPostfixUnaryExpression,
   KotlinPrefixUnaryExpression,
   KotlinRangeExpression
-} from "../../../syntax/kotlin/expressions/expressions";
+} from "../../../syntax/kotlin";
 
 export function kotlinExpressionPrinter(table: KotlinPrinterTable, input: KotlinExpression, depth: number): PrinterOutput {
   return table['disjunction'](table, input.disjunction, depth);
