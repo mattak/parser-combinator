@@ -11,7 +11,8 @@ import {
   KotlinElvisExpression,
   KotlinEquality,
   KotlinExpression,
-  KotlinFile, KotlinFunctionBody,
+  KotlinFile,
+  KotlinFunctionBody,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
@@ -19,6 +20,7 @@ import {
   KotlinImportList,
   KotlinInfixFunctionCall,
   KotlinInfixOperation,
+  KotlinJumpExpression,
   KotlinLiteralConstant,
   KotlinMultiplicativeExpression,
   KotlinNullableType,
@@ -30,6 +32,7 @@ import {
   KotlinPrimaryExpression,
   KotlinPropertyDeclaration,
   KotlinRangeExpression,
+  KotlinSimpleIdentifier,
   KotlinStatement,
   KotlinStatements,
   KotlinStringLiteral,
@@ -80,6 +83,8 @@ import {
 } from "./type/type";
 import {kotlinStatementPrinter, kotlinStatementsPrinter} from "./statements/statement";
 import {kotlinBlockPrinter} from "./statements/block";
+import {kotlinJumpExpressionPrinter} from "./expressions/jump-expression";
+import {kotlinSimpleIdentifierPrinter} from "./identifiers/simple-identifier";
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
@@ -124,6 +129,8 @@ export interface KotlinPrinterTable {
   'statements': KotlinPrinter<KotlinStatements>,
   'block': KotlinPrinter<KotlinBlock>,
   'function-body': KotlinPrinter<KotlinFunctionBody>,
+  'jump-expression': KotlinPrinter<KotlinJumpExpression>,
+  'simple-identifier': KotlinPrinter<KotlinSimpleIdentifier>,
 }
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
@@ -165,4 +172,6 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'statements': kotlinStatementsPrinter,
   'block': kotlinBlockPrinter,
   'function-body': kotlinFunctionBodyPrinter,
+  'jump-expression': kotlinJumpExpressionPrinter,
+  'simple-identifier': kotlinSimpleIdentifierPrinter,
 }

@@ -1,6 +1,7 @@
 import {KotlinStringLiteral} from "./string-literal";
 import {KotlinSimpleIdentifier} from "../identifiers/simple-identifier";
 import {KotlinLiteralConstant} from "./literal-constant";
+import {KotlinJumpExpression} from "./jump-expression";
 
 export type KotlinPrimaryExpressionType = 'parenthesizedExpression'
   | 'simpleIdentifier'
@@ -21,6 +22,7 @@ export type KotlinPrimaryExpressionType = 'parenthesizedExpression'
 export type KotlinPrimaryExpression = KotlinPrimaryExpressionLiteralConstant
   | KotlinPrimaryExpressionStringLiteral
   | KotlinPrimaryExpressionSimpleIdentifier
+  | KotlinPrimaryExpressionJumpExpression
   ;
 
 export interface KotlinPrimaryExpressionLiteralConstant {
@@ -36,4 +38,9 @@ export interface KotlinPrimaryExpressionStringLiteral {
 export interface KotlinPrimaryExpressionSimpleIdentifier {
   type: 'simpleIdentifier',
   value: KotlinSimpleIdentifier,
+}
+
+export interface KotlinPrimaryExpressionJumpExpression {
+  type: 'jumpExpression',
+  value: KotlinJumpExpression,
 }
