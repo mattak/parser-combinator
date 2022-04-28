@@ -7,9 +7,9 @@ import {
   KotlinNullLiteral,
   KotlinPrimaryExpression,
   KotlinPrimaryExpressionLiteralConstant,
-  KotlinPrimaryExpressionStringLiteral
-} from "../../../syntax/kotlin/expressions/expressions";
-import {KotlinStringLiteral} from "../../../syntax/kotlin/expressions/string-literal";
+  KotlinPrimaryExpressionStringLiteral,
+  KotlinStringLiteral
+} from "../../../syntax/kotlin";
 
 export function convert_literal_primaryExpression(table: SwiftKotlinConvertTable, input: SwiftLiteral): KotlinPrimaryExpression {
   switch (input.type) {

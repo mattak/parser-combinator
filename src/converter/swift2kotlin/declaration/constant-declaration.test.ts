@@ -11,12 +11,6 @@ import {
   SwiftPrefixExpression,
   SwiftPrimaryExpressionLiteral
 } from "../../../syntax/swift";
-import {KotlinPropertyDeclaration, KotlinVariableDeclaration} from "../../../syntax/kotlin";
-import {
-  convert_constantDeclaration_propertyDeclarations,
-  convert_initializer_expression,
-  convert_pattern_variableDeclaration
-} from "./constant-declaration";
 import {
   KotlinAdditiveExpression,
   KotlinAsExpression,
@@ -34,8 +28,15 @@ import {
   KotlinPostfixUnaryExpression,
   KotlinPrefixUnaryExpression,
   KotlinPrimaryExpression,
-  KotlinRangeExpression
-} from "../../../syntax/kotlin/expressions/expressions";
+  KotlinPropertyDeclaration,
+  KotlinRangeExpression,
+  KotlinVariableDeclaration
+} from "../../../syntax/kotlin";
+import {
+  convert_constantDeclaration_propertyDeclarations,
+  convert_initializer_expression,
+  convert_pattern_variableDeclaration
+} from "./constant-declaration";
 
 describe('convert_constantDeclaration_propertyDeclaration', () => {
   const converter = convert_constantDeclaration_propertyDeclarations;

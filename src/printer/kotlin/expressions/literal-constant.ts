@@ -1,5 +1,5 @@
 import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
-import {KotlinLiteralConstant} from "../../../syntax/kotlin/expressions/expressions";
+import {KotlinLiteralConstant} from "../../../syntax/kotlin";
 
 export function kotlinLiteralConstantPrinter(table: KotlinPrinterTable, input: KotlinLiteralConstant, depth: number): PrinterOutput {
   switch (input.type) {

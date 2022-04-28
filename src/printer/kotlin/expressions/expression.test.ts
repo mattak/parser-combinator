@@ -16,7 +16,7 @@ import {
   KotlinPrefixUnaryExpression,
   KotlinPrimaryExpressionLiteralConstant,
   KotlinRangeExpression
-} from "../../../syntax/kotlin/expressions/expressions";
+} from "../../../syntax/kotlin";
 import {
   kotlinAdditiveExpressionPrinter,
   kotlinAsExpressionPrinter,

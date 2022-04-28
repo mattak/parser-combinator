@@ -1,8 +1,9 @@
 import {KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 import {
   KotlinPrimaryExpression,
-  KotlinPrimaryExpressionLiteralConstant, KotlinPrimaryExpressionStringLiteral
-} from "../../../syntax/kotlin/expressions/expressions";
+  KotlinPrimaryExpressionLiteralConstant,
+  KotlinPrimaryExpressionStringLiteral
+} from "../../../syntax/kotlin";
 
 export function kotlinPrimaryExpressionPrinter(table: KotlinPrinterTable, input: KotlinPrimaryExpression, depth: number): PrinterOutput {
   switch (input.type) {

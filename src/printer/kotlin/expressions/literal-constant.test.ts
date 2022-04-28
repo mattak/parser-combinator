@@ -1,6 +1,6 @@
 import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
-import {KotlinLiteralConstant} from "../../../syntax/kotlin/expressions/expressions";
 import {kotlinLiteralConstantPrinter} from "./literal-constant";
+import {KotlinLiteralConstant} from "../../../syntax/kotlin";
 
 describe('literalConstant', () => {
   const printer = kotlinLiteralConstantPrinter;
