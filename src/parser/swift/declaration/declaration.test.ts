@@ -3,8 +3,17 @@ import {declaration} from "./declaration";
 import {
   SwiftConstantDeclaration,
   SwiftDeclaration,
-  SwiftImportDeclaration, SwiftInitializer, SwiftLiteral, SwiftLiteralExpression, SwiftPattern, SwiftPatternIdentifier,
-  SwiftPatternInitializer, SwiftPostfixExpressionPrimary, SwiftPrefixExpression, SwiftPrimaryExpression
+  SwiftFunctionDeclaration,
+  SwiftFunctionSignature,
+  SwiftImportDeclaration,
+  SwiftInitializer,
+  SwiftLiteral,
+  SwiftLiteralExpression,
+  SwiftPatternIdentifier,
+  SwiftPatternInitializer,
+  SwiftPostfixExpressionPrimary,
+  SwiftPrefixExpression,
+  SwiftPrimaryExpression
 } from "../../../syntax/swift";
 
 describe('declaration', () => {
@@ -88,6 +97,28 @@ describe('declaration', () => {
             },
           }
         ],
+      },
+      rest: [],
+    });
+  });
+
+  test('function: func run(){}', () => {
+    const input = [...'func run(){}'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftDeclaration>>({
+      result: 'success',
+      data: <SwiftFunctionDeclaration>{
+        type: 'function',
+        head: {},
+        name: 'run',
+        signature: <SwiftFunctionSignature>{
+          parameters: [],
+          isAsync: false,
+          isThrows: false,
+          result: null,
+        },
+        genericWhere: null,
+        body: null,
       },
       rest: [],
     });

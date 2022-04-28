@@ -37,8 +37,8 @@ object Sample {
 
   test('struct and val:"sample"', () => {
     const input = `struct Sample {
-    let a = "sample1" 
-    let b = "sample2" 
+    let a = "sample1"
+    let b = "sample2"
 }`.split('');
     const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
     const outputExpect = `package com.example.test
@@ -46,6 +46,27 @@ object Sample {
 object Sample {
     val a = "sample1"
     val b = "sample2"
+}`;
+    expect(output).toEqual(outputExpect);
+  })
+})
+
+describe('function', () => {
+  const converterTable: SwiftKotlinConvertTable = {
+    ...defaultSwiftKotlinConvertTable,
+    'packageHeader': () => 'com.example.test'
+  };
+  const printerTable: KotlinPrinterTable = {
+    ...defaultKotlinPrinterTable,
+  };
+
+  test('func run(a: Sample) {}', () => {
+    const input = `func run(a: Sample) {
+}`.split('');
+    const output = parseConvertPrint(input, converterTable, printerTable).join('\n');
+    const outputExpect = `package com.example.test
+
+fun run(a: Sample) {
 }`;
     expect(output).toEqual(outputExpect);
   })

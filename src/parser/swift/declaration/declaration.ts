@@ -4,6 +4,7 @@ import {constantDeclaration} from "./constant-declaration";
 import {importDeclaration} from "./import-declaration";
 import {SwiftDeclaration} from "../../../syntax/swift";
 import {structDeclaration} from "./struct-declaration";
+import {functionDeclaration} from "./function-declaration";
 
 export function declaration(input: ParserInput): ParserOutput<SwiftDeclaration> {
   return or<SwiftDeclaration>([
@@ -11,7 +12,7 @@ export function declaration(input: ParserInput): ParserOutput<SwiftDeclaration> 
     constantDeclaration,
     // variable-declaration
     // typealias-declaration
-    // function-declaration
+    functionDeclaration,
     // enum-declaration
     structDeclaration,
     // class-declaration

@@ -11,10 +11,11 @@ import {
   SwiftFunctionSignature,
   SwiftParameter,
   SwiftParameterClause,
-  SwiftParameterList
+  SwiftParameterList,
+  SwiftType,
+  SwiftTypeAnnotation
 } from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
-import {SwiftType, SwiftTypeAnnotation} from "../../../syntax/swift";
 
 describe('parameter', () => {
   const parser = parameter;
@@ -173,8 +174,7 @@ describe('parameterClause', () => {
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftParameterClause>>({
       result: 'success',
-      data: <SwiftParameterList>[
-      ],
+      data: <SwiftParameterList>[],
       rest: [],
     });
   });
@@ -280,6 +280,7 @@ describe('functionDeclaration', () => {
     expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
       result: 'success',
       data: <SwiftFunctionDeclaration>{
+        type: 'function',
         head: <SwiftFunctionHead>{},
         name: 'run',
         signature: <SwiftFunctionSignature>{
@@ -301,6 +302,7 @@ describe('functionDeclaration', () => {
     expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
       result: 'success',
       data: <SwiftFunctionDeclaration>{
+        type: 'function',
         head: <SwiftFunctionHead>{},
         name: 'run',
         signature: <SwiftFunctionSignature>{

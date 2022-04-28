@@ -1,7 +1,4 @@
 import * as fs from "fs";
-import {topLevelDeclaration} from "../parser/swift/declaration/top-level-declaration";
-import {convert_topLevelDeclaration_file} from "../converter/swift2kotlin/declaration/top-level-declaration";
-import {kotlinFilePrinter} from "../printer/kotlin/general/file";
 import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../converter/swift2kotlin/swift-converter";
 import {defaultKotlinPrinterTable, KotlinPrinterTable} from "../printer/kotlin/kotlin-printer";
 import {parseConvertPrint} from "./parse-convert-print";

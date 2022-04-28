@@ -38,6 +38,7 @@ export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunct
     ]),
     ([head, , name, , signature]) => {
       return <SwiftFunctionDeclaration>{
+        type: 'function',
         head: head,
         name: name,
         // <generic-parameter-clause>?

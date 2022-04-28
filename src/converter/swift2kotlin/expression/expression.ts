@@ -22,9 +22,9 @@ import {
   KotlinPrefixUnaryExpression,
   KotlinPrimaryExpression,
   KotlinPrimaryExpressionSimpleIdentifier,
-  KotlinRangeExpression
-} from "../../../syntax/kotlin/expressions/expressions";
-import {KotlinSimpleIdentifier} from "../../../syntax/kotlin/identifiers/simple-identifier";
+  KotlinRangeExpression,
+  KotlinSimpleIdentifier
+} from "../../../syntax/kotlin";
 
 export function convert_expression_expression(table: SwiftKotlinConvertTable, input: SwiftExpression): KotlinExpression {
   const postfixExpression = input.prefix.postfixExpression
