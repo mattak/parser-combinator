@@ -15,9 +15,10 @@ export function kotlinFunctionDeclarationPrinter(
   const name = input.name.value;
   const parameters = table['function-value-parameters'](table, input.parameters, depth);
   const body = input.body !== null ? table['function-body'](table, input.body, depth) : ['{', '}'];
+  const returnType = input.returnType !== null ? ': ' + table['type'](table, input.returnType, depth)[0] : '';
 
   return [
-    `fun ${name}${parameters} ${body[0]}`,
+    `fun ${name}${parameters}${returnType} ${body[0]}`,
     ...body.slice(1),
   ];
 }

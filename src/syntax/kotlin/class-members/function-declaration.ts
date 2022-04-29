@@ -10,7 +10,7 @@ export interface KotlinFunctionDeclaration {
   // (receiverType '.')?
   name: KotlinSimpleIdentifier,
   parameters: KotlinFunctionValueParameters,
-  // (':' type)?
+  returnType: KotlinType | null, // (':' type)?
   // typeConstraints?
   body: KotlinFunctionBody | null,
 }

@@ -23,6 +23,7 @@ export function convert_functionDeclaration_functionDeclaration(
   return <KotlinFunctionDeclaration>{
     name: <KotlinSimpleIdentifier>{value: input.name},
     parameters: table['function-signature'](table, input.signature),
+    returnType: null,
     body: input.body !== null ? table['function-body'](table, input.body) : null,
   }
 }

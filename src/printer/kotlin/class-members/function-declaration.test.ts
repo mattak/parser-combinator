@@ -1,21 +1,17 @@
 import {defaultKotlinPrinterTable, KotlinPrinterTable, PrinterOutput} from "../kotlin-printer";
 import {
   KotlinBlock,
-  KotlinDeclaration,
-  KotlinDeclarationFunctionDeclaration,
-  KotlinDeclarationObjectDeclaration,
-  KotlinDeclarationPropertyDeclaration,
-  KotlinExpression, KotlinFunctionBody,
+  KotlinExpression,
   KotlinFunctionBodyBlock,
   KotlinFunctionBodyExpression,
   KotlinFunctionDeclaration,
-  KotlinFunctionValueParameter, KotlinFunctionValueParameters,
+  KotlinFunctionValueParameter,
   KotlinParameter,
   KotlinSimpleIdentifier,
   KotlinStatement,
-  KotlinStatementDeclaration,
-  KotlinStatementExpression,
-  KotlinType
+  KotlinType,
+  KotlinTypeReference,
+  KotlinUserType
 } from "../../../syntax/kotlin";
 import {
   kotlinFunctionBodyPrinter,
@@ -29,12 +25,14 @@ describe('kotlinFunctionDeclarationPrinter', () => {
   const printer = kotlinFunctionDeclarationPrinter;
   const mockWithoutParameter = jest.fn().mockImplementation(() => ['()']);
   const mockWithParameter1 = jest.fn().mockImplementation(() => ['(a: Int)']);
+  const mockWithType = jest.fn().mockImplementation(() => ['Sample']);
   const mockWithBody = jest.fn().mockImplementation(() => ['{', 'val a = 1', '}']);
 
   test('plain', () => {
     const input = <KotlinFunctionDeclaration>{
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [],
+      returnType: null,
       body: null,
     };
     const table = <KotlinPrinterTable>{
@@ -53,6 +51,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
     const input = <KotlinFunctionDeclaration>{
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [<KotlinFunctionValueParameter>{}],
+      returnType: null,
       body: null,
     };
     const table = <KotlinPrinterTable>{
@@ -67,29 +66,42 @@ describe('kotlinFunctionDeclarationPrinter', () => {
     expect(mockWithParameter1).toHaveBeenCalledTimes(1);
   });
 
+  test('with returnType', () => {
+    const input = <KotlinFunctionDeclaration>{
+      name: <KotlinSimpleIdentifier>{value: "run"},
+      parameters: [],
+      returnType: <KotlinType>{
+        value: <KotlinTypeReference>{
+          type: 'typeReference',
+          value: <KotlinUserType>{
+            type: 'userType',
+            name: 'Sample',
+          },
+        },
+      },
+      body: null,
+    };
+    const table = <KotlinPrinterTable>{
+      ...defaultKotlinPrinterTable,
+      'function-value-parameters': mockWithoutParameter,
+      'type': mockWithType,
+    };
+    const output = printer(table, input, 0);
+    expect(output).toEqual<PrinterOutput>([
+      'fun run(): Sample {',
+      '}',
+    ]);
+    expect(mockWithType).toHaveBeenCalledTimes(1);
+  });
+
   test('with body', () => {
     const input = <KotlinFunctionDeclaration>{
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [<KotlinFunctionValueParameter>{}],
+      returnType: null,
       body: <KotlinFunctionBodyBlock>{
         type: 'block',
-        value: <KotlinBlock>{
-          statements: [
-            <KotlinStatement>{
-              value: <KotlinStatementDeclaration>{
-                type: 'declaration',
-                value: <KotlinDeclarationFunctionDeclaration>{
-                  type: 'function',
-                  value: <KotlinFunctionDeclaration>{
-                    name: {value: 'run'},
-                    parameters: [],
-                    body: null,
-                  },
-                },
-              },
-            },
-          ],
-        },
+        value: <KotlinBlock>{},
       },
     };
     const table = <KotlinPrinterTable>{
