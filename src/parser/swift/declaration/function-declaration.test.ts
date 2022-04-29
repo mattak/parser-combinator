@@ -1,5 +1,6 @@
 import {
   functionDeclaration,
+  functionHead,
   functionResult,
   functionSignature,
   parameter,
@@ -24,6 +25,44 @@ import {
   SwiftTypeIdentifier
 } from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
+
+describe('head', () => {
+  const parser = functionHead;
+
+  test('empty', () => {
+    const input = [] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftParameter>>({
+      result: 'fail',
+    });
+  });
+
+  test('Input: func', () => {
+    const input = [...'func'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionHead>>({
+      result: 'success',
+      data: <SwiftFunctionHead>{
+        modifiers: [],
+      },
+      rest: [],
+    });
+  });
+
+  test('Input: static func', () => {
+    const input = [...'static func'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionHead>>({
+      result: 'success',
+      data: <SwiftFunctionHead>{
+        modifiers: [
+          'static'
+        ],
+      },
+      rest: [],
+    });
+  });
+});
 
 describe('parameter', () => {
   const parser = parameter;
@@ -348,7 +387,7 @@ describe('functionDeclaration', () => {
       result: 'success',
       data: <SwiftFunctionDeclaration>{
         type: 'function',
-        head: <SwiftFunctionHead>{},
+        head: <SwiftFunctionHead>{modifiers: []},
         name: 'run',
         signature: <SwiftFunctionSignature>{
           parameters: <SwiftParameter[]>[],
@@ -372,7 +411,7 @@ describe('functionDeclaration', () => {
       result: 'success',
       data: <SwiftFunctionDeclaration>{
         type: 'function',
-        head: <SwiftFunctionHead>{},
+        head: <SwiftFunctionHead>{modifiers: []},
         name: 'run',
         signature: <SwiftFunctionSignature>{
           parameters: <SwiftParameter[]>[
@@ -413,7 +452,7 @@ describe('functionDeclaration', () => {
       result: 'success',
       data: <SwiftFunctionDeclaration>{
         type: 'function',
-        head: <SwiftFunctionHead>{},
+        head: <SwiftFunctionHead>{modifiers: []},
         name: 'run',
         signature: <SwiftFunctionSignature>{
           parameters: <SwiftParameter[]>[],
@@ -444,7 +483,7 @@ describe('functionDeclaration', () => {
       result: 'success',
       data: <SwiftFunctionDeclaration>{
         type: 'function',
-        head: <SwiftFunctionHead>{},
+        head: <SwiftFunctionHead>{modifiers: []},
         name: 'run',
         signature: <SwiftFunctionSignature>{
           parameters: <SwiftParameter[]>[],

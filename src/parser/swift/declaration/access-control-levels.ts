@@ -1,8 +1,8 @@
 import {Parser} from "../../../types";
 import {cat, or} from "../../../combinators";
-import {map, str} from "../../../util";
+import {list, map, str} from "../../../util";
 import {char} from "../../../char";
-import {whitespace0} from "../lexical-struct/whitespace";
+import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {
   SwiftAccessLevelModifier,
   SwiftActorIsolationModifier,
@@ -72,9 +72,14 @@ export const mutatingModifier: Parser<SwiftMutationModifier> = or([
 
 export const actorIsolationModifier: Parser<SwiftActorIsolationModifier> = str('nonisolated');
 
-export const accessControlLevels: Parser<SwiftDeclarationModifier> = or([
+export const declarationModifier: Parser<SwiftDeclarationModifier> = or([
   declarationModifierPrimitive,
   accessLevelModifier,
   mutatingModifier,
   actorIsolationModifier,
 ]);
+
+export const declarationModifiers: Parser<SwiftDeclarationModifier[]> = list(
+  declarationModifier,
+  whitespace,
+);

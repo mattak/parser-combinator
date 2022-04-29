@@ -2,7 +2,7 @@ import {ParserOutput} from "../../../types";
 import {statement} from "./statement";
 import {
   SwiftFunctionBody,
-  SwiftFunctionDeclaration,
+  SwiftFunctionDeclaration, SwiftFunctionHead,
   SwiftFunctionSignature,
   SwiftImportDeclaration,
   SwiftReturnStatement,
@@ -48,7 +48,7 @@ describe('statement', () => {
         type: 'declaration',
         value: <SwiftFunctionDeclaration>{
           type: 'function',
-          head: {},
+          head: <SwiftFunctionHead>{ modifiers: [] },
           name: 'run',
           signature: <SwiftFunctionSignature>{
             parameters: [],

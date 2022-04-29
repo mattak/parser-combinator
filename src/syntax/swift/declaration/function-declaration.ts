@@ -17,6 +17,7 @@
 import {SwiftType, SwiftTypeAnnotation} from "../type/type";
 import {SwiftExpression} from "../expression/expression";
 import {SwiftStatement} from "../statement/statement";
+import {SwiftDeclarationModifier} from "./access-control-levels";
 
 export interface SwiftFunctionDeclaration {
   type: 'function',
@@ -30,6 +31,7 @@ export interface SwiftFunctionDeclaration {
 
 export interface SwiftFunctionHead {
   // <attributes>? <declaration-modifiers>? func
+  modifiers: SwiftDeclarationModifier[],
 }
 
 export type SwiftFunctionName = string

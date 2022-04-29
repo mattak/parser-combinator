@@ -21,6 +21,7 @@ import {typeAnnotation} from "../type/type-annotation";
 import {expression} from "../expression/expression";
 import {codeBlock} from "./code-block";
 import {type} from "../type/type";
+import {declarationModifiers} from "./access-control-levels";
 
 export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunctionDeclaration> {
   // <function-declaration> ::=
@@ -56,9 +57,12 @@ export function functionHead(input: ParserInput): ParserOutput<SwiftFunctionHead
     cat([
       // attributes?
       // declaration-modifiers?
+      opt(cat([declarationModifiers, whitespace])),
       str('func'),
     ]),
-    () => <SwiftFunctionHead>{},
+    ([m,]) => <SwiftFunctionHead>{
+      modifiers: m.status === 'some' ? m.value[0] : [],
+    },
   )(input);
 }
 

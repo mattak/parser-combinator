@@ -2,8 +2,10 @@ import {ParserOutput} from "../../../types";
 import {declaration} from "./declaration";
 import {
   SwiftConstantDeclaration,
-  SwiftDeclaration, SwiftFunctionBody,
+  SwiftDeclaration,
+  SwiftFunctionBody,
   SwiftFunctionDeclaration,
+  SwiftFunctionHead,
   SwiftFunctionSignature,
   SwiftImportDeclaration,
   SwiftInitializer,
@@ -109,7 +111,7 @@ describe('declaration', () => {
       result: 'success',
       data: <SwiftFunctionDeclaration>{
         type: 'function',
-        head: {},
+        head: <SwiftFunctionHead>{modifiers: []},
         name: 'run',
         signature: <SwiftFunctionSignature>{
           parameters: [],
