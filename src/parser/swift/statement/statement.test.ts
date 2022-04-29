@@ -4,7 +4,9 @@ import {
   SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionSignature,
-  SwiftImportDeclaration, SwiftStatement,
+  SwiftImportDeclaration,
+  SwiftReturnStatement,
+  SwiftStatementControlTransferStatement,
   SwiftStatementDeclaration
 } from "../../../syntax/swift";
 
@@ -58,6 +60,22 @@ describe('statement', () => {
           body: <SwiftFunctionBody>{
             statements: [],
           },
+        },
+      },
+      rest: [],
+    });
+  });
+
+  test('control-transfer-statement', () => {
+    const input = [...'return;'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftStatementControlTransferStatement>>({
+      result: 'success',
+      data: <SwiftStatementControlTransferStatement>{
+        type: "control-transfer-statement",
+        value: <SwiftReturnStatement>{
+          type: 'return',
+          expression: null,
         },
       },
       rest: [],

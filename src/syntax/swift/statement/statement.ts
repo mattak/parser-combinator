@@ -1,4 +1,5 @@
 import {SwiftDeclaration} from "../declaration/declaration";
+import {SwiftControlTransferStatement} from "./control-transfer-statement";
 
 export type SwiftStatementType = 'declaration'
   | 'loop-statement'
@@ -10,11 +11,14 @@ export type SwiftStatementType = 'declaration'
   | 'compiler-control-statement'
   ;
 
-export interface SwiftStatement {
-  type: SwiftStatementType;
-}
+export type SwiftStatement = SwiftStatementDeclaration | SwiftStatementControlTransferStatement
 
 export interface SwiftStatementDeclaration {
   type: 'declaration',
   value: SwiftDeclaration,
+}
+
+export interface SwiftStatementControlTransferStatement {
+  type: 'control-transfer-statement',
+  value: SwiftControlTransferStatement,
 }
