@@ -1,5 +1,6 @@
 import {
   functionDeclaration,
+  functionResult,
   functionSignature,
   parameter,
   parameterClause,
@@ -7,21 +8,20 @@ import {
 } from "./function-declaration";
 import {
   SwiftConstantDeclaration,
-  SwiftDeclaration,
   SwiftFunctionBody,
   SwiftFunctionDeclaration,
   SwiftFunctionHead,
-  SwiftFunctionSignature, SwiftInitializer,
+  SwiftFunctionResult,
+  SwiftFunctionSignature,
   SwiftParameter,
   SwiftParameterClause,
   SwiftParameterList,
-  SwiftPattern, SwiftPatternIdentifier,
+  SwiftPatternIdentifier,
   SwiftPatternInitializer,
-  SwiftStatement,
   SwiftStatementDeclaration,
-  SwiftStatementType,
   SwiftType,
-  SwiftTypeAnnotation
+  SwiftTypeAnnotation,
+  SwiftTypeIdentifier
 } from "../../../syntax/swift";
 import {ParserOutput} from "../../../types";
 
@@ -269,6 +269,57 @@ describe('functionSignature', () => {
       rest: [],
     });
   });
+
+  test('Input: () Sample', () => {
+    const input = [...'() Sample'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionSignature>>({
+      result: 'success',
+      data: <SwiftFunctionSignature>{
+        parameters: [],
+        isAsync: false,
+        isThrows: false,
+        result: <SwiftFunctionResult>{
+          type: <SwiftType>{
+            type: 'type-identifier',
+            name: 'Sample',
+            genericArguments: [],
+            innerType: null,
+          },
+        },
+      },
+      rest: [],
+    });
+  })
+});
+
+describe('functionResult', () => {
+  const parser = functionResult;
+
+  test('Empty', () => {
+    const input = [] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
+      result: 'fail',
+    });
+  });
+
+  test('Sample', () => {
+    const input = [...'Sample'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionResult>>({
+      result: 'success',
+      data: <SwiftFunctionResult>{
+        type: <SwiftTypeIdentifier>{
+          type: 'type-identifier',
+          name: 'Sample',
+          genericArguments: [],
+          innerType: null,
+        },
+      },
+      rest: [],
+    });
+  });
 });
 
 describe('functionDeclaration', () => {
@@ -337,6 +388,37 @@ describe('functionDeclaration', () => {
           isAsync: false,
           isThrows: false,
           result: null,
+        },
+        genericWhere: null,
+        body: <SwiftFunctionBody>{
+          statements: [],
+        },
+      },
+      rest: [],
+    });
+  });
+
+  test('Input: func run() Sample {}', () => {
+    const input = [...'func run() Sample {}'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
+      result: 'success',
+      data: <SwiftFunctionDeclaration>{
+        type: 'function',
+        head: <SwiftFunctionHead>{},
+        name: 'run',
+        signature: <SwiftFunctionSignature>{
+          parameters: <SwiftParameter[]>[],
+          isAsync: false,
+          isThrows: false,
+          result: <SwiftFunctionResult>{
+            type: <SwiftTypeIdentifier>{
+              type: 'type-identifier',
+              name: 'Sample',
+              genericArguments: [],
+              innerType: null,
+            }
+          },
         },
         genericWhere: null,
         body: <SwiftFunctionBody>{

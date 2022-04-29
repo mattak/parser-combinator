@@ -14,7 +14,7 @@
 // local-parameter-name ::= <identifier>
 // default-argument-clause ::== <expression>
 
-import {SwiftTypeAnnotation} from "../type/type";
+import {SwiftType, SwiftTypeAnnotation} from "../type/type";
 import {SwiftExpression} from "../expression/expression";
 import {SwiftStatement} from "../statement/statement";
 
@@ -39,7 +39,12 @@ export interface SwiftFunctionSignature {
   parameters: SwiftParameterClause,
   isAsync: boolean,
   isThrows: boolean,
-  result: null, // FIXME: implement function result
+  result: SwiftFunctionResult | null,
+}
+
+export interface SwiftFunctionResult {
+  // attributes? type
+  type: SwiftType,
 }
 
 export type SwiftParameterClause = SwiftParameterList

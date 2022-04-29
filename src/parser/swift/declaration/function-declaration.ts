@@ -6,6 +6,7 @@ import {
   SwiftFunctionDeclaration,
   SwiftFunctionHead,
   SwiftFunctionName,
+  SwiftFunctionResult,
   SwiftFunctionSignature,
   SwiftParameter,
   SwiftParameterClause,
@@ -19,6 +20,7 @@ import {char} from "../../../char";
 import {typeAnnotation} from "../type/type-annotation";
 import {expression} from "../expression/expression";
 import {codeBlock} from "./code-block";
+import {type} from "../type/type";
 
 export function functionDeclaration(input: ParserInput): ParserOutput<SwiftFunctionDeclaration> {
   // <function-declaration> ::=
@@ -70,14 +72,23 @@ export function functionSignature(input: ParserInput): ParserOutput<SwiftFunctio
       parameterClause,
       opt(cat([whitespace, str('async'),])),
       opt(cat([whitespace, str('throws')])),
-      // result
+      opt(cat([whitespace, functionResult])),
     ]),
-    ([params, isAsync, isThrows]) => <SwiftFunctionSignature>{
+    ([params, isAsync, isThrows, result]) => <SwiftFunctionSignature>{
       parameters: params,
       isAsync: isAsync.status === 'some',
       isThrows: isThrows.status === 'some',
-      result: null,
+      result: result.status === 'some' ? result.value[1] : null,
     })(input);
+}
+
+export function functionResult(input: ParserInput): ParserOutput<SwiftFunctionResult> {
+  return map(
+    type,
+    (t) => <SwiftFunctionResult>{
+      type: t,
+    },
+  )(input);
 }
 
 export function functionBody(input: ParserInput): ParserOutput<SwiftFunctionBody> {

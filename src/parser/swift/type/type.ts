@@ -1,10 +1,7 @@
 import {ParserInput, ParserOutput} from "../../../types";
-import {or} from "../../../combinators";
 import {typeIdentifier} from "./type-identifier";
-import {SwiftType} from "../../../syntax/swift/type/type";
+import {SwiftType} from "../../../syntax/swift";
 
 export function type(input: ParserInput): ParserOutput<SwiftType> {
-  return or([
-    typeIdentifier,
-  ])(input);
+  return typeIdentifier(input);
 }
