@@ -271,7 +271,7 @@ describe('functionSignature', () => {
   });
 
   test('Input: () Sample', () => {
-    const input = [...'() Sample'] as const;
+    const input = [...'() -> Sample'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftFunctionSignature>>({
       result: 'success',
@@ -304,8 +304,16 @@ describe('functionResult', () => {
     });
   });
 
-  test('Sample', () => {
+  test('Empty', () => {
     const input = [...'Sample'] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
+      result: 'fail',
+    });
+  });
+
+  test('Sample', () => {
+    const input = [...'-> Sample'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftFunctionResult>>({
       result: 'success',
@@ -399,7 +407,7 @@ describe('functionDeclaration', () => {
   });
 
   test('Input: func run() Sample {}', () => {
-    const input = [...'func run() Sample {}'] as const;
+    const input = [...'func run() -> Sample {}'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<SwiftFunctionDeclaration>>({
       result: 'success',

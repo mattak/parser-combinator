@@ -84,8 +84,12 @@ export function functionSignature(input: ParserInput): ParserOutput<SwiftFunctio
 
 export function functionResult(input: ParserInput): ParserOutput<SwiftFunctionResult> {
   return map(
-    type,
-    (t) => <SwiftFunctionResult>{
+    cat([
+      str('->'),
+      whitespace0,
+      type,
+    ]),
+    ([, , t]) => <SwiftFunctionResult>{
       type: t,
     },
   )(input);

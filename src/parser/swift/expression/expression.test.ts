@@ -5,7 +5,7 @@ import {
   SwiftLiteralExpression,
   SwiftPostfixExpressionPrimary,
   SwiftPrimaryExpression
-} from "../../../syntax/swift/expression/expression";
+} from "../../../syntax/swift";
 
 describe('expression', () => {
   const parser = expression;

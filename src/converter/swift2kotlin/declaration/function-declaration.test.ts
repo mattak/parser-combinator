@@ -12,7 +12,7 @@ import {
   SwiftDeclaration,
   SwiftExpression, SwiftFunctionBody,
   SwiftFunctionDeclaration,
-  SwiftFunctionHead,
+  SwiftFunctionHead, SwiftFunctionResult,
   SwiftFunctionSignature,
   SwiftParameter, SwiftStatement, SwiftStatementDeclaration, SwiftStatementType,
   SwiftType,
@@ -20,7 +20,7 @@ import {
 } from "../../../syntax/swift";
 import {
   convert_functionBody_functionBody,
-  convert_functionDeclaration_functionDeclaration,
+  convert_functionDeclaration_functionDeclaration, convert_functionResult_type,
   convert_parameter_functionValueParameter,
   convert_parameter_parameter
 } from "./function-declaration";
@@ -105,6 +105,25 @@ describe('convert_parameter_parameter', () => {
   });
 });
 
+describe('convert_functionResult_type', () => {
+  const converter = convert_functionResult_type;
+  const mock = jest.fn().mockImplementation(x => <KotlinType>{})
+  const table = <SwiftKotlinConvertTable>{
+    ...defaultSwiftKotlinConvertTable,
+    'type': mock,
+  }
+
+  test('result', () => {
+    const input = <SwiftFunctionResult>{
+      type: <SwiftType>{
+        type: "type-identifier",
+      }
+    };
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinType>(<KotlinType>{});
+  });
+});
+
 describe('convert_functionBody_functionBody', () => {
   const converter = convert_functionBody_functionBody;
   const stMock = jest.fn().mockImplementation(x => <SwiftStatement[]>[
@@ -155,10 +174,12 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
   const converter = convert_functionDeclaration_functionDeclaration;
   const signatureMock = jest.fn().mockImplementation(x => <KotlinFunctionValueParameters>[])
   const functionMock = jest.fn().mockImplementation(x => <KotlinFunctionBody>{})
+  const resultMock = jest.fn().mockImplementation(x => <KotlinType>{})
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
     'function-signature': signatureMock,
     'function-body': functionMock,
+    'function-result': resultMock,
   }
 
   test('func run(key:Type){}', () => {
@@ -166,7 +187,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
       type: 'function',
       head: <SwiftFunctionHead>{},
       name: 'run',
-      signature: <SwiftFunctionSignature>{},
+      signature: <SwiftFunctionSignature>{result: null},
       genericWhere: null,
       body: null,
     };
@@ -186,7 +207,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
       type: 'function',
       head: <SwiftFunctionHead>{},
       name: 'run',
-      signature: <SwiftFunctionSignature>{},
+      signature: <SwiftFunctionSignature>{result: null},
       genericWhere: null,
       body: <SwiftFunctionBody>{},
     };
@@ -196,6 +217,26 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
         name: {value: 'run'},
         parameters: [],
         returnType: null,
+        body: <KotlinFunctionBody>{},
+      },
+    );
+  });
+
+  test('func run() Sample {}', () => {
+    const input = <SwiftFunctionDeclaration>{
+      type: 'function',
+      head: <SwiftFunctionHead>{},
+      name: 'run',
+      signature: <SwiftFunctionSignature>{result: <SwiftFunctionResult>{}},
+      genericWhere: null,
+      body: <SwiftFunctionBody>{},
+    };
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinFunctionDeclaration>(
+      <KotlinFunctionDeclaration>{
+        name: {value: 'run'},
+        parameters: [],
+        returnType: <KotlinType>{},
         body: <KotlinFunctionBody>{},
       },
     );
