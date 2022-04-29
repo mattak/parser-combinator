@@ -4,7 +4,9 @@ import {map, str} from "../../../util";
 import {char} from "../../../char";
 import {whitespace0} from "../lexical-struct/whitespace";
 import {
-  SwiftAccessLevelModifier, SwiftActorIsolationModifier, SwiftDeclarationModifier,
+  SwiftAccessLevelModifier,
+  SwiftActorIsolationModifier,
+  SwiftDeclarationModifier,
   SwiftDeclarationModifierPrimitive,
   SwiftMutationModifier
 } from "../../../syntax/swift";
@@ -70,7 +72,7 @@ export const mutatingModifier: Parser<SwiftMutationModifier> = or([
 
 export const actorIsolationModifier: Parser<SwiftActorIsolationModifier> = str('nonisolated');
 
-export const declarationModifier: Parser<SwiftDeclarationModifier> = or([
+export const accessControlLevels: Parser<SwiftDeclarationModifier> = or([
   declarationModifierPrimitive,
   accessLevelModifier,
   mutatingModifier,

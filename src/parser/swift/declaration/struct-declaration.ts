@@ -3,7 +3,7 @@ import {cat, or} from "../../../combinators";
 import {list0, map, opt, str} from "../../../util";
 import {identifier} from "../lexical-struct/identifier";
 import {char} from "../../../char";
-import {accessLevelModifier} from "./declaration-modifier";
+import {accessLevelModifier} from "./access-control-levels";
 import {declaration} from "./declaration";
 import {whitespace, whitespace0} from "../lexical-struct/whitespace";
 import {SwiftStructDeclaration, SwiftStructMember, SwiftStructMemberDeclaration} from "../../../syntax/swift";

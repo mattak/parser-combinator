@@ -1,9 +1,9 @@
-import {declarationModifier} from "./declaration-modifier";
+import {accessControlLevels} from "./access-control-levels";
 import {ParserOutput} from "../../../types";
 import {SwiftDeclarationModifier} from "../../../syntax/swift";
 
 describe('declaration-modifier', () => {
-  const parser = declarationModifier;
+  const parser = accessControlLevels;
 
   test('Input empty', () => {
     const input = [] as const;

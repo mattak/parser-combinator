@@ -2,6 +2,7 @@ import {SwiftStatement} from "../statement/statement";
 import {SwiftPattern} from "../pattern/pattern";
 import {SwiftExpression} from "../expression/expression";
 import {SwiftFunctionDeclaration} from "./function-declaration";
+import {SwiftAccessLevelModifier} from "./access-control-levels";
 
 type SwiftDeclarationType = 'import'
   | 'constant'
@@ -40,11 +41,9 @@ export interface SwiftImportDeclaration {
 }
 
 // struct
-export interface SwiftStructMember {
-  type: 'declaration' | 'compiler-control-statement',
-}
+export type SwiftStructMember = SwiftStructMemberDeclaration
 
-export interface SwiftStructMemberDeclaration extends SwiftStructMember {
+export interface SwiftStructMemberDeclaration {
   type: 'declaration',
   value: SwiftDeclaration,
 }
@@ -67,40 +66,4 @@ export interface SwiftPatternInitializer {
   initializer: SwiftInitializer | null,
 }
 
-export interface SwiftInitializer extends SwiftExpression {
-}
-
-// modifier
-export type SwiftDeclarationModifierPrimitive =
-  'class'
-  | 'convenience'
-  | 'dynamic'
-  | 'final'
-  | 'infix'
-  | 'lazy'
-  | 'optional'
-  | 'override'
-  | 'postfix'
-  | 'prefix'
-  | 'required'
-  | 'static'
-  | 'unowned'
-  | 'unowned(safe)'
-  | 'unowned(unsafe)'
-  | 'weak'
-  ;
-export type SwiftAccessLevelModifier =
-  'private' | 'private(set)'
-  | 'fileprivate' | 'fileprivate(set)'
-  | 'internal' | 'internal(set)'
-  | 'public' | 'public(set)'
-  | 'open' | 'open(set)'
-  ;
-export type SwiftMutationModifier = 'mutating' | 'nonmutating';
-export type SwiftActorIsolationModifier = 'nonisolated';
-export type SwiftDeclarationModifier =
-  SwiftDeclarationModifierPrimitive
-  | SwiftAccessLevelModifier
-  | SwiftMutationModifier
-  | SwiftActorIsolationModifier
-  ;
+export type SwiftInitializer = SwiftExpression

@@ -1,3 +1,4 @@
+export * from './declaration/access-control-levels';
 export * from './declaration/declaration';
 export * from './declaration/function-declaration';
 export * from './expression/expression';
