@@ -1,5 +1,6 @@
 import {
   SwiftConstantDeclaration,
+  SwiftControlTransferStatement,
   SwiftDeclaration,
   SwiftExpression,
   SwiftFunctionBody,
@@ -20,7 +21,10 @@ import {
   SwiftTypeAnnotation
 } from "../../syntax/swift";
 import {convert_null_packageHeader, convert_topLevelDeclaration_file} from "./declaration/top-level-declaration";
-import {convert_statement_declaration} from "./statement/statement";
+import {
+  convert_statement_declarations,
+  convert_statement_statements
+} from "./statement/statement";
 import {
   convert_importDeclaration_importHeader,
   convert_importDeclarations_importList
@@ -34,10 +38,12 @@ import {
   KotlinFunctionValueParameters,
   KotlinImportHeader,
   KotlinImportList,
+  KotlinJumpExpression,
   KotlinLiteralConstant,
   KotlinParameter,
   KotlinPrimaryExpression,
   KotlinPropertyDeclaration,
+  KotlinStatement,
   KotlinType
 } from "../../syntax/kotlin";
 import {
@@ -52,11 +58,7 @@ import {
   convert_patternInitializer_propertyDeclaration
 } from "./declaration/constant-declaration";
 import {convert_literal_literalConstant, convert_literal_primaryExpression} from "./lexical-struct/literal";
-import {
-  convert_expression_expression,
-  convert_literalExpression_primaryExpression,
-  convert_primaryExpression_primaryExpression
-} from "./expression/expression";
+import {convert_expression_expression,} from "./expression/expression";
 import {convert_typeAnnotation_type} from "./type/type-annotation";
 import {
   convert_functionBody_functionBody,
@@ -65,13 +67,22 @@ import {
   convert_parameter_functionValueParameter,
   convert_parameter_parameter
 } from "./declaration/function-declaration";
+import {
+  convert_controlTransferStatement_jumpExpression,
+  convert_controlTransferStatement_statement
+} from "./statement/control-transfer-statement";
+import {
+  convert_literalExpression_primaryExpression,
+  convert_primaryExpression_primaryExpression
+} from "./expression/primary-expression";
 
 export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) => To;
 
 export interface SwiftKotlinConvertTable {
   // swift
   'top-level-declaration': Converter<SwiftTopLevelDeclaration, any>,
-  'statement': Converter<SwiftStatement, KotlinDeclaration[]>,
+  'statement__statements': Converter<SwiftStatement, KotlinStatement[]>,
+  'statement__declarations': Converter<SwiftStatement, KotlinDeclaration[]>,
   'declaration': Converter<SwiftDeclaration, KotlinDeclaration[]>,
   'import-declaration': Converter<SwiftImportDeclaration, KotlinImportHeader>,
   'struct-declaration': Converter<SwiftStructDeclaration, KotlinDeclaration>,
@@ -91,6 +102,8 @@ export interface SwiftKotlinConvertTable {
   'parameter__functionValueParameter': Converter<SwiftParameter, KotlinFunctionValueParameter>,
   'parameter__parameter': Converter<SwiftParameter, KotlinParameter>,
   'function-body': Converter<SwiftFunctionBody, KotlinFunctionBody>,
+  'control-transfer-statement__jumpExpression': Converter<SwiftControlTransferStatement, KotlinJumpExpression>,
+  'control-transfer-statement__statement': Converter<SwiftControlTransferStatement, KotlinStatement>,
 
   // kotlin
   'importList': Converter<SwiftImportDeclaration[], KotlinImportList>,
@@ -100,7 +113,8 @@ export interface SwiftKotlinConvertTable {
 export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   // swift
   'top-level-declaration': convert_topLevelDeclaration_file,
-  'statement': convert_statement_declaration,
+  'statement__statements': convert_statement_statements,
+  'statement__declarations': convert_statement_declarations,
   'declaration': convert_declaration_declarations,
   'import-declaration': convert_importDeclaration_importHeader,
   'struct-declaration': convert_structDeclaration_objectDeclaration,
@@ -120,6 +134,8 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'parameter__functionValueParameter': convert_parameter_functionValueParameter,
   'parameter__parameter': convert_parameter_parameter,
   'function-body': convert_functionBody_functionBody,
+  'control-transfer-statement__jumpExpression': convert_controlTransferStatement_jumpExpression,
+  'control-transfer-statement__statement': convert_controlTransferStatement_statement,
 
   // kotlin
   'importList': convert_importDeclarations_importList,

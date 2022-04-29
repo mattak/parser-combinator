@@ -113,7 +113,7 @@ describe('convert_functionBody_functionBody', () => {
   ])
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
-    'statement': stMock,
+    'statement__statements': stMock,
   }
 
   test('block: empty', () => {
@@ -143,18 +143,8 @@ describe('convert_functionBody_functionBody', () => {
       type: 'block',
       value: <KotlinBlock>{
         statements: [
-          <KotlinStatement>{
-            value: <KotlinStatementDeclaration>{
-              type: 'declaration',
-              value: {}
-            }
-          },
-          <KotlinStatement>{
-            value: <KotlinStatementDeclaration>{
-              type: 'declaration',
-              value: {}
-            }
-          },
+          <KotlinStatement>{},
+          <KotlinStatement>{},
         ],
       },
     });

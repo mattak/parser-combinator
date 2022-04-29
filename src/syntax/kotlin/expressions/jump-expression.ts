@@ -11,17 +11,20 @@ export interface KotlinJumpExpressionThrow {
 }
 
 export interface KotlinJumpExpressionReturn {
+  // return or return@<identifier>
   type: 'return',
-  label: 'return' | string, // return@<identifier>
+  label: string | null, // <identifier>
   expression: KotlinExpression | null,
 }
 
 export interface KotlinJumpExpressionContinue {
+  // continue or continue@<identifier>
   type: 'continue',
-  label: 'continue' | string, // continue@<identifier>
+  label: string | null, // <identifier>
 }
 
 export interface KotlinJumpExpressionBreak {
+  // break or break@<identifier>
   type: 'break',
-  label: 'break' | string, // break@<identifier>
+  label: string | null, // <identifier>
 }

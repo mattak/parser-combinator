@@ -3,25 +3,16 @@ import {
   SwiftImportDeclaration,
   SwiftStatement,
   SwiftStatementDeclaration,
-  SwiftStructDeclaration,
   SwiftTopLevelDeclaration
 } from "../../../syntax/swift";
-import {
-  KotlinClassBody, KotlinDeclaration,
-  KotlinFile, KotlinImportHeader,
-  KotlinImportList,
-  KotlinModifiers,
-  KotlinObjectDeclaration
-} from "../../../syntax/kotlin";
-import {SwiftKotlinConvertTable, defaultSwiftKotlinConvertTable} from "../swift-converter";
+import {KotlinDeclaration, KotlinFile, KotlinImportHeader, KotlinImportList} from "../../../syntax/kotlin";
+import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
 
 describe('topLevelDeclarationConverter', () => {
   const converter = convert_topLevelDeclaration_file;
   const table = <SwiftKotlinConvertTable>{
     ...defaultSwiftKotlinConvertTable,
-    'statement': jest.fn().mockImplementation(x => {
-      return {}
-    }),
+    'statement__declarations': jest.fn().mockImplementation(x => [{}]),
     'packageHeader': jest.fn().mockImplementation(() => 'com.example.test'),
   }
 

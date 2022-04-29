@@ -10,7 +10,7 @@ export function convert_topLevelDeclaration_file(table: SwiftKotlinConvertTable,
   return <KotlinFile>{
     packageHeader: table['packageHeader'](table, null),
     importList: table['importList'](table, imports),
-    topLevelObjects: input.statements.flatMap(x => table['statement'](table, x)),
+    topLevelObjects: input.statements.flatMap(x => table['statement__declarations'](table, x)),
   }
 }
 

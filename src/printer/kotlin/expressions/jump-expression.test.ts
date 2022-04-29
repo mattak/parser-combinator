@@ -12,7 +12,7 @@ describe('jump-expression', () => {
   const printer = kotlinJumpExpressionPrinter;
   const table: KotlinPrinterTable = {
     ...defaultKotlinPrinterTable,
-    'expression': jest.fn().mockImplementation(() => ['1'])
+    'expression': jest.fn().mockImplementation(() => ['e'])
   }
 
   test('throw', () => {
@@ -22,14 +22,14 @@ describe('jump-expression', () => {
     };
     const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>([
-      'throw 1'
+      'throw e'
     ]);
   });
 
   test('return: void', () => {
     const input = <KotlinJumpExpressionReturn>{
       type: 'return',
-      label: 'return',
+      label: null,
       expression: null,
     };
     const output = printer(table, input, 0);
@@ -41,19 +41,19 @@ describe('jump-expression', () => {
   test('return: 1', () => {
     const input = <KotlinJumpExpressionReturn>{
       type: 'return',
-      label: 'return@run',
+      label: 'run',
       expression: <KotlinExpression>{},
     };
     const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>([
-      'return@run 1'
+      'return@run e'
     ]);
   });
 
   test('continue', () => {
     const input = <KotlinJumpExpressionContinue>{
       type: 'continue',
-      label: 'continue@run',
+      label: 'run',
     };
     const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>([
@@ -64,7 +64,7 @@ describe('jump-expression', () => {
   test('break', () => {
     const input = <KotlinJumpExpressionBreak>{
       type: 'break',
-      label: 'break@forEach',
+      label: 'forEach',
     };
     const output = printer(table, input, 0);
     expect(output).toEqual<PrinterOutput>([

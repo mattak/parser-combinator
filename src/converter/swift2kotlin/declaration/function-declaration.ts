@@ -13,9 +13,7 @@ import {
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
   KotlinParameter,
-  KotlinSimpleIdentifier,
-  KotlinStatement,
-  KotlinStatementDeclaration
+  KotlinSimpleIdentifier
 } from "../../../syntax/kotlin";
 
 export function convert_functionDeclaration_functionDeclaration(
@@ -61,13 +59,7 @@ export function convert_functionBody_functionBody(
   input: SwiftFunctionBody,
 ): KotlinFunctionBody {
   const statements = input.statements
-    .flatMap(x => table['statement'](table, x))
-    .map(x => <KotlinStatement>{
-      value: <KotlinStatementDeclaration>{
-        type: 'declaration',
-        value: x,
-      }
-    });
+    .flatMap(x => table['statement__statements'](table, x));
   return <KotlinFunctionBodyBlock>{
     type: "block",
     value: <KotlinBlock>{

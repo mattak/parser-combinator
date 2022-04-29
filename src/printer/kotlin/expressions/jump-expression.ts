@@ -9,17 +9,16 @@ export function kotlinJumpExpressionPrinter(
   switch (input.type) {
     case "break":
       return [
-        input.label
+        input.label !== null ? `break@${input.label}` : 'break'
       ]
     case "continue":
       return [
-        input.label
+        input.label !== null ? `continue@${input.label}` : 'continue'
       ]
     case "return":
-      return input.expression !== null ? [
-        input.label + " " + table["expression"](table, input.expression, depth)[0]
-      ] : [
-        input.label
+      const expression = input.expression !== null ? " " + table["expression"](table, input.expression, depth)[0] : '';
+      return [
+        (input.label !== null ? `return@${input.label}` : 'return') + expression
       ]
     case "throw":
       return [
