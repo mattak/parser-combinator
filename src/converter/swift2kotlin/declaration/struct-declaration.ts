@@ -13,7 +13,7 @@ export function convert_structDeclaration_objectDeclaration(table: SwiftKotlinCo
   return <KotlinDeclarationObjectDeclaration>{
     type: 'object',
     value: <KotlinObjectDeclaration>{
-      modifiers: <KotlinModifiers>{modifiers: []},
+      modifiers: <KotlinModifiers>[],
       name: input.name,
       body: <KotlinClassBody>{
         members: members,

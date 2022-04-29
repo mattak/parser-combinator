@@ -2,6 +2,7 @@ import {SwiftKotlinConvertTable} from "../swift-converter";
 import {
   SwiftFunctionBody,
   SwiftFunctionDeclaration,
+  SwiftFunctionHead,
   SwiftFunctionResult,
   SwiftFunctionSignature,
   SwiftParameter
@@ -13,6 +14,8 @@ import {
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
+  KotlinModifier,
+  KotlinModifiers,
   KotlinParameter,
   KotlinSimpleIdentifier,
   KotlinType
@@ -23,11 +26,22 @@ export function convert_functionDeclaration_functionDeclaration(
   input: SwiftFunctionDeclaration,
 ): KotlinFunctionDeclaration {
   return <KotlinFunctionDeclaration>{
+    modifiers: table['function-head'](table, input.head),
     name: <KotlinSimpleIdentifier>{value: input.name},
     parameters: table['function-signature'](table, input.signature),
     returnType: input.signature.result !== null ? table['function-result'](table, input.signature.result) : null,
     body: input.body !== null ? table['function-body'](table, input.body) : null,
   }
+}
+
+export function convert_functionHead_modifiers(
+  table: SwiftKotlinConvertTable,
+  input: SwiftFunctionHead,
+): KotlinModifiers {
+  return input.modifiers
+    .map(x => table['declaration-modifier'](table, x))
+    .filter(x => x !== null)
+    .map(x => x as KotlinModifier);
 }
 
 export function convert_functionSignature_functionValueParameters(

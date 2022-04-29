@@ -1,8 +1,6 @@
-export interface KotlinModifiers {
-  // annotation: KotlinAnnotation,
-  modifiers: KotlinModifierType[],
-}
-export type KotlinModifierType = KotlinClassModifier
+export type KotlinModifiers = KotlinModifier[]
+
+export type KotlinModifier = KotlinClassModifier
   | KotlinMemberModifier
   | KotlinVisibilityModifier
   | KotlinFunctionModifier

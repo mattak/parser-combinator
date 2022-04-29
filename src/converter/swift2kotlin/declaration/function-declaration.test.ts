@@ -1,29 +1,84 @@
 import {defaultSwiftKotlinConvertTable, SwiftKotlinConvertTable} from "../swift-converter";
 import {
   KotlinBlock,
-  KotlinExpression, KotlinFunctionBody, KotlinFunctionBodyBlock,
+  KotlinExpression,
+  KotlinFunctionBody,
+  KotlinFunctionBodyBlock,
   KotlinFunctionDeclaration,
   KotlinFunctionValueParameter,
   KotlinFunctionValueParameters,
-  KotlinParameter, KotlinStatement, KotlinStatementDeclaration,
+  KotlinModifier,
+  KotlinModifiers,
+  KotlinParameter,
+  KotlinStatement,
   KotlinType
 } from "../../../syntax/kotlin";
 import {
   SwiftDeclaration,
-  SwiftExpression, SwiftFunctionBody,
+  SwiftDeclarationModifier,
+  SwiftExpression,
+  SwiftFunctionBody,
   SwiftFunctionDeclaration,
-  SwiftFunctionHead, SwiftFunctionResult,
+  SwiftFunctionHead,
+  SwiftFunctionResult,
   SwiftFunctionSignature,
-  SwiftParameter, SwiftStatement, SwiftStatementDeclaration, SwiftStatementType,
+  SwiftParameter,
+  SwiftStatement,
+  SwiftStatementDeclaration,
   SwiftType,
   SwiftTypeAnnotation
 } from "../../../syntax/swift";
 import {
   convert_functionBody_functionBody,
-  convert_functionDeclaration_functionDeclaration, convert_functionResult_type,
+  convert_functionDeclaration_functionDeclaration,
+  convert_functionHead_modifiers,
+  convert_functionResult_type,
   convert_parameter_functionValueParameter,
   convert_parameter_parameter
 } from "./function-declaration";
+
+
+describe('convert_functionHead_modifiers', () => {
+  const converter = convert_functionHead_modifiers;
+  const mockNull = jest.fn().mockImplementation(() => null)
+  const mockModifier = jest.fn().mockImplementation(() => <KotlinModifier>{})
+
+  test('empty', () => {
+    const input = <SwiftFunctionHead>{
+      modifiers: [],
+    };
+    const table = <SwiftKotlinConvertTable>{
+      ...defaultSwiftKotlinConvertTable,
+      'declaration-modifier': mockNull,
+    }
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinModifiers>([]);
+  });
+
+  test('null', () => {
+    const input = <SwiftFunctionHead>{
+      modifiers: [<SwiftDeclarationModifier>{}],
+    };
+    const table = <SwiftKotlinConvertTable>{
+      ...defaultSwiftKotlinConvertTable,
+      'declaration-modifier': mockNull,
+    }
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinModifiers>([]);
+  });
+
+  test('default', () => {
+    const input = <SwiftFunctionHead>{
+      modifiers: [<SwiftDeclarationModifier>{}],
+    };
+    const table = <SwiftKotlinConvertTable>{
+      ...defaultSwiftKotlinConvertTable,
+      'declaration-modifier': mockModifier,
+    }
+    const output = converter(table, input);
+    expect(output).toEqual<KotlinModifiers>([<KotlinModifier>{}]);
+  });
+});
 
 describe('convert_parameter_functionValueParameter', () => {
   const converter = convert_parameter_functionValueParameter;
@@ -185,7 +240,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
   test('func run(key:Type){}', () => {
     const input = <SwiftFunctionDeclaration>{
       type: 'function',
-      head: <SwiftFunctionHead>{},
+      head: <SwiftFunctionHead>{modifiers: []},
       name: 'run',
       signature: <SwiftFunctionSignature>{result: null},
       genericWhere: null,
@@ -194,6 +249,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
     const output = converter(table, input);
     expect(output).toEqual<KotlinFunctionDeclaration>(
       <KotlinFunctionDeclaration>{
+        modifiers: [],
         name: {value: 'run'},
         parameters: [],
         returnType: null,
@@ -205,7 +261,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
   test('func run(key:Type){ <statement> }', () => {
     const input = <SwiftFunctionDeclaration>{
       type: 'function',
-      head: <SwiftFunctionHead>{},
+      head: <SwiftFunctionHead>{modifiers: []},
       name: 'run',
       signature: <SwiftFunctionSignature>{result: null},
       genericWhere: null,
@@ -214,6 +270,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
     const output = converter(table, input);
     expect(output).toEqual<KotlinFunctionDeclaration>(
       <KotlinFunctionDeclaration>{
+        modifiers: [],
         name: {value: 'run'},
         parameters: [],
         returnType: null,
@@ -225,7 +282,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
   test('func run() Sample {}', () => {
     const input = <SwiftFunctionDeclaration>{
       type: 'function',
-      head: <SwiftFunctionHead>{},
+      head: <SwiftFunctionHead>{modifiers: []},
       name: 'run',
       signature: <SwiftFunctionSignature>{result: <SwiftFunctionResult>{}},
       genericWhere: null,
@@ -234,6 +291,7 @@ describe('convert_functionDeclaration_functionDeclaration', () => {
     const output = converter(table, input);
     expect(output).toEqual<KotlinFunctionDeclaration>(
       <KotlinFunctionDeclaration>{
+        modifiers: [],
         name: {value: 'run'},
         parameters: [],
         returnType: <KotlinType>{},

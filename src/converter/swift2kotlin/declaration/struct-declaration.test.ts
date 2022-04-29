@@ -36,7 +36,7 @@ describe('convert_structDeclaration_objectDeclaration', () => {
       <KotlinDeclarationObjectDeclaration>{
         type: 'object',
         value: {
-          modifiers: <KotlinModifiers>{modifiers: []},
+          modifiers: <KotlinModifiers>[],
           name: 'sample',
           body: <KotlinClassBody>{members: []},
         },
@@ -59,7 +59,7 @@ describe('convert_structDeclaration_objectDeclaration', () => {
       <KotlinDeclarationObjectDeclaration>{
         type: 'object',
         value: {
-          modifiers: <KotlinModifiers>{modifiers: []},
+          modifiers: [],
           name: 'sample',
           body: <KotlinClassBody>{
             members: [

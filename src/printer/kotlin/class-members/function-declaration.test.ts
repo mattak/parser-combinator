@@ -4,8 +4,8 @@ import {
   KotlinExpression,
   KotlinFunctionBodyBlock,
   KotlinFunctionBodyExpression,
-  KotlinFunctionDeclaration,
-  KotlinFunctionValueParameter,
+  KotlinFunctionDeclaration, KotlinFunctionModifier,
+  KotlinFunctionValueParameter, KotlinModifier, KotlinModifiers,
   KotlinParameter,
   KotlinSimpleIdentifier,
   KotlinStatement,
@@ -30,6 +30,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
 
   test('plain', () => {
     const input = <KotlinFunctionDeclaration>{
+      modifiers: <KotlinModifiers>[],
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [],
       returnType: null,
@@ -49,6 +50,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
 
   test('with parameter', () => {
     const input = <KotlinFunctionDeclaration>{
+      modifiers: <KotlinModifiers>[],
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [<KotlinFunctionValueParameter>{}],
       returnType: null,
@@ -68,6 +70,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
 
   test('with returnType', () => {
     const input = <KotlinFunctionDeclaration>{
+      modifiers: <KotlinModifiers>[],
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [],
       returnType: <KotlinType>{
@@ -96,6 +99,7 @@ describe('kotlinFunctionDeclarationPrinter', () => {
 
   test('with body', () => {
     const input = <KotlinFunctionDeclaration>{
+      modifiers: <KotlinModifiers>[],
       name: <KotlinSimpleIdentifier>{value: "run"},
       parameters: [<KotlinFunctionValueParameter>{}],
       returnType: null,

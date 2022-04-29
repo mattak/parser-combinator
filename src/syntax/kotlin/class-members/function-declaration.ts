@@ -2,9 +2,11 @@ import {KotlinExpression} from "../expressions/expressions";
 import {KotlinSimpleIdentifier} from "../identifiers/simple-identifier";
 import {KotlinType} from "../types/type";
 import {KotlinBlock} from "../statements/block";
+import {KotlinModifiers} from "../modifiers/modifiers";
 
 export interface KotlinFunctionDeclaration {
   // modifiers?
+  modifiers: KotlinModifiers,
   // 'fun'
   // typeParameters?
   // (receiverType '.')?

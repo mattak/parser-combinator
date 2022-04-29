@@ -22,6 +22,8 @@ import {
   KotlinInfixOperation,
   KotlinJumpExpression,
   KotlinLiteralConstant,
+  KotlinModifier,
+  KotlinModifiers,
   KotlinMultiplicativeExpression,
   KotlinNullableType,
   KotlinObjectDeclaration,
@@ -85,6 +87,7 @@ import {kotlinStatementPrinter, kotlinStatementsPrinter} from "./statements/stat
 import {kotlinBlockPrinter} from "./statements/block";
 import {kotlinJumpExpressionPrinter} from "./expressions/jump-expression";
 import {kotlinSimpleIdentifierPrinter} from "./identifiers/simple-identifier";
+import {kotlinModifierPrinter, kotlinModifiersPrinter} from "./modifiers/modifiers";
 
 export type PrinterOutput = string[];
 export type KotlinPrinter<T> = (table: KotlinPrinterTable, input: T, depth: number) => PrinterOutput;
@@ -131,6 +134,8 @@ export interface KotlinPrinterTable {
   'function-body': KotlinPrinter<KotlinFunctionBody>,
   'jump-expression': KotlinPrinter<KotlinJumpExpression>,
   'simple-identifier': KotlinPrinter<KotlinSimpleIdentifier>,
+  'modifiers': KotlinPrinter<KotlinModifiers>,
+  'modifier': KotlinPrinter<KotlinModifier>,
 }
 
 export const defaultKotlinPrinterTable: KotlinPrinterTable = {
@@ -174,4 +179,6 @@ export const defaultKotlinPrinterTable: KotlinPrinterTable = {
   'function-body': kotlinFunctionBodyPrinter,
   'jump-expression': kotlinJumpExpressionPrinter,
   'simple-identifier': kotlinSimpleIdentifierPrinter,
+  'modifiers': kotlinModifiersPrinter,
+  'modifier': kotlinModifierPrinter,
 }

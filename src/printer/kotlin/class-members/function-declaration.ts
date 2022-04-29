@@ -12,13 +12,15 @@ export function kotlinFunctionDeclarationPrinter(
   input: KotlinFunctionDeclaration,
   depth: number,
 ): PrinterOutput {
+  const modifiers = table['modifiers'](table, input.modifiers, depth);
+  const head = modifiers.length > 0 ? `${modifiers[0]} fun` : 'fun';
   const name = input.name.value;
   const parameters = table['function-value-parameters'](table, input.parameters, depth);
   const body = input.body !== null ? table['function-body'](table, input.body, depth) : ['{', '}'];
   const returnType = input.returnType !== null ? ': ' + table['type'](table, input.returnType, depth)[0] : '';
 
   return [
-    `fun ${name}${parameters}${returnType} ${body[0]}`,
+    `${head} ${name}${parameters}${returnType} ${body[0]}`,
     ...body.slice(1),
   ];
 }

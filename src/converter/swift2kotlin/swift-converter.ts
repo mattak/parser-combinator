@@ -2,9 +2,11 @@ import {
   SwiftConstantDeclaration,
   SwiftControlTransferStatement,
   SwiftDeclaration,
+  SwiftDeclarationModifier,
   SwiftExpression,
   SwiftFunctionBody,
   SwiftFunctionDeclaration,
+  SwiftFunctionHead,
   SwiftFunctionResult,
   SwiftFunctionSignature,
   SwiftImportDeclaration,
@@ -39,6 +41,8 @@ import {
   KotlinImportList,
   KotlinJumpExpression,
   KotlinLiteralConstant,
+  KotlinModifier,
+  KotlinModifiers,
   KotlinParameter,
   KotlinPrimaryExpression,
   KotlinPropertyDeclaration,
@@ -62,6 +66,7 @@ import {convert_typeAnnotation_type} from "./type/type-annotation";
 import {
   convert_functionBody_functionBody,
   convert_functionDeclaration_functionDeclaration,
+  convert_functionHead_modifiers,
   convert_functionResult_type,
   convert_functionSignature_functionValueParameters,
   convert_parameter_functionValueParameter,
@@ -76,6 +81,7 @@ import {
   convert_primaryExpression_primaryExpression
 } from "./expression/primary-expression";
 import {convert_type_type} from "./type/type";
+import {convert_declarationModifier_modifier} from "./declaration/access-control-levels";
 
 export type Converter<From, To> = (table: SwiftKotlinConvertTable, input: From) => To;
 
@@ -100,6 +106,7 @@ export interface SwiftKotlinConvertTable {
   'type-annotation__type': Converter<SwiftTypeAnnotation, KotlinType>,
   'type': Converter<SwiftType, KotlinType>,
   'function-declaration': Converter<SwiftFunctionDeclaration, KotlinFunctionDeclaration>,
+  'function-head': Converter<SwiftFunctionHead, KotlinModifiers>,
   'function-signature': Converter<SwiftFunctionSignature, KotlinFunctionValueParameters>,
   'parameter__functionValueParameter': Converter<SwiftParameter, KotlinFunctionValueParameter>,
   'parameter__parameter': Converter<SwiftParameter, KotlinParameter>,
@@ -107,6 +114,7 @@ export interface SwiftKotlinConvertTable {
   'function-result': Converter<SwiftFunctionResult, KotlinType>,
   'control-transfer-statement__jumpExpression': Converter<SwiftControlTransferStatement, KotlinJumpExpression>,
   'control-transfer-statement__statement': Converter<SwiftControlTransferStatement, KotlinStatement>,
+  'declaration-modifier': Converter<SwiftDeclarationModifier, KotlinModifier | null>,
 
   // kotlin
   'importList': Converter<SwiftImportDeclaration[], KotlinImportList>,
@@ -134,6 +142,7 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'type-annotation__type': convert_typeAnnotation_type,
   'type': convert_type_type,
   'function-declaration': convert_functionDeclaration_functionDeclaration,
+  'function-head': convert_functionHead_modifiers,
   'function-signature': convert_functionSignature_functionValueParameters,
   'parameter__functionValueParameter': convert_parameter_functionValueParameter,
   'parameter__parameter': convert_parameter_parameter,
@@ -141,6 +150,7 @@ export const defaultSwiftKotlinConvertTable: SwiftKotlinConvertTable = {
   'function-result': convert_functionResult_type,
   'control-transfer-statement__jumpExpression': convert_controlTransferStatement_jumpExpression,
   'control-transfer-statement__statement': convert_controlTransferStatement_statement,
+  'declaration-modifier': convert_declarationModifier_modifier,
 
   // kotlin
   'importList': convert_importDeclarations_importList,

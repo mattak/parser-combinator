@@ -13,7 +13,7 @@ describe('kotlinObjectDeclarationPrinter', () => {
   test('Empty', () => {
     const input = <KotlinObjectDeclaration>{
       type: 'object',
-      modifiers: {modifiers: []},
+      modifiers: [],
       name: "MyStruct",
       body: <KotlinClassBody>{
         members: [],
